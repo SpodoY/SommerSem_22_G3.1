@@ -72,8 +72,8 @@ public class AppController {
         controlList.add(new Article("Mathe Main", "Mathe - Leid für die ganze Familie"));
         controlList.add(new Article("Audiophile", "Top 10 Headsets in 2022"));
         controlList.add(new Article("Bildungsresistenz Main", "Top 20 schlechteste Lolmates in 2022"));
-        controlList.add(new Article("BitCoin Bimbo", "These Bitcoins be hot as f***"));
-        controlList.add(new Article("BitCoin Bimbo", "BitCoin is dropping, here is why"));
+        controlList.add(new Article("BitCoin Jimbo", "These Bitcoins be hot as f***"));
+        controlList.add(new Article("BitCoin Jimbo", "BitCoin is dropping, here is why"));
         controlList.add(new Article("AustrianLover007", "Top 10 Places to visit Austria"));
         controlList.add(new Article("AustrianLover007", "Country Road, take me to Austria"));
         controlList.add(new Article(null, null));
