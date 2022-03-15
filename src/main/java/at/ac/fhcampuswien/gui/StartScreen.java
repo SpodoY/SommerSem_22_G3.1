@@ -46,6 +46,18 @@ public class StartScreen {
     }
 
     private static void loadNewScene(String scene) {
-
+        mainStage.setScene(SceneLoader.loadScene(scene));
     }
-}
+
+    public static AppController getApp() {
+        return app;
+    }
+
+    public static Stage getMainStage() {
+        return mainStage;
+    }
+
+    public static void goBack() {
+        mainStage.setScene(mainScene);
+    }
+ }
