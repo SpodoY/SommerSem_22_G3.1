@@ -22,7 +22,7 @@ public class AppController {
         }
     }
 
-    public int getArticleCount(){return  0;}
+    public int getArticleCount(){return this.articles.size();}
 
     public List<Article> getArticles() {
         return articles;
