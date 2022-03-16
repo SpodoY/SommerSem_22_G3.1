@@ -50,8 +50,18 @@ public class AppTest {
         assertEquals("This is also a test article", appController.getArticles().get(1).getTitle());
     }
 
+    @Test
+    @DisplayName("If counted articles correct size")
+    public void getArticleCountTest() {
+        // Arrange
+        int generated_mock_articles = 9;
 
+        // Act
+        int articleCount = app.getArticleCount();
 
+        // Assert
+        assertEquals(generated_mock_articles, articleCount);
+    }
 
 
     @Test
