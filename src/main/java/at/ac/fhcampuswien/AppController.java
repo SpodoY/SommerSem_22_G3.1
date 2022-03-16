@@ -72,10 +72,15 @@ public class AppController {
     }
 
     protected static List<Article> filterList(String query, List<Article> articles) {
-        return intermediary;
+        String toLower = query.toLowerCase();                                                                            //we don´t want case sensitive querys ->everything to lower case
+        intermediary.clear();                                                                                            //a intermediary list which gets cleared everytime the function is called so we can reuse it
+        if (toLower.equals("")) return intermediary;                                                                     //if the query is empty we return a empty list (duuhhhh)
+        for (Article a: articles) {                                                                                      //a for-each loop which gets every avaiable article
+            if (a.getTitle().toLowerCase().contains(toLower)) intermediary.add(a);                                       //checks if a title of an article (in lower case) contains our query. if it dooes it adds the article to our intermediary list
+        } return intermediary;
     }
 
     public List<Article> getAllNewsBitcoin() {
-        return null;
+        return filterList("bitcoin",articles);                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }
 }
