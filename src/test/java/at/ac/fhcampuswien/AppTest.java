@@ -15,7 +15,7 @@ public class AppTest {
     private static AppController app;
 
     @BeforeAll
-    static void init(){
+    static void init() {
         app = new AppController();
     }
 
@@ -136,5 +136,49 @@ public class AppTest {
         //Assert
         assertEquals(expectedList, actualList);
     }
+
+    @Test
+    @DisplayName("If returned Lists are Bitcoin articles")
+    /*A test for a successful search result. If every article really has the query in it  */
+    public void bitcoinNewsTest() {
+        //arrange
+        String query = "bitcoin";                                                                                        //defining the query which is searched for
+        //act
+        for (Article a : app.filterList("bitcoin", app.getArticles())) {                                           //a for-each loop calls every element of the returned filtered list
+            //assert
+            assertTrue(a.toString().toLowerCase().contains("bitcoin"));                                                  //asserting if every entry in the list contains the query
+        }
+    }
+
+    @Test
+    @DisplayName("Filtering based on query string")
+    /*A test for the general search query*/
+    public void filterListTest() {
+        //arrange
+        String query = "top";                                                                                            //the query which is searched for
+        int expectedSize = 3;                                                                                            //the expected number of successful matches
+
+        //act
+        int actualSize = app.filterList(query, app.getArticles()).size();                                                //using the function "filterList" to get a list of articles and then counting it
+
+        //assert
+        assertEquals(actualSize, expectedSize);                                                                          //comparing the size of the actual filtered list with the outcome that should be
+    }
+
+    @Test
+    @DisplayName("Filtering based on query string")
+    /*A test for an empty query*/
+    public void filterListTest1() {
+        //arrange
+        String query = "";                                                                                               //the query which is searched for
+        int expectedSize = 0;                                                                                            //the expected number of successfull matches
+
+        //act
+        int actualSize = app.filterList(query, app.getArticles()).size();                                                //using the function "filterList" to get a list of articles and then counting it
+
+        //assert
+        assertEquals(actualSize, expectedSize);                                                                          //comparing the size of the actual filtered list with the outcome that should be
+    }
+
 
 }
