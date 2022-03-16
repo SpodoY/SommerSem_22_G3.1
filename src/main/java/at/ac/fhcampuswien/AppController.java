@@ -46,19 +46,6 @@ public class AppController {
         }
     }
 
-    public List<Article> getAllNewsBitcoin() {
-        return filterList("bitcoin",articles);
-
-    }
-
-    protected static List<Article> filterList(String query, List<Article> articles) {
-        String toLower = query.toLowerCase();
-        intermediary.clear();
-        if (toLower.equals("")) return intermediary;
-        for (Article a: articles) {
-            if (a.getTitle().toLowerCase().contains(toLower)) intermediary.add(a);
-        } return intermediary;
-    }
 
     private static List<Article> generateMockList() {
         // generate a new list for return Type

@@ -137,25 +137,4 @@ public class AppTest {
         assertEquals(expectedList, actualList);
     }
 
-
-    @Test
-    @DisplayName("If returned Lists are Bitcoin articles")
-    public void bitcoinNewsTest() {
-        for (Article a: app.filterList("bitcoin",app.getArticles())) {
-            assertTrue(a.toString().toLowerCase().contains("bitcoin"));
-        }
-    }
-
-    @Test
-    @DisplayName("Filtering based on query string")
-    public void filterListTest() {
-        assertEquals(app.filterList("top",app.getArticles()).size(), 3);
-    }
-
-    @Test
-    @DisplayName("Filtering based on query string")
-    public void filterListTest1() {
-        assertEquals(app.filterList("",app.getArticles()).size(), 0);
-    }
-
 }
