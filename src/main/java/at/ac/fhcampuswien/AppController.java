@@ -22,9 +22,7 @@ public class AppController {
         }
     }
 
-    public int getArticleCount(){
-        return this.articles.size();
-    }
+    public int getArticleCount(){return  0;}
 
     public List<Article> getArticles() {
         return articles;
@@ -62,25 +60,5 @@ public class AppController {
         } return intermediary;
     }
 
-    private static List<Article> generateMockList() {
-        // generate a new list for return Type
-        List<Article> controlList = new ArrayList<>();
 
-        //Mock data insertion
-        controlList.add(new Article("Waschbärenverlang", "Die wunderbaren Reisen von Thommy"));
-        controlList.add(new Article("Blechdach", "Maxl - Far from home"));
-        controlList.add(new Article("Mathe Main", "Mathe - Leid für die ganze Familie"));
-        controlList.add(new Article("Audiophile", "Top 10 Headsets in 2022"));
-        controlList.add(new Article("Bildungsresistenz Main", "Top 20 schlechteste Lolmates in 2022"));
-        controlList.add(new Article("BitCoin Jimbo", "These Bitcoins be hot as f***"));
-        controlList.add(new Article("BitCoin Jimbo", "BitCoin is dropping, here is why"));
-        controlList.add(new Article("AustrianLover007", "Top 10 Places to visit Austria"));
-        controlList.add(new Article("AustrianLover007", "Country Road, take me to Austria"));
-        controlList.add(new Article(null, null));
-        controlList.add(new Article("Tacocat", null));
-        controlList.add(new Article(null, "Pls no kill"));
-
-        // returning the filled list
-        return controlList;
-    }
 }

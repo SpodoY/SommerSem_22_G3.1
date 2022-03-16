@@ -52,19 +52,6 @@ public class AppTest {
 
 
     @Test
-    @DisplayName("If counted articles correct size")
-    public void getArticleCountTest() {
-        // Arrange
-        int generated_mock_articles = 9;
-
-        // Act
-        int articleCount = app.getArticleCount();
-
-        // Assert
-        assertEquals(generated_mock_articles, articleCount);
-    }
-
-    @Test
     @DisplayName("List of articles contains 0 Elements")
     public void headlinesAustriaTest_Scenario1() {
         //Arrange
