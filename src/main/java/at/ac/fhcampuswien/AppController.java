@@ -22,7 +22,7 @@ public class AppController {
         }
     }
 
-    public int getArticleCount(){
+    public int getArticleCount() {
         return this.articles.size();
     }
 
@@ -30,16 +30,16 @@ public class AppController {
         return articles;
     }
 
-    public List<Article> getTopHeadlinesAustria(){
+    public List<Article> getTopHeadlinesAustria() {
         //filters austrian articles - word "austria" in Author and Title - didn't use filterList() because only article's title is filtered
         List<Article> listFiltered = new ArrayList<>();
         String query = "austria";
 
-        for (Article a: articles) {
+        for (Article a : articles) {
             if (a.toString().toLowerCase().contains(query)) listFiltered.add(a);
         }
 
-        if(listFiltered.size() == 0) {
+        if (listFiltered.size() == 0) {
             //if no article from Austria - return empty List
             return new ArrayList<>();
         } else {
@@ -48,19 +48,6 @@ public class AppController {
         }
     }
 
-    public List<Article> getAllNewsBitcoin() {
-        return filterList("bitcoin",articles);
-
-    }
-
-    protected static List<Article> filterList(String query, List<Article> articles) {
-        String toLower = query.toLowerCase();
-        intermediary.clear();
-        if (toLower.equals("")) return intermediary;
-        for (Article a: articles) {
-            if (a.getTitle().toLowerCase().contains(toLower)) intermediary.add(a);
-        } return intermediary;
-    }
 
     private static List<Article> generateMockList() {
         // generate a new list for return Type
@@ -82,5 +69,18 @@ public class AppController {
 
         // returning the filled list
         return controlList;
+    }
+
+    protected static List<Article> filterList(String query, List<Article> articles) {
+        String toLower = query.toLowerCase();                                                                            //we don´t want case sensitive querys ->everything to lower case
+        intermediary.clear();                                                                                            //a intermediary list which gets cleared everytime the function is called so we can reuse it
+        if (toLower.equals("")) return intermediary;                                                                     //if the query is empty we return a empty list (duuhhhh)
+        for (Article a: articles) {                                                                                      //a for-each loop which gets every avaiable article
+            if (a.getTitle().toLowerCase().contains(toLower)) intermediary.add(a);                                       //checks if a title of an article (in lower case) contains our query. if it dooes it adds the article to our intermediary list
+        } return intermediary;
+    }
+
+    public List<Article> getAllNewsBitcoin() {
+        return filterList("bitcoin",articles);                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }
 }

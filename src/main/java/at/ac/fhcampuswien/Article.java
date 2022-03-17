@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien;
 
 public class Article {
-
     private String author;
     private String title;
 
@@ -23,5 +22,7 @@ public class Article {
     public String toString() {
         return String.format("Title: %s, Author: %s%n", title, author);
     }
+
+
 
 }
