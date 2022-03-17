@@ -15,7 +15,11 @@ public class AppController {
     }
 
     public void setArticles(List<Article> articles) {
-
+        // clears list for new usage
+        this.articles.clear();
+        for (Article a : articles) {
+            if (!(a.getAuthor() == null || a.getTitle() == null)) this.articles.add(a);
+        }
     }
 
     public int getArticleCount(){
