@@ -14,7 +14,9 @@ public class AppController {
         setArticles(generateMockList());
     }
 
+    public void setArticles(List<Article> articles) {
 
+    }
 
     public int getArticleCount(){
         return this.articles.size();
