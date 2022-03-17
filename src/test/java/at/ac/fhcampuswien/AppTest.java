@@ -19,7 +19,36 @@ public class AppTest {
         app = new AppController();
     }
 
+    @Test
+    @DisplayName("If no Articles given, size = 0")
+    public void setArticlesSize0() {
+        // Arrange
+        AppController appController = new AppController();
 
+        //Act
+        appController.setArticles(new ArrayList<>());
+
+        //Assert
+        assertEquals(0, appController.getArticles().size());
+    }
+
+    @Test
+    @DisplayName("Articles filled and order right")
+    public void setTwoArticles() {
+        // Arrange
+        AppController appController = new AppController();
+        List<Article> l = new ArrayList<>();
+
+        // Act
+        l.add(new Article("Tester1", "This is a test article"));
+        l.add(new Article("Tester2", "This is also a test article"));
+        appController.setArticles(l);
+
+        // Assert
+        assertEquals(2, appController.getArticles().size());
+        assertEquals("Tester1", appController.getArticles().get(0).getAuthor());
+        assertEquals("This is also a test article", appController.getArticles().get(1).getTitle());
+    }
 
     @Test
     @DisplayName("If counted articles correct size")
