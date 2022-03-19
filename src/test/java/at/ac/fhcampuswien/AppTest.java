@@ -63,79 +63,7 @@ public class AppTest {
         assertEquals(generated_mock_articles, articleCount);
     }
 
-    @Test
-    @DisplayName("List of articles contains 0 Elements")
-    public void headlinesAustriaTest_Scenario1() {
-        //Arrange
-        List<Article> expectedList = new ArrayList<>(); //Output should be an empty list - therefore new empty list
 
-        //Act
-        var appController = new AppController();
-        appController.setArticles(new ArrayList<>());  //is set Articles ok? it is another method... and therefore my test isn't independent
-        List<Article> actualList = appController.getTopHeadlinesAustria();
-
-        //Assert
-        assertEquals(expectedList, actualList);
-    }
-
-    @Test
-    @DisplayName("List of articles contains Austrian Articles")
-    public void headlinesAustriaTest_Scenario2() {
-        //Arrange
-        List<Article> articlesList = new ArrayList<>();
-        //Austria - in Author
-        Article article3 = new Article("The local Austrian", "The best commuter towns if you work in Vienna");
-        articlesList.add(article3);
-        //Austria - in Title
-        Article article5 = new Article("The local", "Today in Austria: A roundup of the latest news");
-        articlesList.add(article5);
-
-        List<Article> expectedList = new ArrayList<>();
-        expectedList.add(article3);
-        expectedList.add(article5);
-
-        //Act
-        Article article1 = new Article("The New York Times", "First Amendment Scholars Want to See the Media Lose These Cases");
-        articlesList.add(article1);
-        Article article2 = new Article("The Australian", "The start-up using tech to police global trade bans");
-        articlesList.add(article2);
-        Article article4 = new Article("Metropole", "The Way the World Works: Economics vs. Reality");
-        articlesList.add(article4);
-
-        var appController = new AppController();
-        appController.setArticles(articlesList);
-        List<Article> actualList = appController.getTopHeadlinesAustria();
-
-        //Assert
-        assertEquals(expectedList, actualList);
-    }
-
-    @Test
-    @DisplayName("List of articles contains NO Austrian Articles")
-    public void headlinesAustriaTest_Scenario3() {
-        //Arrange
-        List<Article> expectedList = new ArrayList<>();  //No Austrian articles - that's why empty list
-
-        //Act
-        List<Article> articlesList = new ArrayList<>();
-        Article article1 = new Article("The New York Times", "First Amendment Scholars Want to See the Media Lose These Cases");
-        articlesList.add(article1);
-        Article article2 = new Article("The Australian", "The start-up using tech to police global trade bans");
-        articlesList.add(article2);
-        Article article3 = new Article("The local Ostrian", "The best commuter towns if you work in Vienna");
-        articlesList.add(article3);
-        Article article4 = new Article("Metropole", "The Way the World Works: Economics vs. Reality");
-        articlesList.add(article4);
-        Article article5 = new Article("The local", "Today in Ostria: A roundup of the latest news");
-        articlesList.add(article5);
-
-        var appController = new AppController();
-        appController.setArticles(articlesList);
-        List<Article> actualList = appController.getTopHeadlinesAustria();
-
-        //Assert
-        assertEquals(expectedList, actualList);
-    }
 
     @Test
     @DisplayName("If returned Lists are Bitcoin articles")
