@@ -27,4 +27,13 @@ public class NewsResponse {
     public List<Article> getArticles() {
         return articles;
     }
+
+    @Override
+    public String toString() {
+        return "NewsResponse{" +
+                "status='" + status + '\'' +
+                ", totalResults=" + totalResults +
+                ", articles=" + articles +
+                '}';
+    }
 }
