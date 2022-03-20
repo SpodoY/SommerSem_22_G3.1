@@ -14,6 +14,9 @@ public class NewsApi {
     private final String BASEURL = "https://newsapi.org/v2/";
     private final static String API_KEY = readKey();
 
+    /**
+    This method reads the api key from a static file, which isn't pushed to git
+     */
     private static String readKey() {
         // Instantiating all Classes need for reading from a file
         InputStream file = NewsApi.class.getClassLoader().getResourceAsStream("at/ac/fhcampuswien/keys.txt");
@@ -28,15 +31,30 @@ public class NewsApi {
         return null;
     }
 
-    public String  Response (String category, String keyword) {
+    /**
+     * This method gets all parameters for the url and calls the request function
+     * @param category headlines or everything
+     * @param keyword the filtering word, default is keyword
+     * @return returns the http message body as string
+     */
+    public String Response (String category, String keyword) {
+        String url= null;
         try {
             // assembling the url and running the request
-            return runGetRequest(BASEURL +category+ "?q=" +keyword+ API_KEY);
+            url = BASEURL +category+ "?q=" +keyword+ API_KEY;
+            return runGetRequest(url);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Invalid url : "+ url);
         }
         return null;
     }
+
+    /**
+     * This method handles Get request and should be called from the response function
+     * @param url the url from the Response function
+     * @return the message body to string from the http request
+     * @throws IOException
+     */
     private String runGetRequest(String url) throws IOException {
 
         // initiates the http client
