@@ -137,6 +137,7 @@ public class AppTest {
         assertEquals(expectedList, actualList);
     }
 
+
     @Test
     @DisplayName("If returned Lists are Bitcoin articles")
     /*A test for a successful search result. If every article really has the query in it  */

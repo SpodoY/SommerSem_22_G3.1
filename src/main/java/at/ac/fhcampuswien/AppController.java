@@ -48,7 +48,6 @@ public class AppController {
         }
     }
 
-
     private static List<Article> generateMockList() {
         // generate a new list for return Type
         List<Article> controlList = new ArrayList<>();

@@ -7,8 +7,6 @@ public class App {
         Menu menu = new Menu();
         menu.start();
 
-
-        //comment test 3
     }
 
 }
