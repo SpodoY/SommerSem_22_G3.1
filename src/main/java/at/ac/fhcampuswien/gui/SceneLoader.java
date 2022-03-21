@@ -15,16 +15,28 @@ import java.util.List;
 
 import static at.ac.fhcampuswien.gui.StartScreen.*;
 
+/**
+ * Used to dynamically change the Scene of the {@link StartScreen} without having to create a new window
+ */
 public class SceneLoader {
 
+    /**
+     * Creates a new scene with content based on which command is given
+     *
+     * @param command - Which content should the scene be filled with
+     * @return a new Scene filled with the desired Content
+     */
     public static Scene loadScene(String command) {
-        AppController app = getApp();
 
+        // Basic GUI Components
+        AppController app = getApp();
         VBox container = new VBox();
+        List<Article> newsList = new ArrayList<>();
+
         container.setPadding(new Insets(10));
         container.setAlignment(Pos.TOP_CENTER);
 
-        List<Article> newsList = new ArrayList<>();
+        // Based on which Button was pressed -> Different Content is Loaded into the Article List
         switch (command) {
             case "AT" -> newsList = app.getTopHeadlinesAustria();
             case "Bit" -> newsList = app.getAllNewsBitcoin();
@@ -36,7 +48,8 @@ public class SceneLoader {
             }
             case "Fuck this shit I'm out" -> System.exit(0);
         }
-        //TODO: Style Text better
+
+        // Articles are put into Scene with Author and Title property
         for (Article a : newsList) {
             Text t = new Text(a.toString());
             t.setStyle("-fx-font: 14 Verdana");
@@ -45,9 +58,11 @@ public class SceneLoader {
             container.getChildren().add(t);
         }
 
+        // Button to be able to go back to the MainScene
         Button goBack = new Button("<---");
         goBack.setOnAction(e -> goBack());
         container.getChildren().add(goBack);
+
         return new Scene(container, WIDTH, HEIGHT);
     }
 }
