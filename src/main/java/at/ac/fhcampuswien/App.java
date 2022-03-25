@@ -7,7 +7,7 @@ public class App {
     public static void main(String[] args) {
         // launches application
         Menu menu = new Menu();
-        //menu.start();
+        menu.start();
 
         var news = new NewsApi();
         String test = news.Response("everything","keyword");

@@ -6,6 +6,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
@@ -18,9 +20,11 @@ import static at.ac.fhcampuswien.gui.StartScreen.*;
 public class SceneLoader {
 
     public static Scene loadScene(String command) {
-        AppController app = getApp();
 
+        AppController app = getApp();
+        ScrollPane scrollPane = new ScrollPane();
         VBox container = new VBox();
+
         container.setPadding(new Insets(10));
         container.setAlignment(Pos.TOP_CENTER);
 
@@ -29,25 +33,29 @@ public class SceneLoader {
             case "AT" -> newsList = app.getTopHeadlinesAustria();
             case "Bit" -> newsList = app.getAllNewsBitcoin();
             case "Count" -> {
-                Text t = new Text("Amount of Articles: " + app.getArticleCount());
-                t.setStyle("-fx-font: 36 Verdana");
+                Label label = new Label("Amount of Articles: " + app.getArticleCount());
+                label.setStyle("-fx-font: 36 Verdana");
                 container.setAlignment(Pos.CENTER);
-                container.getChildren().add(t);
+                container.getChildren().add(label);
             }
             case "Fuck this shit I'm out" -> System.exit(0);
         }
         //TODO: Style Text better
         for (Article a : newsList) {
-            Text t = new Text(a.toString());
-            t.setStyle("-fx-font: 14 Verdana");
-            t.wrappingWidthProperty().bind(container.widthProperty());
-            t.setTextAlignment(TextAlignment.CENTER);
-            container.getChildren().add(t);
+            Label label = new Label(a.toString());
+            label.setStyle("-fx-font: 14 Verdana");
+            label.setWrapText(true);
+            label.setTextAlignment(TextAlignment.CENTER);
+            container.getChildren().add(label);
         }
 
         Button goBack = new Button("<---");
         goBack.setOnAction(e -> goBack());
         container.getChildren().add(goBack);
-        return new Scene(container, WIDTH, HEIGHT);
+
+        scrollPane.setContent(container);
+        scrollPane.setFitToWidth(true);
+
+        return new Scene(scrollPane, WIDTH, HEIGHT);
     }
 }

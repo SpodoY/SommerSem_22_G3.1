@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 
 public class StartScreen {
 
-    public static final int WIDTH = 400;
+    public static final int WIDTH = 450;
     public static final int HEIGHT = 650;
 
     /* Pane & Shit */
