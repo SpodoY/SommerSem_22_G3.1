@@ -55,7 +55,7 @@ public class AppController {
         for (Article a : articles) {
             if (a.toString().toLowerCase().contains(query)) listFiltered.add(a);
         }
-
+        
         if (listFiltered.size() == 0) {
             //if no article from Austria - return empty List
             return new ArrayList<>();

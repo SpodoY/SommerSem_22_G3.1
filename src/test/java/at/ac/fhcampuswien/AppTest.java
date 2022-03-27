@@ -64,6 +64,20 @@ public class AppTest {
     }
 
 
+    @Test
+    @DisplayName("If counted articles correct size")
+    public void getArticleCountTest1() {
+        // Arrange
+        int zero_article = 0;
+
+        // Act
+        var app = new AppController();
+        app.setArticles(new ArrayList<>());
+        int articleCount = app.getArticleCount();
+
+        // Assert
+        assertEquals(zero_article, articleCount);
+    }
 
     @Test
     @DisplayName("List of articles contains 0 Elements")
