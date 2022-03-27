@@ -5,7 +5,6 @@ import java.util.List;
 
 public class AppController {
 
-    // a private list for storing intermediary Data
     private static List<Article> intermediary = new ArrayList<>();
 
     // the Datastructures for containing all our Articles
@@ -15,10 +14,6 @@ public class AppController {
         setArticles(generateMockList());
     }
 
-    /**
-     * adds an article to the passed threw list if the title and author aren't null
-     * @param articles an array list generically binded to the locally created article class
-     */
     public void setArticles(List<Article> articles) {
         // clears list for new usage
         this.articles.clear();
@@ -27,26 +22,14 @@ public class AppController {
         }
     }
 
-    /**
-     *  returns the size of the local article list
-     * @return
-     */
     public int getArticleCount() {
         return this.articles.size();
     }
 
-    /**
-     * returns the article list
-     * @return
-     */
     public List<Article> getArticles() {
         return articles;
     }
 
-    /**
-     * this function returns the passed threw list if the size is bigger than zero else returns a new empty list
-     * @return
-     */
     public List<Article> getTopHeadlinesAustria() {
         //filters austrian articles - word "austria" in Author and Title - didn't use filterList() because only article's title is filtered
         List<Article> listFiltered = new ArrayList<>();
@@ -65,10 +48,6 @@ public class AppController {
         }
     }
 
-    /**
-     * fills the complete list with mock data
-     * @return the filled list
-     */
     private static List<Article> generateMockList() {
         // generate a new list for return Type
         List<Article> controlList = new ArrayList<>();
@@ -91,37 +70,16 @@ public class AppController {
         return controlList;
     }
 
-    /**
-     * filters the list based on a passed query
-     * @param query the keyWord for the search
-     * @param articles the list to filter
-     * @return the new filtered list
-     */
     protected static List<Article> filterList(String query, List<Article> articles) {
-        //we don´t want case-sensitive query's ->everything to lower case
-
-        String toLower = query.toLowerCase();
-
-        //a intermediary list which gets cleared everytime the function is called so we can reuse it
-        intermediary.clear();
-
-        //if the query is empty we return an empty list
-
-        if (toLower.equals("")) return intermediary;
-
-        //a for-each loop which gets every avaiable article
-        for (Article a: articles) {
-
-            //checks if a title of an article (in lower case) contains our query. if it does it adds the article to our intermediary list
-            if (a.getTitle().toLowerCase().contains(toLower)) intermediary.add(a);
-
-        }
-
-        return intermediary;
+        String toLower = query.toLowerCase();                                                                            //we don´t want case sensitive querys ->everything to lower case
+        intermediary.clear();                                                                                            //a intermediary list which gets cleared everytime the function is called so we can reuse it
+        if (toLower.equals("")) return intermediary;                                                                     //if the query is empty we return a empty list (duuhhhh)
+        for (Article a: articles) {                                                                                      //a for-each loop which gets every avaiable article
+            if (a.getTitle().toLowerCase().contains(toLower)) intermediary.add(a);                                       //checks if a title of an article (in lower case) contains our query. if it dooes it adds the article to our intermediary list
+        } return intermediary;
     }
 
     public List<Article> getAllNewsBitcoin() {
-
-        //gets all the articles with the query "bitcoin" and returns the new list
-        return filterList("bitcoin",articles);                                                                         }
+        return filterList("bitcoin",articles);                                                                     //gets all the articles with the query "bitcoin" and returns the new list
+    }
 }

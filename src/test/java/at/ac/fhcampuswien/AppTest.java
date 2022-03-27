@@ -63,8 +63,6 @@ public class AppTest {
         assertEquals(generated_mock_articles, articleCount);
     }
 
-
-
     @Test
     @DisplayName("List of articles contains 0 Elements")
     public void headlinesAustriaTest_Scenario1() {
