@@ -79,7 +79,7 @@ public class StartScreen {
     /**
      * Returns the {@link AppController}
      *
-     * @return
+     * @return The app
      */
     public static AppController getApp() {
         return app;
