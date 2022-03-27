@@ -63,6 +63,7 @@ public class SceneLoader {
         goBack.setOnAction(e -> goBack());
         container.getChildren().add(goBack);
 
+        //changes the current displayed scene to the changed one
         return new Scene(container, WIDTH, HEIGHT);
     }
 }
