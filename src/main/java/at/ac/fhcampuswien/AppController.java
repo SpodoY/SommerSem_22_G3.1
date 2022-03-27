@@ -48,20 +48,12 @@ public class AppController {
      * @return
      */
     public List<Article> getTopHeadlinesAustria() {
-        //filters austrian articles - word "austria" in Author and Title - didn't use filterList() because only article's title is filtered
-        List<Article> listFiltered = new ArrayList<>();
-        String query = "austria";
 
-        for (Article a : articles) {
-            if (a.toString().toLowerCase().contains(query)) listFiltered.add(a);
-        }
-        
-        if (listFiltered.size() == 0) {
-            //if no article from Austria - return empty List
-            return new ArrayList<>();
+        if (articles.size() == 0) {
+            List<Article> newArticleList = new ArrayList<>();
+            return newArticleList;
         } else {
-            //return filtered List
-            return listFiltered;
+            return articles;
         }
     }
 
