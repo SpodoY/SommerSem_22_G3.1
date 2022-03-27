@@ -9,8 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +33,8 @@ public class SceneLoader {
         AppController app = getApp();
         ScrollPane scrollPane = new ScrollPane();
         VBox container = new VBox();
+
+        List<Article> newsList = new ArrayList<>();
 
         container.setPadding(new Insets(10));
         container.setAlignment(Pos.TOP_CENTER);
