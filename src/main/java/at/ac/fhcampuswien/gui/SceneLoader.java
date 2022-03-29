@@ -8,10 +8,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 
+import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,5 +73,12 @@ public class SceneLoader {
         scrollPane.setFitToWidth(true);
 
         return new Scene(scrollPane, WIDTH, HEIGHT);
+
     }
+
+//    private static HBox buildArticleItem() {
+//        HBox cotainer = new HBox();
+//        URL url = new URL("https://www.wiwo.de/images/imago0047108890h/28208162/2-format11240.jpg");
+//        InputStream inputStream = url.openStream();
+//    }
 }

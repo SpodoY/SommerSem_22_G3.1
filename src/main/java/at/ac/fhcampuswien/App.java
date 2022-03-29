@@ -8,6 +8,7 @@ public class App {
         // launches application
         Menu menu = new Menu();
         menu.start();
+        System.out.println("Tacocat");
 
         var news = new NewsApi();
         String test = news.Response("everything","keyword");
