@@ -10,7 +10,7 @@ public class App {
         menu.start();
 
         var news = new NewsApi();
-        String test = news.Response("everything","keyword");
+        String test = news.responseQ("everything","keyword");
         System.out.println(test);
     }
 

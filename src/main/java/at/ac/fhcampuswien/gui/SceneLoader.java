@@ -44,8 +44,8 @@ public class SceneLoader {
 
         // Based on which Button was pressed -> Different Content is Loaded into the Article List
         switch (command) {
-            case "AT" -> newsList = app.getTopHeadlinesAustria();
-            case "Bit" -> newsList = app.getAllNewsBitcoin();
+            case "AT" -> newsList = app.getArticles();
+            case "Bit" -> newsList = app.getArticles();
             case "Count" -> {
                 Label label = new Label("Amount of Articles: " + app.getArticleCount());
                 label.setStyle("-fx-font: 36 Verdana");

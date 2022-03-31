@@ -1,3 +1,4 @@
+/*
 package at.ac.fhcampuswien;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -140,7 +141,9 @@ public class AppTest {
 
     @Test
     @DisplayName("If returned Lists are Bitcoin articles")
-    /*A test for a successful search result. If every article really has the query in it  */
+    */
+/*A test for a successful search result. If every article really has the query in it  *//*
+
     public void bitcoinNewsTest() {
         //arrange
         String query = "bitcoin";                                                                                        //defining the query which is searched for
@@ -153,7 +156,9 @@ public class AppTest {
 
     @Test
     @DisplayName("Filtering based on query string")
-    /*A test for the general search query*/
+    */
+/*A test for the general search query*//*
+
     public void filterListTest() {
         //arrange
         String query = "top";                                                                                            //the query which is searched for
@@ -168,7 +173,9 @@ public class AppTest {
 
     @Test
     @DisplayName("Filtering based on query string")
-    /*A test for an empty query*/
+    */
+/*A test for an empty query*//*
+
     public void filterListTest1() {
         //arrange
         String query = "";                                                                                               //the query which is searched for
@@ -183,3 +190,4 @@ public class AppTest {
 
 
 }
+*/
