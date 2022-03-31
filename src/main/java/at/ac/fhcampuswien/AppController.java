@@ -13,12 +13,11 @@ public class AppController {
 
     // the Datastructures for containing all our Articles
     private List<Article> articles = new ArrayList<>();
-
     private static NewsApi newsApi = new NewsApi();
+    private Gson gsonParser = new Gson();
 
     public NewsResponse answer(String json) {
-        Gson gson = new Gson();
-        NewsResponse data = gson.fromJson(json, NewsResponse.class);
+        NewsResponse data = gsonParser.fromJson(json, NewsResponse.class);
         return data;
     }
 
@@ -52,6 +51,7 @@ public class AppController {
         setArticles(bitcoin.getArticles());
         return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }
+
     protected static List<Article> filterList(String query, List<Article> articles) {
         String toLower = query.toLowerCase();                                                                           //we don´t want case sensitive querys ->everything to lower case
         intermediary.clear();                                                                                           //a intermediary list which gets cleared everytime the function is called so we can reuse it

@@ -46,7 +46,6 @@ public class SceneLoader {
         long startTime = System.currentTimeMillis();
 
         // Based on which Button was pressed -> Different Content is Loaded into the Article List
-        System.out.println("Starting API Call");
         switch (command) {
             case "AT" -> newsList = app.getTopHeadlinesAustria();
             case "Bit" -> newsList = app.getAllNewsBitcoin();
@@ -59,9 +58,8 @@ public class SceneLoader {
             case "Fuck this shit I'm out" -> System.exit(0);
         }
         System.out.printf("API Call needed %dms %n", System.currentTimeMillis() - startTime);
-
         startTime = System.currentTimeMillis();
-        System.out.println("Starting GUI Element generation");
+
         // Articles are put into Scene with Author and Title property
         for (Article a : newsList) {
             container.getChildren().add(buildArticleItem(a));
@@ -114,8 +112,8 @@ public class SceneLoader {
 
     /**
      * Takes the Date format given by the NewsApi and converts it into a more readable form
-     * @param date - The given date by the NewsApi
-     * @return - Formatted Date in 'dd.MM.yyyy HH:mm:ss' format
+     * @param date The given date by the NewsApi
+     * @return Formatted Date in 'dd.MM.yyyy HH:mm:ss' format
      */
     private static String formatDate(String date) {
         DateTimeFormatter pattern = DateTimeFormatter.ISO_DATE_TIME;

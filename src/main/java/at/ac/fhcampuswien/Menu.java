@@ -1,9 +1,6 @@
 package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.gui.StartScreen;
-import javafx.stage.Stage;
-
-import java.util.Scanner;
 
 public class Menu {
 

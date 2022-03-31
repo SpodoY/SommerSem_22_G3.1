@@ -1,15 +1,13 @@
 package at.ac.fhcampuswien.apiHandling;
 
-import at.ac.fhcampuswien.Article;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import okhttp3.*;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 
 
 public class NewsApi {
@@ -35,7 +33,12 @@ public class NewsApi {
         return null;
     }
 
-
+    /**
+     * This method gets all parameters for the url and calls the request function
+     * @param category headlines or everything
+     * @param args the filtering word, default is keyword
+     * @return returns the http message body as string
+     */
     public String urlBuilder(String category, String  ... args){
 
         String url = BASEURL + category;
@@ -49,16 +52,10 @@ public class NewsApi {
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Invalid url created check arguments");
+            return "";
         }
-        return "";
     }
 
-    /**
-     * This method gets all parameters for the url and calls the request function
-     * @param category headlines or everything
-     * @param keyword the filtering word, default is keyword
-     * @return returns the http message body as string
-     */
 
 
     /**
