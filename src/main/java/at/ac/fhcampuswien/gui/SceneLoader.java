@@ -10,11 +10,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Paint;
+import javafx.scene.text.TextAlignment;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,6 +80,11 @@ public class SceneLoader {
 
     }
 
+    /**
+     * Based on the Information the Artilce holds, it creates a new GUI Article Element to display the Article properly
+     * @param a - Given article to display
+     * @return - HBox Container that can be added to the GUI
+     */
     private static HBox buildArticleItem(Article a) {
         HBox cotainer = new HBox();
         VBox image = new VBox();
@@ -91,15 +97,29 @@ public class SceneLoader {
 
         //ArticleInfo
         Label title = new Label(a.getTitle());
+        title.setTextAlignment(TextAlignment.CENTER);
+        title.setPadding(new Insets(0, 0,10,0 ));
         title.setWrapText(true);
         Label writtenBy = new Label("Written by: " + a.getAuthor());
         writtenBy.setWrapText(true);
-        Label date = new Label(a.getPublishedAt());
+        Label date = new Label(formatDate(a.getPublishedAt()));
         date.setWrapText(true);
         articleInfo.setStyle("-fx-font: 12 Verdana");
+        articleInfo.setAlignment(Pos.CENTER);
         articleInfo.getChildren().addAll(title, writtenBy, date);
 
         cotainer.getChildren().addAll(image, articleInfo);
         return cotainer;
+    }
+
+    /**
+     * Takes the Date format given by the NewsApi and converts it into a more readable form
+     * @param date - The given date by the NewsApi
+     * @return - Formatted Date in 'dd.MM.yyyy HH:mm:ss' format
+     */
+    private static String formatDate(String date) {
+        DateTimeFormatter pattern = DateTimeFormatter.ISO_DATE_TIME;
+        LocalDateTime dateTime = LocalDateTime.parse(date, pattern);
+        return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
     }
 }
