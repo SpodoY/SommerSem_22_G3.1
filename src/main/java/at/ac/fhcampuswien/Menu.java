@@ -50,11 +50,11 @@ public class Menu {
     }
 
     private void getTopHeadlinesAustria(AppController ctrl) {
-        System.out.println(ctrl.getTopHeadlinesAustria());
+        System.out.println(ctrl.getArticles());
     }
 
     private void getAllNewsBitcoin(AppController ctrl) {
-        System.out.println(ctrl.getAllNewsBitcoin());
+        System.out.println(ctrl.getArticles());
     }
 
     private static void printExitMessage() {

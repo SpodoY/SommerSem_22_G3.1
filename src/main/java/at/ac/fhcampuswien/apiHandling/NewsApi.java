@@ -1,11 +1,15 @@
 package at.ac.fhcampuswien.apiHandling;
 
+import at.ac.fhcampuswien.Article;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import okhttp3.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 
 public class NewsApi {
@@ -37,7 +41,7 @@ public class NewsApi {
      * @param keyword the filtering word, default is keyword
      * @return returns the http message body as string
      */
-    public String Response (String category, String keyword) {
+    public String responseQ(String category, String keyword) {
         String url= null;
         try {
             // assembling the url and running the request
@@ -49,6 +53,18 @@ public class NewsApi {
         return null;
     }
 
+    public String responseTop(String country) {
+        String url= null;
+        try {
+            // assembling the url and running the request
+            url = BASEURL +"top-headlines?country="+ country+ API_KEY;
+            System.out.println(url);
+            return runGetRequest(url);
+        } catch (IOException e) {
+            System.out.println("Invalid url : "+ url);
+        }
+        return null;
+    }
     /**
      * This method handles Get request and should be called from the response function
      * @param url the url from the Response function
@@ -68,6 +84,7 @@ public class NewsApi {
         try (Response response = client.newCall(request).execute()) {
 
             //returns the body of the http request and uses okhttp library to parse it to
+            /*gson.fromJson(response.body().string(), NewsResponse.class);*/
             return response.body().string();
 
         } catch (IOException e) {
@@ -76,4 +93,5 @@ public class NewsApi {
         // just the last Backup return if nothing works
         return "no respones";
     }
+
 }
