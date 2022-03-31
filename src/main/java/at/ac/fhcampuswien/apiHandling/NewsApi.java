@@ -35,37 +35,32 @@ public class NewsApi {
         return null;
     }
 
+
+    public String urlBuilder(String category, String  ... args){
+
+        String url = BASEURL + category;
+        for (String part : args) {
+            url += "?" + part;
+        }
+        url += API_KEY;
+
+        try {
+            return runGetRequest(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Invalid url created check arguments");
+        }
+        return "";
+    }
+
     /**
      * This method gets all parameters for the url and calls the request function
      * @param category headlines or everything
      * @param keyword the filtering word, default is keyword
      * @return returns the http message body as string
      */
-    public String responseQ(String category, String keyword) {
-        String url= null;
-        try {
-            // assembling the url and running the request
-            url = BASEURL +category+ "?q=" +keyword+ API_KEY;
-            System.out.println(url);
-            return runGetRequest(url);
-        } catch (IOException e) {
-            System.out.println("Invalid url : "+ url);
-        }
-        return null;
-    }
 
-    public String responseTop(String country) {
-        String url= null;
-        try {
-            // assembling the url and running the request
-            url = BASEURL +"top-headlines?country="+ country+ API_KEY;
-            System.out.println(url);
-            return runGetRequest(url);
-        } catch (IOException e) {
-            System.out.println("Invalid url : "+ url);
-        }
-        return null;
-    }
+
     /**
      * This method handles Get request and should be called from the response function
      * @param url the url from the Response function

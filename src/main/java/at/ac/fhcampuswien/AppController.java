@@ -14,6 +14,8 @@ public class AppController {
     // the Datastructures for containing all our Articles
     private List<Article> articles = new ArrayList<>();
 
+    private static NewsApi newsApi = new NewsApi();
+
     public NewsResponse answer(String json) {
         Gson gson = new Gson();
         NewsResponse data = gson.fromJson(json, NewsResponse.class);
@@ -41,14 +43,15 @@ public class AppController {
     }
 
     public List<Article> getTopHeadlinesAustria() {
-        String category = "at";
-        NewsApi newsApi = new NewsApi();
-        NewsResponse austria = answer(newsApi.responseTop(category));
+        NewsResponse austria = answer(newsApi.urlBuilder("top-headlines","country=at"));
         setArticles(austria.getArticles());
         return austria.getArticles();
     }
-
-
+    public List<Article> getAllNewsBitcoin() {
+        NewsResponse bitcoin = answer(newsApi.urlBuilder("everything","q=bitcoin"));
+        setArticles(bitcoin.getArticles());
+        return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
+    }
     protected static List<Article> filterList(String query, List<Article> articles) {
         String toLower = query.toLowerCase();                                                                           //we don´t want case sensitive querys ->everything to lower case
         intermediary.clear();                                                                                           //a intermediary list which gets cleared everytime the function is called so we can reuse it
@@ -61,12 +64,5 @@ public class AppController {
         return intermediary;
     }
 
-    public List<Article> getAllNewsBitcoin() {
-        String category = "everything";
-        String keyword = "bitcoin";
-        NewsApi newsApi = new NewsApi();
-        NewsResponse bitcoin = answer(newsApi.responseQ(category, keyword));
-        setArticles(bitcoin.getArticles());
-        return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
-    }
+
 }

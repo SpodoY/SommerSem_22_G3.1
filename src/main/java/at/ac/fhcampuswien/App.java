@@ -9,9 +9,6 @@ public class App {
         Menu menu = new Menu();
         menu.start();
 
-        var news = new NewsApi();
-        String test = news.responseQ("everything","keyword");
-        System.out.println(test);
     }
 
 }
