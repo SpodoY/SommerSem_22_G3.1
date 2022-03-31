@@ -62,7 +62,7 @@ public class AppController {
     }
 
     public List<Article> getAllNewsBitcoin() {
-        String category = "at";
+        String category = "everything";
         String keyword = "bitcoin";
         NewsApi newsApi = new NewsApi();
         NewsResponse bitcoin = answer(newsApi.responseQ(category, keyword));

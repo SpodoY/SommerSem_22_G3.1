@@ -10,8 +10,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +39,8 @@ public class SceneLoader {
 
         List<Article> newsList = new ArrayList<>();
 
-        container.setPadding(new Insets(10));
+        container.setPadding(new Insets(20));
+        container.setSpacing(20);
         container.setAlignment(Pos.TOP_CENTER);
         long startTime = System.currentTimeMillis();
 

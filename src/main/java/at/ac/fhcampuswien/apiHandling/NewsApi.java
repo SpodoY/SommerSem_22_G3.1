@@ -46,6 +46,7 @@ public class NewsApi {
         try {
             // assembling the url and running the request
             url = BASEURL +category+ "?q=" +keyword+ API_KEY;
+            System.out.println(url);
             return runGetRequest(url);
         } catch (IOException e) {
             System.out.println("Invalid url : "+ url);
