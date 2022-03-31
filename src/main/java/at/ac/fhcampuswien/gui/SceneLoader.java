@@ -89,21 +89,26 @@ public class SceneLoader {
         VBox articleInfo = new VBox();
 
         //Image
-        Image articlePicture = new Image(a.getUrlToImage(), 175, 0, true, false);
+        Image articlePicture = new Image(a.getUrlToImage(), 175, 98, false, false);
+        if (articlePicture.isError()) { articlePicture = new Image(SceneLoader.class.getClassLoader()
+                .getResourceAsStream("at/ac/fhcampuswien/imgNotFound.png"), 175, 98, false, false);}
         ImageView articlePictureView = new ImageView(articlePicture);
         image.getChildren().add(articlePictureView);
 
         //ArticleInfo
         Label title = new Label(a.getTitle());
-        title.setTextAlignment(TextAlignment.CENTER);
+        title.setTextAlignment(TextAlignment.RIGHT);
         title.setPadding(new Insets(0, 0,10,0 ));
+        title.setStyle("-fx-font-weight: bold");
         title.setWrapText(true);
         Label writtenBy = new Label("Written by: " + a.getAuthor());
         writtenBy.setWrapText(true);
         Label date = new Label(formatDate(a.getPublishedAt()));
         date.setWrapText(true);
         articleInfo.setStyle("-fx-font: 12 Verdana");
-        articleInfo.setAlignment(Pos.CENTER);
+        articleInfo.setAlignment(Pos.CENTER_RIGHT);
+        articleInfo.setPrefWidth(WIDTH);
+        articleInfo.setPadding(new Insets(0, 10, 0, 10));
         articleInfo.getChildren().addAll(title, writtenBy, date);
 
         cotainer.getChildren().addAll(image, articleInfo);
