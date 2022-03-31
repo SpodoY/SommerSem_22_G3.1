@@ -8,13 +8,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 
-
-import java.io.InputStream;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,11 +39,13 @@ public class SceneLoader {
 
         container.setPadding(new Insets(10));
         container.setAlignment(Pos.TOP_CENTER);
+        long startTime = System.currentTimeMillis();
 
         // Based on which Button was pressed -> Different Content is Loaded into the Article List
+        System.out.println("Starting API Call");
         switch (command) {
-            case "AT" -> newsList = app.getArticles();
-            case "Bit" -> newsList = app.getArticles();
+            case "AT" -> newsList = app.getTopHeadlinesAustria();
+            case "Bit" -> newsList = app.getAllNewsBitcoin();
             case "Count" -> {
                 Label label = new Label("Amount of Articles: " + app.getArticleCount());
                 label.setStyle("-fx-font: 36 Verdana");
@@ -54,15 +54,15 @@ public class SceneLoader {
             }
             case "Fuck this shit I'm out" -> System.exit(0);
         }
+        System.out.printf("API Call needed %dms %n", System.currentTimeMillis() - startTime);
 
+        startTime = System.currentTimeMillis();
+        System.out.println("Starting GUI Element generation");
         // Articles are put into Scene with Author and Title property
         for (Article a : newsList) {
-            Label label = new Label(a.toString());
-            label.setStyle("-fx-font: 14 Verdana");
-            label.setWrapText(true);
-            label.setTextAlignment(TextAlignment.CENTER);
-            container.getChildren().add(label);
+            container.getChildren().add(buildArticleItem(a));
         }
+        System.out.printf("GUI generation needed %dms %n", System.currentTimeMillis() - startTime);
 
         // Button to be able to go back to the MainScene
         Button goBack = new Button("<---");
@@ -76,9 +76,27 @@ public class SceneLoader {
 
     }
 
-//    private static HBox buildArticleItem() {
-//        HBox cotainer = new HBox();
-//        URL url = new URL("https://www.wiwo.de/images/imago0047108890h/28208162/2-format11240.jpg");
-//        InputStream inputStream = url.openStream();
-//    }
+    private static HBox buildArticleItem(Article a) {
+        HBox cotainer = new HBox();
+        VBox image = new VBox();
+        VBox articleInfo = new VBox();
+
+        //Image
+        Image articlePicture = new Image(a.getUrlToImage(), 175, 0, true, false);
+        ImageView articlePictureView = new ImageView(articlePicture);
+        image.getChildren().add(articlePictureView);
+
+        //ArticleInfo
+        Label title = new Label(a.getTitle());
+        title.setWrapText(true);
+        Label writtenBy = new Label("Written by: " + a.getAuthor());
+        writtenBy.setWrapText(true);
+        Label date = new Label(a.getPublishedAt());
+        date.setWrapText(true);
+        articleInfo.setStyle("-fx-font: 12 Verdana");
+        articleInfo.getChildren().addAll(title, writtenBy, date);
+
+        cotainer.getChildren().addAll(image, articleInfo);
+        return cotainer;
+    }
 }

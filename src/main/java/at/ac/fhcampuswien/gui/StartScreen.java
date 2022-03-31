@@ -14,8 +14,8 @@ import javafx.stage.Stage;
  */
 public class StartScreen {
 
-    public static final int WIDTH = 450;
-    public static final int HEIGHT = 650;
+    public static final int WIDTH = 600;
+    public static final int HEIGHT = 750;
 
     /* Pane & Shit */
     private static final VBox CONTAINER = new VBox();

@@ -40,11 +40,12 @@ public class AppController {
         return articles;
     }
 
-    public void getTopHeadlinesAustria() {
+    public List<Article> getTopHeadlinesAustria() {
         String category = "at";
         NewsApi newsApi = new NewsApi();
         NewsResponse austria = answer(newsApi.responseTop(category));
         setArticles(austria.getArticles());
+        return austria.getArticles();
     }
 
 
@@ -60,11 +61,12 @@ public class AppController {
         return intermediary;
     }
 
-    public void getAllNewsBitcoin() {
+    public List<Article> getAllNewsBitcoin() {
         String category = "at";
         String keyword = "bitcoin";
         NewsApi newsApi = new NewsApi();
         NewsResponse bitcoin = answer(newsApi.responseQ(category, keyword));
-        setArticles(bitcoin.getArticles());                                                                     //gets all the articles with the query "bitcoin" and returns the new list
+        setArticles(bitcoin.getArticles());
+        return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }
 }
