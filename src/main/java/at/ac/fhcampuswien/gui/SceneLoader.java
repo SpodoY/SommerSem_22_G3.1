@@ -64,6 +64,7 @@ public class SceneLoader {
         for (Article a : newsList) {
             container.getChildren().add(buildArticleItem(a));
         }
+        container.requestFocus();
         System.out.printf("GUI generation needed %dms %n", System.currentTimeMillis() - startTime);
 
         // Button to be able to go back to the MainScene
@@ -89,7 +90,10 @@ public class SceneLoader {
         VBox articleInfo = new VBox();
 
         //Image
-        Image articlePicture = new Image(a.getUrlToImage(), 175, 0, true, false);
+        Image articlePicture =new Image("at/ac/fhcampuswien/img.png",175, 0, true, false);
+        if(a.getUrlToImage() != null) {
+            articlePicture = new Image(a.getUrlToImage(), 175, 0, true, false);
+        }
         ImageView articlePictureView = new ImageView(articlePicture);
         image.getChildren().add(articlePictureView);
 
