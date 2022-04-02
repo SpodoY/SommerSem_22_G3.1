@@ -28,9 +28,7 @@ public class AppController {
     public void setArticles(List<Article> articles) {
         // clears list for new usage
         this.articles.clear();
-        for (Article a : articles) {
-            if (!(a.getAuthor() == null || a.getTitle() == null)) this.articles.add(a);
-        }
+        this.articles.addAll(articles);
     }
 
     public int getArticleCount() {
@@ -42,12 +40,13 @@ public class AppController {
     }
 
     public List<Article> getTopHeadlinesAustria() {
-        NewsResponse austria = answer(newsApi.urlBuilder("top-headlines","country=at"));
+        NewsResponse austria = answer(newsApi.urlBuilder("top-headlines", "country=at"));
         setArticles(austria.getArticles());
         return austria.getArticles();
     }
+
     public List<Article> getAllNewsBitcoin() {
-        NewsResponse bitcoin = answer(newsApi.urlBuilder("everything","q=bitcoin"));
+        NewsResponse bitcoin = answer(newsApi.urlBuilder("everything", "q=bitcoin"));
         setArticles(bitcoin.getArticles());
         return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }

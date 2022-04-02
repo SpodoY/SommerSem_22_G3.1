@@ -85,33 +85,39 @@ public class SceneLoader {
      * @return - HBox Container that can be added to the GUI
      */
     private static HBox buildArticleItem(Article a) {
-        HBox cotainer = new HBox();
+        HBox container = new HBox();
         VBox image = new VBox();
         VBox articleInfo = new VBox();
 
         //Image
-        Image articlePicture =new Image("at/ac/fhcampuswien/img.png",175, 0, true, false);
-        if(a.getUrlToImage() != null) {
-            articlePicture = new Image(a.getUrlToImage(), 175, 0, true, false);
-        }
+        Image articlePicture;
+        if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
+        else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
+
         ImageView articlePictureView = new ImageView(articlePicture);
         image.getChildren().add(articlePictureView);
 
         //ArticleInfo
         Label title = new Label(a.getTitle());
-        title.setTextAlignment(TextAlignment.CENTER);
+        title.setTextAlignment(TextAlignment.RIGHT);
         title.setPadding(new Insets(0, 0,10,0 ));
+        title.setStyle("-fx-font: 12 Verdana; -fx-font-weight: bold;");
         title.setWrapText(true);
+
         Label writtenBy = new Label("Written by: " + a.getAuthor());
         writtenBy.setWrapText(true);
+        writtenBy.setTextAlignment(TextAlignment.RIGHT);
+
         Label date = new Label(formatDate(a.getPublishedAt()));
         date.setWrapText(true);
-        articleInfo.setStyle("-fx-font: 12 Verdana");
-        articleInfo.setAlignment(Pos.CENTER);
+
+        articleInfo.setStyle("-fx-font: 11 Verdana");
+        articleInfo.setAlignment(Pos.CENTER_RIGHT);
+        articleInfo.setPadding(new Insets(0, 10, 0, 10));
         articleInfo.getChildren().addAll(title, writtenBy, date);
 
-        cotainer.getChildren().addAll(image, articleInfo);
-        return cotainer;
+        container.getChildren().addAll(image, articleInfo);
+        return container;
     }
 
     /**
