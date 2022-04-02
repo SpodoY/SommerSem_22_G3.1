@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.enums;
 
 public enum Category {
-    //TODO: is bitcoin a category?? what about the other categories - delete them???
     BITCOIN ("q=bitcoin"),
     BUSINESS ("q=business"),
     ENTERTAINMENT ("q=entertainment"),

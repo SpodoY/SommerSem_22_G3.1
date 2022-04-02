@@ -1,7 +1,6 @@
 package at.ac.fhcampuswien.enums;
 
 public enum Country {
-    //TODO: write a method for "country=.."
     AE ("country=ae"),
     AR ("country=ar"),
     AT ("country=at"),
@@ -56,7 +55,6 @@ public enum Country {
     US ("country=us"),
     VE ("country=ve"),
     ZA ("country=za");
-
 
     private String partOfUrl;
 
