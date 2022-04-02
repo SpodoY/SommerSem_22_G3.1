@@ -64,6 +64,7 @@ public class SceneLoader {
         for (Article a : newsList) {
             container.getChildren().add(buildArticleItem(a));
         }
+        container.requestFocus();
         System.out.printf("GUI generation needed %dms %n", System.currentTimeMillis() - startTime);
 
         // Button to be able to go back to the MainScene
@@ -89,26 +90,24 @@ public class SceneLoader {
         VBox articleInfo = new VBox();
 
         //Image
-        Image articlePicture = new Image(a.getUrlToImage(), 175, 98, false, false);
-        if (articlePicture.isError()) { articlePicture = new Image(SceneLoader.class.getClassLoader()
-                .getResourceAsStream("at/ac/fhcampuswien/imgNotFound.png"), 175, 98, false, false);}
+        Image articlePicture =new Image("at/ac/fhcampuswien/img.png",175, 0, true, false);
+        if(a.getUrlToImage() != null) {
+            articlePicture = new Image(a.getUrlToImage(), 175, 0, true, false);
+        }
         ImageView articlePictureView = new ImageView(articlePicture);
         image.getChildren().add(articlePictureView);
 
         //ArticleInfo
         Label title = new Label(a.getTitle());
-        title.setTextAlignment(TextAlignment.RIGHT);
+        title.setTextAlignment(TextAlignment.CENTER);
         title.setPadding(new Insets(0, 0,10,0 ));
-        title.setStyle("-fx-font-weight: bold");
         title.setWrapText(true);
         Label writtenBy = new Label("Written by: " + a.getAuthor());
         writtenBy.setWrapText(true);
         Label date = new Label(formatDate(a.getPublishedAt()));
         date.setWrapText(true);
         articleInfo.setStyle("-fx-font: 12 Verdana");
-        articleInfo.setAlignment(Pos.CENTER_RIGHT);
-        articleInfo.setPrefWidth(WIDTH);
-        articleInfo.setPadding(new Insets(0, 10, 0, 10));
+        articleInfo.setAlignment(Pos.CENTER);
         articleInfo.getChildren().addAll(title, writtenBy, date);
 
         cotainer.getChildren().addAll(image, articleInfo);
