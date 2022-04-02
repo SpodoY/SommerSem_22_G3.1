@@ -64,6 +64,7 @@ public class StartScreen {
             mainStage.setScene(mainScene);
             mainStage.setResizable(false);
             mainStage.show();
+
         });
     }
 
