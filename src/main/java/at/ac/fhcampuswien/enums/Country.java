@@ -64,7 +64,8 @@ public enum Country {
         this.partOfUrl = partOfUrl;
     }
 
-    public String getPartOfUrl() {
+    @Override
+    public String toString() {
         return this.partOfUrl;
     }
 }

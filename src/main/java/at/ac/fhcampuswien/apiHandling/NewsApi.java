@@ -39,18 +39,20 @@ public class NewsApi {
      * @param args the filtering word, default is keyword
      * @return returns the http message body as string
      */
-    public String urlBuilder(String category, String  ... args){
+    public String urlBuilder(Enum category, Enum  ... args){
 
-        String url = BASEURL + category;
-        for (String part : args) {
-            url += "?" + part;
+        String url = BASEURL +   category.toString();
+        for (Enum part : args) {
+            url += "?" +  part.toString();
         }
         url += API_KEY;
 
+        System.out.println(url);
         try {
             return runGetRequest(url);
         } catch (IOException e) {
             e.printStackTrace();
+            System.out.println(url);
             System.out.println("Invalid url created check arguments");
             return "";
         }

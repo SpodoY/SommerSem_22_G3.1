@@ -17,8 +17,8 @@ public enum Category {
         this.partOfUrl = partOfUrl;
     }
 
-    public String getPartOfUrl() {
+    @Override
+    public String toString() {
         return this.partOfUrl;
     }
-
 }

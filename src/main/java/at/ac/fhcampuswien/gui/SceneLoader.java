@@ -64,7 +64,7 @@ public class SceneLoader {
         for (Article a : newsList) {
             container.getChildren().add(buildArticleItem(a));
         }
-        container.requestFocus();
+
         System.out.printf("GUI generation needed %dms %n", System.currentTimeMillis() - startTime);
 
         // Button to be able to go back to the MainScene
@@ -74,6 +74,7 @@ public class SceneLoader {
 
         scrollPane.setContent(container);
         scrollPane.setFitToWidth(true);
+
 
         return new Scene(scrollPane, WIDTH, HEIGHT);
 
