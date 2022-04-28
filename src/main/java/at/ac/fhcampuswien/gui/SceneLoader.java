@@ -11,6 +11,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
@@ -67,10 +68,20 @@ public class SceneLoader {
 
         System.out.printf("GUI generation needed %dms %n", System.currentTimeMillis() - startTime);
 
+        Button toTop = new Button("To Top");
+        toTop.setOnAction(e -> toTop(scrollPane));
+
         // Button to be able to go back to the MainScene
         Button goBack = new Button("<---");
         goBack.setOnAction(e -> goBack());
-        container.getChildren().add(goBack);
+
+        HBox buttonContainer = new HBox();
+        buttonContainer.setAlignment(Pos.CENTER);
+        buttonContainer.setMinWidth(Math.floor(WIDTH/3.0));
+        buttonContainer.setSpacing(WIDTH / 10.0);
+        buttonContainer.getChildren().addAll(goBack, toTop);
+
+        container.getChildren().add(buttonContainer);
 
         scrollPane.setContent(container);
         scrollPane.setFitToWidth(true);
@@ -130,5 +141,9 @@ public class SceneLoader {
         DateTimeFormatter pattern = DateTimeFormatter.ISO_DATE_TIME;
         LocalDateTime dateTime = LocalDateTime.parse(date, pattern);
         return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+    }
+
+    private static void toTop(ScrollPane pane) {
+        pane.setVvalue(0);
     }
 }
