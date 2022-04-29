@@ -43,13 +43,19 @@ public class AppController {
     }
 
     public List<Article> getTopHeadlinesAustria() {
-        NewsResponse austria = answer(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT));
+        // constructing the url
+        String url = newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT);
+        // running get request and formatting it to NewsResponse class
+        NewsResponse austria = answer(newsApi.getRequest(url));
         setArticles(austria.getArticles());
         return austria.getArticles();
     }
 
     public List<Article> getAllNewsBitcoin() {
-        NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING,Category.BITCOIN));
+        // constructing the url
+        String url = newsApi.urlBuilder(Endpoint.EVERYTHING,Category.BITCOIN);
+        // running get request and formatting it to NewsResponse class
+        NewsResponse bitcoin = answer(newsApi.getRequest(url));
         setArticles(bitcoin.getArticles());
         return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }

@@ -40,14 +40,20 @@ public class NewsApi {
      * @return returns the http message body as string
      */
     public String urlBuilder(Enum category, Enum  ... args){
-
+        // setting the endpoint
         String url = BASEURL +   category.toString();
+        // for all parameters  in args adding to the url
         for (Enum part : args) {
             url += "?" +  part.toString();
         }
+        // adding the api key ath the end
         url += API_KEY;
 
-        System.out.println(url);
+        return url;
+    }
+
+
+    public String getRequest(String url){
         try {
             return runGetRequest(url);
         } catch (IOException e) {
@@ -57,7 +63,6 @@ public class NewsApi {
             return "";
         }
     }
-
 
 
     /**
