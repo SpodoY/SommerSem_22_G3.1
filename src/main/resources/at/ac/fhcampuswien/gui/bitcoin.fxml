@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.BitcoinController">
     <top>
-        <AnchorPane prefHeight="107.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="107.0" prefWidth="1006.0" style="-fx-background-color: #e5f1ef;" BorderPane.alignment="CENTER">
             <children>
-                <Label layoutX="484.0" layoutY="45.0" text="Bitcoin" />
+                <Label layoutX="449.0" layoutY="42.0" text="Bitcoin News">
+               <font>
+                  <Font name="Beirut Regular" size="19.0" />
+               </font></Label>
             <Label layoutX="453.0" layoutY="64.0" text="Number of Articles????" />
             </children>
         </AnchorPane>
     </top>
     <bottom>
-        <AnchorPane prefHeight="76.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="82.0" prefWidth="1006.0" style="-fx-background-color: #e5f1ef;" BorderPane.alignment="CENTER">
             <children>
-                <Button layoutX="443.0" layoutY="26.0" mnemonicParsing="false" onAction="#goToMainWindow" text="go to MainWindow" />
+            <Pane layoutX="-6.0" prefHeight="83.0" prefWidth="1006.0">
+               <children>
+                      <Button layoutX="478.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToMainWindow" style="-fx-background-color: transparent; -fx-border-st: none;">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/left-arrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children></Pane>
             </children>
         </AnchorPane>
     </bottom>
