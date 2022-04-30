@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.AustriaController">
+   <top>
+      <AnchorPane prefHeight="107.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="443.0" layoutY="45.0" text="Top Headlines Austria" />
+            <Label layoutX="438.0" layoutY="70.0" text="Number of Articles????" />
+         </children>
+      </AnchorPane>
+   </top>
+   <bottom>
+      <AnchorPane prefHeight="76.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button layoutX="443.0" layoutY="26.0" mnemonicParsing="false" onAction="#goToMainWindow" text="go to MainWindow" />
+         </children>
+      </AnchorPane>
+   </bottom>
+   <center>
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <children>
+            <ListView fx:id="austriaList" prefHeight="566.0" prefWidth="1006.0" />
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
