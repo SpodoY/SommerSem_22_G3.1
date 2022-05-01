@@ -9,6 +9,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 /**
  * Used as the Startup GUI where the user can choose which news or information he wants to be displayed
  */
@@ -38,16 +40,25 @@ public class StartScreen {
             Button bitButton = new Button("Bitcoin News");
             Button countButton = new Button("Article Count");
             Button quitButton = new Button("Quit");
+            Button sortedButton = new Button("Sorted");
 
             // Setting ActionHandlers to define method executed on click
             atButton.setOnAction(e -> loadNewScene("AT"));
+            sortedButton.setOnAction(e->loadNewScene("AT2"));
             bitButton.setOnAction(e -> loadNewScene("Bit"));
-            countButton.setOnAction(e -> loadNewScene("Count"));
+            countButton.setOnAction(e -> {loadNewScene("Count");
+                try {
+                    app.saveHTML(app.getArticles().get(1));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+            });
             quitButton.setOnAction(e -> loadNewScene("Fuck this shit I'm out"));
 
             // Styling
             atButton.setMinWidth(WIDTH); atButton.setMinHeight(75);
             bitButton.setMaxWidth(Double.MAX_VALUE); bitButton.setMinHeight(75);
+            sortedButton.setMaxWidth(Double.MAX_VALUE); sortedButton.setMinHeight(75);
             countButton.setMaxWidth(Double.MAX_VALUE); countButton.setMinHeight(75);
             quitButton.setMaxWidth(Double.MAX_VALUE); quitButton.setMinHeight(75);
 
@@ -55,7 +66,7 @@ public class StartScreen {
             CONTAINER.setAlignment(Pos.CENTER);
 
             // Adding everything in the mainScene
-            CONTAINER.getChildren().addAll(welcomeText, atButton, bitButton, countButton, quitButton);
+            CONTAINER.getChildren().addAll(welcomeText, atButton, bitButton, countButton,sortedButton, quitButton);
 
             mainScene = new Scene(CONTAINER, WIDTH, HEIGHT);
 

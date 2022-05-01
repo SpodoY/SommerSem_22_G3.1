@@ -11,7 +11,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
@@ -50,6 +49,7 @@ public class SceneLoader {
         switch (command) {
             case "AT" -> newsList = app.getTopHeadlinesAustria();
             case "Bit" -> newsList = app.getAllNewsBitcoin();
+            case "AT2" -> newsList = app.sizeMatters();
             case "Count" -> {
                 Label label = new Label("Amount of Articles: " + app.getArticleCount());
                 label.setStyle("-fx-font: 36 Verdana");
@@ -102,13 +102,13 @@ public class SceneLoader {
         VBox articleInfo = new VBox();
 
         //Image
-        Image articlePicture;
+      /*  Image articlePicture;
         if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
         else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
 
         ImageView articlePictureView = new ImageView(articlePicture);
         image.getChildren().add(articlePictureView);
-
+*/
         //ArticleInfo
         Label title = new Label(a.getTitle());
         title.setTextAlignment(TextAlignment.RIGHT);
@@ -123,10 +123,12 @@ public class SceneLoader {
         Label date = new Label(formatDate(a.getPublishedAt()));
         date.setWrapText(true);
 
+        Label DesCount = new Label(""+a.getDescription().length());
+
         articleInfo.setStyle("-fx-font: 11 Verdana");
         articleInfo.setAlignment(Pos.CENTER_RIGHT);
         articleInfo.setPadding(new Insets(0, 10, 0, 10));
-        articleInfo.getChildren().addAll(title, writtenBy, date);
+        articleInfo.getChildren().addAll(title, writtenBy, date,DesCount);
 
         container.getChildren().addAll(image, articleInfo);
         return container;

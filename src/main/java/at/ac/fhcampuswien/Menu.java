@@ -26,6 +26,7 @@ public class Menu {
     /**
      * Based on which String is given the corresponding method gets called.
      * If the input is wrong a message is displayed
+     *
      * @param input The string to tell which method should be called
      */
     private void handleInput(String input) {

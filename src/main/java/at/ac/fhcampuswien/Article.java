@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien;
 
-public class Article {
+public class Article implements Comparable<Article> {
     private String author;
     private String title;
     private String name;
@@ -59,5 +59,17 @@ public class Article {
     }
 
 
+    public String getDescription() {
+        return description;
+    }
 
+    @Override
+    public int compareTo(Article a) {
+        if (getDescription().length() == a.getDescription().length()) {
+            return String.CASE_INSENSITIVE_ORDER.compare(getTitle(), a.getTitle());
+        } else {
+            return Integer.compare(a.getDescription().length(), getDescription().length());
+        }
+    }
 }
+

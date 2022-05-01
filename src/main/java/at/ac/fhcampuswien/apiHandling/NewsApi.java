@@ -4,10 +4,11 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.URL;
+import java.time.LocalDateTime;
+
+import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 
 public class NewsApi {
@@ -58,7 +59,21 @@ public class NewsApi {
         }
     }
 
+    public void urlFixed(String url) throws IOException {
+        URL urlReal = new URL(url);
+        String input;
+        BufferedReader in = new BufferedReader(new InputStreamReader(urlReal.openStream()));
+        String filename = LocalDateTime.now().format(ISO_LOCAL_DATE);
+        String directory = String.format("at/ac/fhcampuswien/%s.txt",filename);
+        File file = new File("file.txt");
+        file.createNewFile();
+        FileOutputStream oFile = new FileOutputStream(file, false);
 
+        while((input = in.readLine())!=null){
+            System.out.println(input);
+            in.close();
+        }
+    }
 
     /**
      * This method handles Get request and should be called from the response function

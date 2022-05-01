@@ -7,8 +7,10 @@ import at.ac.fhcampuswien.enums.Country;
 import at.ac.fhcampuswien.enums.Endpoint;
 import com.google.gson.Gson;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class AppController {
 
@@ -35,6 +37,7 @@ public class AppController {
     }
 
     public int getArticleCount() {
+        sizeMatters();
         return this.articles.size();
     }
 
@@ -49,7 +52,7 @@ public class AppController {
     }
 
     public List<Article> getAllNewsBitcoin() {
-        NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING,Category.BITCOIN));
+        NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
         setArticles(bitcoin.getArticles());
         return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
     }
@@ -66,5 +69,35 @@ public class AppController {
         return intermediary;
     }
 
+    public List<Article> headLess() {
+        intermediary.clear();
+        intermediary = articles.stream().filter(a -> a.getTitle().length() > 100).collect(Collectors.toList());
+        return intermediary;
+    }
 
+    public List<Article> sizeMatters() {
+        intermediary.clear();
+        intermediary = articles.stream().sorted((Article a, Article b) -> {
+            if (a.getDescription().length() == b.getDescription().length()) {
+                return String.CASE_INSENSITIVE_ORDER.compare(a.getTitle(), b.getTitle());
+            } else {
+                return Integer.compare(b.getDescription().length(), a.getDescription().length());
+            }
+        }).collect(Collectors.toList());
+        return intermediary;
+    }
+
+    public void saveHTML(Article a) throws IOException {
+        String url = a.getUrl();
+        try {
+            newsApi.urlFixed(url);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(url);
+            System.out.println("Invalid url created check arguments");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
 }
