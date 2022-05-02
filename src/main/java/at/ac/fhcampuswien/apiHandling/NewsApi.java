@@ -25,12 +25,23 @@ public class NewsApi {
         InputStream file = NewsApi.class.getClassLoader().getResourceAsStream("at/ac/fhcampuswien/keys.txt");
         InputStreamReader fileReader = new InputStreamReader(file);
         BufferedReader bufferdReader = new BufferedReader(fileReader);
+        String key;
         try {
             // reading the api key from file
-            return "&apiKey="+ bufferdReader.readLine();
+            key = "&apiKey="+ bufferdReader.readLine();
+
+            //Custom Exception - check API Key length
+            try {
+                checkReadKey(key);
+                return key;
+            } catch (Exception e) {
+                System.out.println("A problem in NewsApi occured: " + e);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         return null;
     }
 
@@ -50,6 +61,13 @@ public class NewsApi {
 
         System.out.println(url);
         try {
+
+            //Custom Exception - check if URL contains an Endpoint (Top Headlines or Everything)
+            try {
+                checkURL(url);
+            } catch (Exception e) {
+                System.out.println("A problem in NewsApi occured: " + e);
+            }
             return runGetRequest(url);
         } catch (IOException e) {
             e.printStackTrace();
@@ -102,6 +120,25 @@ public class NewsApi {
         }
         // just the last Backup return if nothing works
         return "no respones";
+    }
+
+
+    static void checkReadKey(String key) throws NewsApiException{
+        //check key length - should be 40;
+        if(key.length() < 40) {
+            throw new NewsApiException("\n" + "Your API Key is too short. Please check your API Key again.");
+        } else if (key.length() > 40) {
+            throw new NewsApiException("\n" + "Your API Key is too long. Please check your API Key again.");
+        }
+        //else: everything is fine with length of API Key
+    }
+
+    static void checkURL(String url) throws NewsApiException{
+        //check if url contains an endpoint (top headlines or everything)
+        if(!(url.contains("top-headlines") || url.contains("everything"))){
+            throw new NewsApiException("\n" + "An Enpoint (->top-headlines, everything<-) in your URL is missing.");
+        }
+        //else: URL contains an Endpoint
     }
 
 }
