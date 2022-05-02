@@ -113,7 +113,15 @@ public class NewsApi {
 
             //returns the body of the http request and uses okhttp library to parse it to
             /*gson.fromJson(response.body().string(), NewsResponse.class);*/
-            return response.body().string();
+            String responseString = response.body().string();
+
+            //Custom Exception - check if response status is ok
+            try {
+                checkStatus(responseString);
+            } catch (Exception e) {
+                System.out.println("A problem in NewsApi occured: " + e);
+            }
+            return responseString;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -140,5 +148,18 @@ public class NewsApi {
         }
         //else: URL contains an Endpoint
     }
+
+    static void checkStatus(String responseString) throws NewsApiException {
+        //check if status is "ok"
+        String rString = responseString.replaceAll("[^a-zA-Z]+","").toLowerCase();
+
+        if (rString.contains("statusok")) {  //rString.indexOf("statusok") == -1
+            // response status = ok
+        } else {
+            throw new NewsApiException("\n" + "Response status is NOT 'ok'!");
+        }
+
+    }
+
 
 }
