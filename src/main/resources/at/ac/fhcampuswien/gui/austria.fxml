@@ -13,7 +13,7 @@
                <font>
                   <Font name="Beirut Regular" size="19.0" />
                </font></Label>
-            <Label layoutX="438.0" layoutY="70.0" text="Number of Articles????" />
+            <Label fx:id="articleNum" layoutX="438.0" layoutY="70.0" text="Number of Articles????" />
          </children>
       </AnchorPane>
    </top>

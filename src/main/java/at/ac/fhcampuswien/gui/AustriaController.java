@@ -2,8 +2,7 @@ package at.ac.fhcampuswien.gui;
 
 import at.ac.fhcampuswien.AppController;
 import at.ac.fhcampuswien.Article;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,8 +17,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Circle;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
@@ -29,6 +26,8 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class AustriaController implements Initializable {
 
@@ -37,6 +36,9 @@ public class AustriaController implements Initializable {
 
     @FXML
     ListView<HBox> austriaList;
+
+    @FXML
+    Label articleNum;
 
     /**
      * When this method is called, it will change the Scene to
@@ -59,6 +61,8 @@ public class AustriaController implements Initializable {
     public void loadArticles() {
         List<Article> austiranArticle = app.getTopHeadlinesAustria();
 
+        articleNum.setText(String.format("Number of articles: %d", austiranArticle.size()));
+
         double windowWidth = austriaList.getPrefWidth();
 
         for (Article a : austiranArticle) {
@@ -66,14 +70,21 @@ public class AustriaController implements Initializable {
             VBox image = new VBox();
             VBox articleInfo = new VBox();
 
-            //Image
-            Image articlePicture;
-            if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
-            else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
+            //Image - An attempt to multi threading
+            Runnable task = () -> {
+                Platform.runLater(() -> {
+                    Image articlePicture;
+                    if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
+                    else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
 
-            ImageView articlePictureView = new ImageView(articlePicture);
-            image.getChildren().add(articlePictureView);
-            image.setAlignment(Pos.CENTER_LEFT);
+                    ImageView articlePictureView = new ImageView(articlePicture);
+                    image.getChildren().add(articlePictureView);
+                    image.setAlignment(Pos.CENTER_LEFT);
+                });
+            };
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
 
             //ArticleInfo
             Label title = new Label(a.getTitle());
@@ -99,7 +110,7 @@ public class AustriaController implements Initializable {
             container.getChildren().addAll(image, articleInfo);
             container.setAlignment(Pos.CENTER_LEFT);
 //            container.setBackground(new Background(new BackgroundFill(Paint.valueOf("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
-            container.setMinWidth(windowWidth);
+            container.setMaxWidth(windowWidth - 35);
             austriaList.getItems().add(container);
         }
     }

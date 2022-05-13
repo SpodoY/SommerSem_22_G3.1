@@ -130,7 +130,6 @@ public class NewsApi {
         return "no respones";
     }
 
-
     static void checkReadKey(String key) throws NewsApiException{
         //check key length - should be 40;
         if(key.length() < 40) {

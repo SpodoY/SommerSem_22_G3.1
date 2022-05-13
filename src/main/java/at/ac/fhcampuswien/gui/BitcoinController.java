@@ -36,6 +36,9 @@ public class BitcoinController implements Initializable {
     ListView<HBox> bitcoinList;
 
     @FXML
+    Label articleNum;
+
+    @FXML
     public void goToMainWindow(ActionEvent event) throws IOException
     {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
@@ -51,6 +54,8 @@ public class BitcoinController implements Initializable {
     @FXML
     public void loadArticles() {
         List<Article> austiranArticle = app.getAllNewsBitcoin();
+
+        articleNum.setText(String.format("Number of articles: %d", austiranArticle.size()));
 
         double windowWidth = bitcoinList.getPrefWidth();
 
@@ -92,7 +97,6 @@ public class BitcoinController implements Initializable {
             container.getChildren().addAll(image, articleInfo);
             container.setAlignment(Pos.CENTER_LEFT);
 //            container.setBackground(new Background(new BackgroundFill(Paint.valueOf("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
-            container.setMinWidth(windowWidth);
             bitcoinList.getItems().add(container);
         }
     }

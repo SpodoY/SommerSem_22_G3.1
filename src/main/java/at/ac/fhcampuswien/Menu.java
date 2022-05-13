@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien;
 
-import at.ac.fhcampuswien.gui.StartScreen;
+import at.ac.fhcampuswien.gui.NewGUI;
 
 public class Menu {
 
@@ -10,7 +10,7 @@ public class Menu {
 
     public void start() {
 
-        StartScreen.main(new String[0]);
+        NewGUI.main(new String[0]);
 
 
 //        Scanner in = new Scanner(System.in);
