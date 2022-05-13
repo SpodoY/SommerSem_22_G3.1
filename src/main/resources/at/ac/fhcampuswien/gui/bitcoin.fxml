@@ -38,7 +38,7 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <ListView fx:id="austriaList" prefHeight="566.0" prefWidth="1006.0" />
+                <ListView fx:id="bitcoinList" prefHeight="566.0" prefWidth="1006.0" />
             </children>
         </AnchorPane>
     </center>

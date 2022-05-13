@@ -102,13 +102,13 @@ public class SceneLoader {
         VBox articleInfo = new VBox();
 
         //Image
-      /*  Image articlePicture;
+        Image articlePicture;
         if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
         else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
 
         ImageView articlePictureView = new ImageView(articlePicture);
         image.getChildren().add(articlePictureView);
-*/
+
         //ArticleInfo
         Label title = new Label(a.getTitle());
         title.setTextAlignment(TextAlignment.RIGHT);

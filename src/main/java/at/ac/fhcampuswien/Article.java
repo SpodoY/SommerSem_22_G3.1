@@ -10,7 +10,6 @@ public class Article implements Comparable<Article> {
     private String publishedAt;
     private String content;
 
-
     public Article(String author, String title) {
         this.author = author;
         this.title = title;
