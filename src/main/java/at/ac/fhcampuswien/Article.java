@@ -31,6 +31,10 @@ public class Article implements Comparable<Article> {
         return author;
     }
 
+    public int getAuthorLength(){
+        return author.length();
+    }
+
     public String getTitle() {
         return title;
     }
@@ -70,5 +74,6 @@ public class Article implements Comparable<Article> {
             return Integer.compare(a.getDescription().length(), getDescription().length());
         }
     }
+
 }
 

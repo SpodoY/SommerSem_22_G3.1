@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,7 +55,7 @@ public class AppController {
     public List<Article> getAllNewsBitcoin() {
         NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
         setArticles(bitcoin.getArticles());
-        return bitcoin.getArticles();                                                                     //gets all the articles with the query "bitcoin" and returns the new list
+        return bitcoin.getArticles();                                                                                   //gets all the articles with the query "bitcoin" and returns the new list
     }
 
     protected static List<Article> filterList(String query, List<Article> articles) {
@@ -95,9 +96,17 @@ public class AppController {
             e.printStackTrace();
             System.out.println(url);
             System.out.println("Invalid url created check arguments");
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
+    public String authorLength(List<Article> articles) {
+        return articles.stream().sorted(Comparator.comparing(Article::getAuthorLength)).collect(Collectors.toList()).get(0).getAuthor();
+    }
+
+    public int howMuchTime(List<Article> articles){
+        return (int) articles.stream().filter(e->e.getPublishedAt().contains("New York Times")).count();
+    }
+
 }
