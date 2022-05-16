@@ -17,7 +17,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -26,8 +25,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class AustriaController implements Initializable {
 
@@ -39,6 +36,9 @@ public class AustriaController implements Initializable {
 
     @FXML
     Label articleNum;
+
+    private double imgWidth = 175;
+    private double imgHeight = 98;
 
     /**
      * When this method is called, it will change the Scene to
@@ -74,8 +74,8 @@ public class AustriaController implements Initializable {
             Runnable task = () -> {
                 Platform.runLater(() -> {
                     Image articlePicture;
-                    if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
-                    else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
+                    if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),imgWidth, imgHeight, false, false);
+                    else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", imgWidth, imgHeight, false, false);
 
                     ImageView articlePictureView = new ImageView(articlePicture);
                     image.getChildren().add(articlePictureView);
@@ -88,28 +88,23 @@ public class AustriaController implements Initializable {
 
             //ArticleInfo
             Label title = new Label(a.getTitle());
-            title.setTextAlignment(TextAlignment.RIGHT);
             title.setPadding(new Insets(0, 0,10,0 ));
             title.setStyle("-fx-font: 12 Verdana; -fx-font-weight: bold;");
             title.setWrapText(true);
 
             Label writtenBy = new Label("Written by: " + a.getAuthor());
-            writtenBy.setWrapText(true);
-            writtenBy.setTextAlignment(TextAlignment.RIGHT);
-
             Label date = new Label(formatDate(a.getPublishedAt()));
-            date.setWrapText(true);
 
-//            Label DesCount = new Label(""+a.getDescription().length());
+//          Label DesCount = new Label(""+a.getDescription().length());
 
             articleInfo.setStyle("-fx-font: 11 Verdana");
             articleInfo.setAlignment(Pos.CENTER_RIGHT);
             articleInfo.setPadding(new Insets(0, 10, 0, 10));
             articleInfo.getChildren().addAll(title, writtenBy, date);
+            articleInfo.setMinWidth(windowWidth - imgWidth - 35);
 
             container.getChildren().addAll(image, articleInfo);
-            container.setAlignment(Pos.CENTER_LEFT);
-//            container.setBackground(new Background(new BackgroundFill(Paint.valueOf("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
+            container.setAlignment(Pos.CENTER_RIGHT);
             container.setMaxWidth(windowWidth - 35);
             austriaList.getItems().add(container);
         }
@@ -130,48 +125,4 @@ public class AustriaController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         loadArticles();
     }
-
-
-    /*
-    @FXML
-    private ListView<String> austriaList;  //Article
-    //@FXML
-    //AppController app = getApp();
-    @FXML
-    private Label myLabel;
-
-    String[] example = {"Article1", "Article2", "Article3"};
-
-    String currentArticle; //Article
-
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        //myListView.getItems().addAll(app.getTopHeadlinesAustria());
-        austriaList.getItems().addAll(example);
-
-        //changeListener
-        /*
-        myListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Article>() {
-            @Override
-            public void changed(ObservableValue<? extends Article> observableValue, Article article, Article t1) {
-                currentArticle = myListView.getSelectionModel().getSelectedItem();
-
-                myLabel.set(currentArticle);
-            }
-        });
-         */
-    /*
-        austriaList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                currentArticle = austriaList.getSelectionModel().getSelectedItem();
-
-                myLabel.setText(currentArticle);
-
-
-            }
-        });
-
-    }
-     */
 }

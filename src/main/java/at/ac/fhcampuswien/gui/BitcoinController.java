@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.gui;
 
 import at.ac.fhcampuswien.AppController;
 import at.ac.fhcampuswien.Article;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -38,6 +38,9 @@ public class BitcoinController implements Initializable {
     @FXML
     Label articleNum;
 
+    private double imgWidth = 175;
+    private double imgHeight = 98;
+
     @FXML
     public void goToMainWindow(ActionEvent event) throws IOException
     {
@@ -53,50 +56,53 @@ public class BitcoinController implements Initializable {
 
     @FXML
     public void loadArticles() {
-        List<Article> austiranArticle = app.getAllNewsBitcoin();
+        List<Article> bitCoinArticle = app.getAllNewsBitcoin();
 
-        articleNum.setText(String.format("Number of articles: %d", austiranArticle.size()));
+        articleNum.setText(String.format("Number of articles: %d", bitCoinArticle.size()));
 
         double windowWidth = bitcoinList.getPrefWidth();
 
-        for (Article a : austiranArticle) {
+        for (Article a : bitCoinArticle) {
             HBox container = new HBox();
             VBox image = new VBox();
             VBox articleInfo = new VBox();
 
-            //Image
-            Image articlePicture;
-            if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),175, 0, true, false);
-            else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", 175, 0, true, false);
+            //Image - An attempt to multi threading
+            Runnable task = () -> {
+                Platform.runLater(() -> {
+                    Image articlePicture;
+                    if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),imgWidth, imgHeight, false, false);
+                    else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", imgWidth, imgHeight, false, false);
 
-            ImageView articlePictureView = new ImageView(articlePicture);
-            image.getChildren().add(articlePictureView);
-            image.setAlignment(Pos.CENTER_LEFT);
+                    ImageView articlePictureView = new ImageView(articlePicture);
+                    image.getChildren().add(articlePictureView);
+                    image.setAlignment(Pos.CENTER_LEFT);
+                });
+            };
+            Thread thread = new Thread(task);
+            thread.setDaemon(true);
+            thread.start();
 
             //ArticleInfo
             Label title = new Label(a.getTitle());
-            title.setTextAlignment(TextAlignment.RIGHT);
             title.setPadding(new Insets(0, 0,10,0 ));
             title.setStyle("-fx-font: 12 Verdana; -fx-font-weight: bold;");
             title.setWrapText(true);
 
             Label writtenBy = new Label("Written by: " + a.getAuthor());
-            writtenBy.setWrapText(true);
-            writtenBy.setTextAlignment(TextAlignment.RIGHT);
-
             Label date = new Label(formatDate(a.getPublishedAt()));
-            date.setWrapText(true);
 
-//            Label DesCount = new Label(""+a.getDescription().length());
+//          Label DesCount = new Label(""+a.getDescription().length());
 
             articleInfo.setStyle("-fx-font: 11 Verdana");
             articleInfo.setAlignment(Pos.CENTER_RIGHT);
             articleInfo.setPadding(new Insets(0, 10, 0, 10));
             articleInfo.getChildren().addAll(title, writtenBy, date);
+            articleInfo.setMinWidth(windowWidth - imgWidth - 35);
 
             container.getChildren().addAll(image, articleInfo);
-            container.setAlignment(Pos.CENTER_LEFT);
-//            container.setBackground(new Background(new BackgroundFill(Paint.valueOf("#ff0000"), CornerRadii.EMPTY, Insets.EMPTY)));
+            container.setAlignment(Pos.CENTER_RIGHT);
+            container.setMaxWidth(windowWidth - 35);
             bitcoinList.getItems().add(container);
         }
     }
