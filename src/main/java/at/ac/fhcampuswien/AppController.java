@@ -40,7 +40,7 @@ public class AppController {
     }
 
     public int getArticleCount() {
-        sizeMatters();
+        sortByLengthDescending();
         return this.articles.size();
     }
 
@@ -49,22 +49,23 @@ public class AppController {
     }
 
     public List<Article> getTopHeadlinesAustria() {
-        try{
+        try {
             NewsResponse austria = answer(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT));
             setArticles(austria.getArticles());
             return austria.getArticles();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Couldn't get articles ");
             return new ArrayList<Article>();
         }
     }
+
     //gets all the articles with the query "bitcoin" and returns the new list
     public List<Article> getAllNewsBitcoin() {
-        try{
-        NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
-        setArticles(bitcoin.getArticles());
-        return bitcoin.getArticles();
-        }catch (Exception e) {
+        try {
+            NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
+            setArticles(bitcoin.getArticles());
+            return bitcoin.getArticles();
+        } catch (Exception e) {
             System.out.println("Couldn't get articles ");
             return new ArrayList<Article>();
         }
@@ -82,20 +83,32 @@ public class AppController {
         return intermediary;
     }
 
-    public List<Article> headLess() {
+    public List<Article> headLessThan15() {
         intermediary.clear();
-        intermediary = articles.stream().filter(a -> a.getTitle().length() > 100).collect(Collectors.toList());
+        intermediary = articles.stream().filter(a -> a.getTitle().length() < 15).collect(Collectors.toList());
         return intermediary;
     }
 
-    public List<Article> sizeMatters() {
+    public List<Article> sortByLengthDescending() {
         intermediary.clear();
+
         intermediary = articles.stream().sorted((Article a, Article b) -> {
-            if (a.getDescription().length() == b.getDescription().length()) {
-                return String.CASE_INSENSITIVE_ORDER.compare(a.getTitle(), b.getTitle());
-            } else {
-                return Integer.compare(b.getDescription().length(), a.getDescription().length());
+            try {
+                if (a.getDescription().length() == b.getDescription().length()) {
+                    return String.CASE_INSENSITIVE_ORDER.compare(a.getTitle(), b.getTitle());
+                } else {
+                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
+                }
+            } catch (NullPointerException e) {
+                if (a.getDescription() == null) {
+                    a.setDescription("Sorry there is no description for this one");
+                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
+                } else if (b.getDescription() == null) {
+                    b.setDescription("Sorry there is no description for that article");
+                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
+                }
             }
+            return Integer.compare(b.getDescription().length(), a.getDescription().length());
         }).collect(Collectors.toList());
         return intermediary;
     }
@@ -113,12 +126,13 @@ public class AppController {
         }
 
     }
+
     public String authorLength(List<Article> articles) {
         return articles.stream().sorted(Comparator.comparing(Article::getAuthorLength)).collect(Collectors.toList()).get(0).getAuthor();
     }
 
-    public int howMuchTime(List<Article> articles){
-        return (int) articles.stream().filter(e->e.getPublishedAt().contains("New York Times")).count();
+    public int sourceNewYorkTimes(List<Article> articles) {
+        return (int) articles.stream().filter(e -> e.getPublishedAt().contains("New York Times")).count();
     }
 
 

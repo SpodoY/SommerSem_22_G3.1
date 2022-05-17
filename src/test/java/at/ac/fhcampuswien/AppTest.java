@@ -1,15 +1,9 @@
-/*
+
 package at.ac.fhcampuswien;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AppTest {
 
@@ -18,8 +12,13 @@ public class AppTest {
     @BeforeAll
     static void init() {
         app = new AppController();
+        AppController appController = new AppController();
+        ArrayList<Article> testlist = new ArrayList<Article>();
     }
+}
 
+
+/*
     @Test
     @DisplayName("If no Articles given, size = 0")
     public void setArticlesSize0() {
@@ -148,7 +147,7 @@ public class AppTest {
         //arrange
         String query = "bitcoin";                                                                                        //defining the query which is searched for
         //act
-        for (Article a : app.filterList("bitcoin", app.getArticles())) {                                           //a for-each loop calls every element of the returned filtered list
+        for (Article a : app.filterList("bitcoin", app.getArticles())) {                                                //a for-each loop calls every element of the returned filtered list
             //assert
             assertTrue(a.toString().toLowerCase().contains("bitcoin"));                                                  //asserting if every entry in the list contains the query
         }

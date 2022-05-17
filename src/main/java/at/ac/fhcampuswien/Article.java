@@ -55,6 +55,10 @@ public class Article implements Comparable<Article> {
         return publishedAt;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Override
     // overriding to string to get a nice output
     public String toString() {

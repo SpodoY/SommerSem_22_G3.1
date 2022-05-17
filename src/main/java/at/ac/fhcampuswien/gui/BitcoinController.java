@@ -42,13 +42,12 @@ public class BitcoinController implements Initializable {
     private double imgHeight = 98;
 
     @FXML
-    public void goToMainWindow(ActionEvent event) throws IOException
-    {
+    public void goToMainWindow(ActionEvent event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
         window.show();
@@ -71,8 +70,10 @@ public class BitcoinController implements Initializable {
             Runnable task = () -> {
                 Platform.runLater(() -> {
                     Image articlePicture;
-                    if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),imgWidth, imgHeight, false, false);
-                    else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", imgWidth, imgHeight, false, false);
+                    if (a.getUrlToImage() != null)
+                        articlePicture = new Image(a.getUrlToImage(), imgWidth, imgHeight, false, false);
+                    else
+                        articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", imgWidth, imgHeight, false, false);
 
                     ImageView articlePictureView = new ImageView(articlePicture);
                     image.getChildren().add(articlePictureView);
@@ -85,14 +86,15 @@ public class BitcoinController implements Initializable {
 
             //ArticleInfo
             Label title = new Label(a.getTitle());
-            title.setPadding(new Insets(0, 0,10,0 ));
+            title.setPadding(new Insets(0, 0, 10, 0));
             title.setStyle("-fx-font: 12 Verdana; -fx-font-weight: bold;");
             title.setWrapText(true);
 
             Label writtenBy = new Label("Written by: " + a.getAuthor());
             Label date = new Label(formatDate(a.getPublishedAt()));
 
-//          Label DesCount = new Label(""+a.getDescription().length());
+
+            Label DesCount = new Label("" + a.getDescription().length());
 
             articleInfo.setStyle("-fx-font: 11 Verdana");
             articleInfo.setAlignment(Pos.CENTER_RIGHT);
@@ -109,6 +111,7 @@ public class BitcoinController implements Initializable {
 
     /**
      * Takes the Date format given by the NewsApi and converts it into a more readable form
+     *
      * @param date The given date by the NewsApi
      * @return Formatted Date in 'dd.MM.yyyy HH:mm:ss' format
      */
