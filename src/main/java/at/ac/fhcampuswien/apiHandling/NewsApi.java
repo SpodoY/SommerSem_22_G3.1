@@ -18,7 +18,7 @@ public class NewsApi {
     private final static String API_KEY = readKey();
 
     /**
-    This method reads the api key from a static file, which isn't pushed to git
+     * This method reads the api key from a static file, which isn't pushed to git
      */
     private static String readKey() {
         // Instantiating all Classes need for reading from a file
@@ -28,11 +28,11 @@ public class NewsApi {
         String key;
         try {
             // reading the api key from file
-            key = "&apiKey="+ bufferdReader.readLine();
+            key = "&apiKey=" + bufferdReader.readLine();
 
             //Custom Exception - check API Key length
             try {
-                checkReadKey(key);
+                NewsApiException.checkReadKey(key);
                 return key;
             } catch (Exception e) {
                 System.out.println("A problem in NewsApi occured: " + e);
@@ -47,15 +47,16 @@ public class NewsApi {
 
     /**
      * This method gets all parameters for the url and calls the request function
+     *
      * @param category headlines or everything
-     * @param args the filtering word, default is keyword
+     * @param args     the filtering word, default is keyword
      * @return returns the http message body as string
      */
-    public String urlBuilder(Enum category, Enum  ... args){
+    public String urlBuilder(Enum category, Enum... args) {
 
-        String url = BASEURL +   category.toString();
+        String url = BASEURL + category.toString();
         for (Enum part : args) {
-            url += "?" +  part.toString();
+            url += "?" + part.toString();
         }
         url += API_KEY;
 
@@ -64,18 +65,20 @@ public class NewsApi {
 
             //Custom Exception - check if URL contains an Endpoint (Top Headlines or Everything)
             try {
-                checkURL(url);
+                NewsApiException.checkURL(url);
             } catch (Exception e) {
                 System.out.println("A problem in NewsApi occured: " + e);
             }
-            return runGetRequest(url);
+            if (NewsApiException.netIsAvailable()) {
+                return runGetRequest(url);
+            }
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println(url);
             System.out.println("Invalid url created check arguments");
-            return "";
-        }
+
+        }return "";
     }
+
 
     public void urlFixed(String url) throws IOException {
         URL urlReal = new URL(url);
@@ -117,7 +120,7 @@ public class NewsApi {
 
             //Custom Exception - check if response status is ok
             try {
-                checkStatus(responseString);
+                NewsApiException.checkStatus(responseString);
             } catch (Exception e) {
                 System.out.println("A problem in NewsApi occured: " + e);
             }
@@ -129,36 +132,5 @@ public class NewsApi {
         // just the last Backup return if nothing works
         return "no respones";
     }
-
-    static void checkReadKey(String key) throws NewsApiException{
-        //check key length - should be 40;
-        if(key.length() < 40) {
-            throw new NewsApiException("\n" + "Your API Key is too short. Please check your API Key again.");
-        } else if (key.length() > 40) {
-            throw new NewsApiException("\n" + "Your API Key is too long. Please check your API Key again.");
-        }
-        //else: everything is fine with length of API Key
-    }
-
-    static void checkURL(String url) throws NewsApiException{
-        //check if url contains an endpoint (top headlines or everything)
-        if(!(url.contains("top-headlines") || url.contains("everything"))){
-            throw new NewsApiException("\n" + "An Enpoint (->top-headlines, everything<-) in your URL is missing.");
-        }
-        //else: URL contains an Endpoint
-    }
-
-    static void checkStatus(String responseString) throws NewsApiException {
-        //check if status is "ok"
-        String rString = responseString.replaceAll("[^a-zA-Z]+","").toLowerCase();
-
-        if (rString.contains("statusok")) {  //rString.indexOf("statusok") == -1
-            // response status = ok
-        } else {
-            throw new NewsApiException("\n" + "Response status is NOT 'ok'!");
-        }
-
-    }
-
 
 }

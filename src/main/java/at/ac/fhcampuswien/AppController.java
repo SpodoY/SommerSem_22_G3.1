@@ -47,15 +47,25 @@ public class AppController {
     }
 
     public List<Article> getTopHeadlinesAustria() {
-        NewsResponse austria = answer(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT));
-        setArticles(austria.getArticles());
-        return austria.getArticles();
+        try{
+            NewsResponse austria = answer(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT));
+            setArticles(austria.getArticles());
+            return austria.getArticles();
+        }catch (Exception e){
+            System.out.println("Couldn't get articles ");
+            return new ArrayList<Article>();
+        }
     }
-
+    //gets all the articles with the query "bitcoin" and returns the new list
     public List<Article> getAllNewsBitcoin() {
+        try{
         NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
         setArticles(bitcoin.getArticles());
-        return bitcoin.getArticles();                                                                                   //gets all the articles with the query "bitcoin" and returns the new list
+        return bitcoin.getArticles();
+        }catch (Exception e) {
+            System.out.println("Couldn't get articles ");
+            return new ArrayList<Article>();
+        }
     }
 
     protected static List<Article> filterList(String query, List<Article> articles) {
