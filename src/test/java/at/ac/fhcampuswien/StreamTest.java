@@ -58,7 +58,7 @@ public class StreamTest {
     }
     @Test
     @DisplayName("Test Stream for headlines smaller than 15 digits")
-    public void testReadFileWithResource()  {
+    public void TestStreamHeadlines()  {
         //Arrange
         List<Article> filter =  app.getArticles();
 
