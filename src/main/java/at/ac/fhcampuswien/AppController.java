@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AppController {
@@ -119,4 +121,13 @@ public class AppController {
         return (int) articles.stream().filter(e->e.getPublishedAt().contains("New York Times")).count();
     }
 
+
+    public String sourceMostArticles(List<Article> articles) {
+        return articles.stream().map(Article::getName)
+                .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
+                .entrySet().stream()
+                .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
+                .orElse(null);
+
+    }
 }
