@@ -40,7 +40,6 @@ public class AppController {
     }
 
     public int getArticleCount() {
-        sortByLengthDescending();
         return this.articles.size();
     }
 
@@ -91,25 +90,14 @@ public class AppController {
 
     public List<Article> sortByLengthDescending() {
         intermediary.clear();
-
         intermediary = articles.stream().sorted((Article a, Article b) -> {
-            try {
-                if (a.getDescription().length() == b.getDescription().length()) {
-                    return String.CASE_INSENSITIVE_ORDER.compare(a.getTitle(), b.getTitle());
-                } else {
-                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
+                    if (a.getDescription().length() == b.getDescription().length()) {
+                        return String.CASE_INSENSITIVE_ORDER.compare(a.getTitle(), b.getTitle());
+                    } else {
+                        return Integer.compare(b.getDescription().length(), a.getDescription().length());
+                    }
                 }
-            } catch (NullPointerException e) {
-                if (a.getDescription() == null) {
-                    a.setDescription("Sorry there is no description for this one");
-                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
-                } else if (b.getDescription() == null) {
-                    b.setDescription("Sorry there is no description for that article");
-                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
-                }
-            }
-            return Integer.compare(b.getDescription().length(), a.getDescription().length());
-        }).collect(Collectors.toList());
+        ).collect(Collectors.toList());
         return intermediary;
     }
 
@@ -128,12 +116,17 @@ public class AppController {
     }
 
     public String authorLength(List<Article> articles) {
-        return articles.stream().sorted(Comparator.comparing(Article::getAuthorLength)).collect(Collectors.toList()).get(0).getAuthor();
+        return articles.stream()
+                .sorted(Comparator
+                        .comparing(Article::getAuthorLength))
+                .collect(Collectors.toList())
+                .get(articles.size()-1)
+                .getAuthor();
     }
-
-    public int sourceNewYorkTimes(List<Article> articles) {
-        return (int) articles.stream().filter(e -> e.getPublishedAt().contains("New York Times")).count();
-    }
+    //requires an implementation of sourcedata like id or name
+   /* public int sourceNewYorkTimes(List<Article> articles) {
+        return (int) articles.stream().filter(e -> e.getName().contains("New York Times")).count();
+    }*/
 
 
     public String sourceMostArticles(List<Article> articles) {
@@ -142,6 +135,5 @@ public class AppController {
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
-
     }
 }

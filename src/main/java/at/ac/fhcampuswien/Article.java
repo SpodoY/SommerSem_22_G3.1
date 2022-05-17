@@ -31,8 +31,13 @@ public class Article implements Comparable<Article> {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int getAuthorLength(){
-        return author.length();
+        if (author==null) return 0;
+        else return author.length();
     }
 
     public String getTitle() {
@@ -40,7 +45,12 @@ public class Article implements Comparable<Article> {
     }
 
     public String getName() {
-        return name;
+        if (name==null){return "";}
+        else return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getUrl() {
@@ -67,7 +77,8 @@ public class Article implements Comparable<Article> {
 
 
     public String getDescription() {
-        return description;
+        if (description==null){return description="";}
+        else return description;
     }
 
     @Override

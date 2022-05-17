@@ -86,7 +86,7 @@ public class NewsApi {
         BufferedReader in = new BufferedReader(new InputStreamReader(urlReal.openStream()));
         String filename = LocalDateTime.now().format(ISO_LOCAL_DATE);
         String directory = String.format("at/ac/fhcampuswien/%s.txt",filename);
-        File file = new File("file.txt");
+        File file = new File("%s.txt",filename);
         file.createNewFile();
         FileOutputStream oFile = new FileOutputStream(file, false);
 
