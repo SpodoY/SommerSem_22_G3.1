@@ -104,7 +104,7 @@ public class AppController {
     public void saveHTML(Article a) throws IOException {
         String url = a.getUrl();
         try {
-            newsApi.urlFixed(url);
+            newsApi.downladAnArticle(url, a);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(url);

@@ -1,12 +1,12 @@
 package at.ac.fhcampuswien.apiHandling;
 
+import at.ac.fhcampuswien.Article;
 import at.ac.fhcampuswien.exceptions.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.*;
-import java.net.HttpRetryException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -97,20 +97,25 @@ public class NewsApi {
     }
 
 
-    public void urlFixed(String url) throws IOException {
+    public void downladAnArticle(String url, Article a) throws IOException {
         URL urlReal = new URL(url);
         String input;
         BufferedReader in = new BufferedReader(new InputStreamReader(urlReal.openStream()));
-        String filename = LocalDateTime.now().format(ISO_LOCAL_DATE);
-        String directory = String.format("at/ac/fhcampuswien/%s.txt", filename);
-        File file = new File("%s.txt", filename);
+        String filename = a.getTitle() + " " + LocalDateTime.now().format(ISO_LOCAL_DATE) +".html";
+
+        final File parentDir = new File("download");
+        parentDir.mkdir();
+        final File file = new File(parentDir, filename);
+        String path = file.getAbsolutePath();
         file.createNewFile();
-        FileOutputStream oFile = new FileOutputStream(file, false);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
 
         while ((input = in.readLine()) != null) {
-            System.out.println(input);
-            in.close();
+            writer.append((input));
         }
+        in.close();
+        writer.close();
     }
 
     /**

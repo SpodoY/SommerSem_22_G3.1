@@ -8,6 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.file.Files;
@@ -160,6 +161,15 @@ public class StreamTest {
         app.setArticles(resetList);
 
     }*/
+    @Test
+    public void chekTheDownloadFunction(){
+        try {
+                app.saveHTML(resetList.get(0));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }
 
 
