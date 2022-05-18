@@ -1,12 +1,15 @@
 package at.ac.fhcampuswien.apiHandling;
 
+import at.ac.fhcampuswien.exceptions.*;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
 import java.io.*;
+import java.net.HttpRetryException;
 import java.net.URL;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
@@ -29,19 +32,14 @@ public class NewsApi {
         try {
             // reading the api key from file
             key = "&apiKey=" + bufferdReader.readLine();
-
-            //Custom Exception - check API Key length
-            try {
-                NewsApiException.checkReadKey(key);
+            if (!NewsApiChecks.checkReadKey(key)) {
+                throw new ApiKeyExceptions();
+            } else {
                 return key;
-            } catch (Exception e) {
-                System.out.println("A problem in NewsApi occured: " + e);
             }
-
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException | NewsApiException | ApiKeyExceptions e) {
+            System.out.println("A problem in NewsApi occured: " + e.getMessage());
         }
-
         return null;
     }
 
@@ -52,31 +50,50 @@ public class NewsApi {
      * @param args     the filtering word, default is keyword
      * @return returns the http message body as string
      */
-    public String urlBuilder(Enum category, Enum... args) {
+    public String urlBuilder(Enum category, Enum... args) throws UrlException {
 
         String url = BASEURL + category.toString();
         for (Enum part : args) {
             url += "?" + part.toString();
         }
-        url += API_KEY;
-
-        System.out.println(url);
         try {
+            if (API_KEY == null) {
+                throw new ApiKeyExceptions();
+            } else {
+                url += API_KEY;
+            }
+        } catch (ApiKeyExceptions e) {
+            System.out.println(e.getMessage());
+            return "";
+        }
 
+        return url;
+    }
+
+    public String runRequest(String url) {
+        try {
+            if (Objects.equals(url, "")) {
+                throw new UrlException();
+            }
+        } catch (UrlException e) {
+            System.out.println(e.getMessage());
+            return "";
+        }
+        try {
             //Custom Exception - check if URL contains an Endpoint (Top Headlines or Everything)
-            try {
-                NewsApiException.checkURL(url);
-            } catch (Exception e) {
-                System.out.println("A problem in NewsApi occured: " + e);
+            if (!NewsApiChecks.checkURL(url)) {
+                throw new UrlException();
             }
-            if (NewsApiException.netIsAvailable()) {
-                return runGetRequest(url);
+            if (!NewsApiChecks.netIsAvailable()) {
+                throw new NoWifiException();
+            } else {
+                System.out.println(url);
+                return getRequest(url);
             }
-        } catch (IOException e) {
-            System.out.println(url);
-            System.out.println("Invalid url created check arguments");
-
-        }return "";
+        } catch (NoWifiException | UrlException | IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return "";
     }
 
 
@@ -85,12 +102,12 @@ public class NewsApi {
         String input;
         BufferedReader in = new BufferedReader(new InputStreamReader(urlReal.openStream()));
         String filename = LocalDateTime.now().format(ISO_LOCAL_DATE);
-        String directory = String.format("at/ac/fhcampuswien/%s.txt",filename);
-        File file = new File("%s.txt",filename);
+        String directory = String.format("at/ac/fhcampuswien/%s.txt", filename);
+        File file = new File("%s.txt", filename);
         file.createNewFile();
         FileOutputStream oFile = new FileOutputStream(file, false);
 
-        while((input = in.readLine())!=null){
+        while ((input = in.readLine()) != null) {
             System.out.println(input);
             in.close();
         }
@@ -98,11 +115,12 @@ public class NewsApi {
 
     /**
      * This method handles Get request and should be called from the response function
+     *
      * @param url the url from the Response function
      * @return the message body to string from the http request
      * @throws IOException
      */
-    private String runGetRequest(String url) throws IOException {
+    private String getRequest(String url) throws IOException {
 
         // initiates the http client
         var client = new OkHttpClient();
@@ -119,15 +137,15 @@ public class NewsApi {
             String responseString = response.body().string();
 
             //Custom Exception - check if response status is ok
-            try {
-                NewsApiException.checkStatus(responseString);
-            } catch (Exception e) {
-                System.out.println("A problem in NewsApi occured: " + e);
-            }
-            return responseString;
 
-        } catch (IOException e) {
-            e.printStackTrace();
+            if (!HttpException.checkStatus(responseString)) {
+                throw new HttpException();
+            } else {
+                return responseString;
+            }
+
+        } catch (IOException| HttpException e) {
+            System.out.println(e.getMessage());
         }
         // just the last Backup return if nothing works
         return "no respones";

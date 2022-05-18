@@ -16,7 +16,7 @@ public enum Language {
     UD ("language=ud"),
     ZH ("language=zh");
 
-    private String partOfUrl;
+    private final String partOfUrl;
 
     Language(final String partOfUrl){
         this.partOfUrl = partOfUrl;

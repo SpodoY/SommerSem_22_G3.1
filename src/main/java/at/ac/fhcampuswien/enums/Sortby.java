@@ -8,7 +8,7 @@ public enum Sortby {
     //newest articles come first.
     PUBLISHED_AT ("sortBy=publishedAt");
 
-    private String partOfUrl;
+    private final String partOfUrl;
 
     Sortby(final String partOfUrl){
         this.partOfUrl = partOfUrl;

@@ -20,9 +20,9 @@ public class AppController {
     private static List<Article> intermediary = new ArrayList<>();
 
     // the Datastructures for containing all our Articles
-    private List<Article> articles = new ArrayList<>();
-    private static NewsApi newsApi = new NewsApi();
-    private Gson gsonParser = new Gson();
+    private final List<Article> articles = new ArrayList<>();
+    private static final NewsApi newsApi = new NewsApi();
+    private final Gson gsonParser = new Gson();
 
     public NewsResponse answer(String json) {
         NewsResponse data = gsonParser.fromJson(json, NewsResponse.class);
@@ -49,7 +49,7 @@ public class AppController {
 
     public List<Article> getTopHeadlinesAustria() {
         try {
-            NewsResponse austria = answer(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT));
+            NewsResponse austria = answer(newsApi.runRequest( newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT)));
             setArticles(austria.getArticles());
             return austria.getArticles();
         } catch (Exception e) {
@@ -61,7 +61,7 @@ public class AppController {
     //gets all the articles with the query "bitcoin" and returns the new list
     public List<Article> getAllNewsBitcoin() {
         try {
-            NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
+            NewsResponse bitcoin = answer(newsApi.runRequest( newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN)));
             setArticles(bitcoin.getArticles());
             return bitcoin.getArticles();
         } catch (Exception e) {

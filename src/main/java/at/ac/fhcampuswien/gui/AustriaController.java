@@ -37,8 +37,8 @@ public class AustriaController implements Initializable {
     @FXML
     Label articleNum;
 
-    private double imgWidth = 175;
-    private double imgHeight = 98;
+    private final double imgWidth = 175;
+    private final double imgHeight = 98;
 
     /**
      * When this method is called, it will change the Scene to

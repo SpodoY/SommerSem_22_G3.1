@@ -38,8 +38,8 @@ public class BitcoinController implements Initializable {
     @FXML
     Label articleNum;
 
-    private double imgWidth = 175;
-    private double imgHeight = 98;
+    private final double imgWidth = 175;
+    private final double imgHeight = 98;
 
     @FXML
     public void goToMainWindow(ActionEvent event) throws IOException {

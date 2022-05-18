@@ -9,7 +9,7 @@ public enum Endpoint {
     EVERYTHING ("everything"),
     TOP_HEADLINES ("top-headlines");
 
-    private String partOfUrl;
+    private final String partOfUrl;
 
     Endpoint(final String partOfUrl){
         this.partOfUrl = partOfUrl;

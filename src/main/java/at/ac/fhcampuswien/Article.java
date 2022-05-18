@@ -2,7 +2,7 @@ package at.ac.fhcampuswien;
 
 public class Article implements Comparable<Article> {
     private String author;
-    private String title;
+    private final String title;
     private String name;
     private String description;
     private String url;
