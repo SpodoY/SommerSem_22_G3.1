@@ -10,4 +10,6 @@ module at.ac.fhcampuswien {
     opens at.ac.fhcampuswien.gui to javafx.fxml;
     exports at.ac.fhcampuswien.apiHandling;
     opens at.ac.fhcampuswien.apiHandling;
+    exports at.ac.fhcampuswien.exceptions;
+    opens at.ac.fhcampuswien.exceptions;
 }

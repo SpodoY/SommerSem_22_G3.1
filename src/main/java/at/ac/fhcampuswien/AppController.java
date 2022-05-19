@@ -20,9 +20,9 @@ public class AppController {
     private static List<Article> intermediary = new ArrayList<>();
 
     // the Datastructures for containing all our Articles
-    private List<Article> articles = new ArrayList<>();
-    private static NewsApi newsApi = new NewsApi();
-    private Gson gsonParser = new Gson();
+    private final List<Article> articles = new ArrayList<>();
+    private static final NewsApi newsApi = new NewsApi();
+    private final Gson gsonParser = new Gson();
 
     public NewsResponse answer(String json) {
         NewsResponse data = gsonParser.fromJson(json, NewsResponse.class);
@@ -40,7 +40,6 @@ public class AppController {
     }
 
     public int getArticleCount() {
-        sortByLengthDescending();
         return this.articles.size();
     }
 
@@ -50,7 +49,7 @@ public class AppController {
 
     public List<Article> getTopHeadlinesAustria() {
         try {
-            NewsResponse austria = answer(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT));
+            NewsResponse austria = answer(newsApi.runRequest( newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT)));
             setArticles(austria.getArticles());
             return austria.getArticles();
         } catch (Exception e) {
@@ -62,7 +61,7 @@ public class AppController {
     //gets all the articles with the query "bitcoin" and returns the new list
     public List<Article> getAllNewsBitcoin() {
         try {
-            NewsResponse bitcoin = answer(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN));
+            NewsResponse bitcoin = answer(newsApi.runRequest( newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN)));
             setArticles(bitcoin.getArticles());
             return bitcoin.getArticles();
         } catch (Exception e) {
@@ -94,7 +93,7 @@ public class AppController {
     public void saveHTML(Article a) throws IOException {
         String url = a.getUrl();
         try {
-            newsApi.urlFixed(url);
+            newsApi.downladAnArticle(url, a);
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println(url);
@@ -105,21 +104,23 @@ public class AppController {
     }
 
     public String authorLength(List<Article> articles) {
-        return articles.stream().sorted(Comparator.comparing(Article::getAuthorLength)).collect(Collectors.toList()).get(0).getAuthor();
+        return articles.stream()
+                .sorted(Comparator
+                        .comparing(Article::getAuthorLength))
+                .collect(Collectors.toList())
+                .get(articles.size()-1)
+                .getAuthor();
     }
-
     public int sourceNewYorkTimes(List<Article> articles) {
-        //TODO: Change Author to content.name when content is added
-        return (int) articles.stream().filter(e -> e.getAuthor().contains("New York Times")).count();
+        return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
     }
 
-
-    public String sourceMostArticles(List<Article> articles) {
-        return articles.stream().map(Article::getName)
+    //Needs a new implementation Sourcename is now articles.getSource.getName
+    /*public String sourceMostArticles(List<Article> articles) {
+        return articles.stream().map(Article::getAuthor)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
-
-    }
+    }*/
 }

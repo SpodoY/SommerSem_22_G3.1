@@ -56,7 +56,7 @@ public enum Country {
     VE ("country=ve"),
     ZA ("country=za");
 
-    private String partOfUrl;
+    private final String partOfUrl;
 
     Country(final String partOfUrl){
         this.partOfUrl = partOfUrl;

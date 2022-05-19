@@ -1,9 +1,9 @@
 package at.ac.fhcampuswien;
 
 public class Article implements Comparable<Article> {
+    private Source source;
     private String author;
-    private String title;
-    private String name;
+    private final String title;
     private String description;
     private String url;
     private String urlToImage;
@@ -15,11 +15,11 @@ public class Article implements Comparable<Article> {
         this.title = title;
     }
 
-    public Article(String author, String title, String name, String description, String url, String urlToImage,
+    public Article(Source source,String author, String title, String description, String url, String urlToImage,
                    String publishedAt, String content) {
+        this.source = source;
         this.author = author;
         this.title = title;
-        this.name = name;
         this.description = description;
         this.url = url;
         this.urlToImage = urlToImage;
@@ -31,17 +31,19 @@ public class Article implements Comparable<Article> {
         return author;
     }
 
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
     public int getAuthorLength(){
-        return author.length();
+        if (author==null) return 0;
+        else return author.length();
     }
 
     public String getTitle() {
         return title;
     }
 
-    public String getName() {
-        return name;
-    }
 
     public String getUrl() {
         return url;
@@ -67,7 +69,12 @@ public class Article implements Comparable<Article> {
 
 
     public String getDescription() {
-        return description;
+        if (description==null){return description="";}
+        else return description;
+    }
+
+    public Source getSource() {
+        return source;
     }
 
     @Override

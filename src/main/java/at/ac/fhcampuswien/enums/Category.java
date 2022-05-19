@@ -10,7 +10,7 @@ public enum Category {
     SPORTS ("q=sports"),
     TECHNOLOGY ("q=technology");
 
-    private String partOfUrl;
+    private final String partOfUrl;
 
     Category(final String partOfUrl){
         this.partOfUrl = partOfUrl;
