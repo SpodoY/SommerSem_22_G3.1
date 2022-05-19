@@ -145,7 +145,7 @@ public class StreamTest {
     }
 
     //Next test requires an implementation of sourcedata like id or name
-   /* @Test
+    @Test
     @DisplayName("Tests the number of articles with New York Times in it ")
     public void testNewYorkTimes() {
         //Arrange
@@ -160,7 +160,7 @@ public class StreamTest {
         //Rest
         app.setArticles(resetList);
 
-    }*/
+    }
     @Test
     public void chekTheDownloadFunction(){
         try {

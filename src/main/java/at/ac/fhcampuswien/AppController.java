@@ -123,17 +123,16 @@ public class AppController {
                 .get(articles.size()-1)
                 .getAuthor();
     }
-    //requires an implementation of sourcedata like id or name
-   /* public int sourceNewYorkTimes(List<Article> articles) {
-        return (int) articles.stream().filter(e -> e.getName().contains("New York Times")).count();
-    }*/
+    public int sourceNewYorkTimes(List<Article> articles) {
+        return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
+    }
 
-
-    public String sourceMostArticles(List<Article> articles) {
-        return articles.stream().map(Article::getName)
+    //Needs a new implementation Sourcename is now articles.getSource.getName
+    /*public String sourceMostArticles(List<Article> articles) {
+        return articles.stream().map(Article::getAuthor)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
-    }
+    }*/
 }
