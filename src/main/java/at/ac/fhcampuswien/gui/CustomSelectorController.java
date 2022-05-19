@@ -50,5 +50,6 @@ public class CustomSelectorController implements Initializable {
 
         System.out.println(endpointValue);
         category.setDisable(endpointValue == Endpoint.TOP_HEADLINES);
+        //TODO: Add more Enums & Dropdowns
     }
 }
