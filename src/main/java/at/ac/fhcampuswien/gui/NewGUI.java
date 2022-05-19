@@ -17,7 +17,7 @@ public class NewGUI extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(NewGUI.class.getResource("mainWindow.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(NewGUI.class.getResource("startingWindow.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
 
         stage.setTitle("NewsGUI");

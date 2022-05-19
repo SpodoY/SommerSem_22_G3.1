@@ -84,33 +84,11 @@ public class AppController {
     }
 
     public List<Article> headLessThan15() {
-        intermediary.clear();
-        intermediary = articles.stream().filter(a -> a.getTitle().length() < 15).collect(Collectors.toList());
-        return intermediary;
+        return articles.stream().filter(a -> a.getTitle().length() < 15).collect(Collectors.toList());
     }
 
     public List<Article> sortByLengthDescending() {
-        intermediary.clear();
-
-        intermediary = articles.stream().sorted((Article a, Article b) -> {
-            try {
-                if (a.getDescription().length() == b.getDescription().length()) {
-                    return String.CASE_INSENSITIVE_ORDER.compare(a.getTitle(), b.getTitle());
-                } else {
-                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
-                }
-            } catch (NullPointerException e) {
-                if (a.getDescription() == null) {
-                    a.setDescription("Sorry there is no description for this one");
-                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
-                } else if (b.getDescription() == null) {
-                    b.setDescription("Sorry there is no description for that article");
-                    return Integer.compare(b.getDescription().length(), a.getDescription().length());
-                }
-            }
-            return Integer.compare(b.getDescription().length(), a.getDescription().length());
-        }).collect(Collectors.toList());
-        return intermediary;
+        return articles.stream().sorted().collect(Collectors.toList());
     }
 
     public void saveHTML(Article a) throws IOException {
@@ -124,7 +102,6 @@ public class AppController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
     public String authorLength(List<Article> articles) {
@@ -132,7 +109,8 @@ public class AppController {
     }
 
     public int sourceNewYorkTimes(List<Article> articles) {
-        return (int) articles.stream().filter(e -> e.getPublishedAt().contains("New York Times")).count();
+        //TODO: Change Author to content.name when content is added
+        return (int) articles.stream().filter(e -> e.getAuthor().contains("New York Times")).count();
     }
 
 

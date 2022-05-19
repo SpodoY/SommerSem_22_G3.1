@@ -16,56 +16,42 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class AustriaController implements Initializable {
+public class NewsLoadingController implements Initializable {
 
-    @FXML
-    AppController app = new AppController();
+    @FXML AppController app = new AppController();
 
-    @FXML
-    ListView<HBox> austriaList;
+    @FXML ListView<HBox> newsList;
 
-    @FXML
-    Label articleNum;
+    @FXML Label articleNum;
+
+    @FXML private Label austria;
+
+    @FXML private Label bitcoin;
+
+    @FXML private Label customNews;
 
     private double imgWidth = 175;
-    private double imgHeight = 98;
+    private double imgHeight = imgWidth / 16 * 9;
 
-    /**
-     * When this method is called, it will change the Scene to
-     * a TableView example
-     */
-    @FXML
-    public void goToMainWindow(ActionEvent event) throws IOException
-    {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
+    private void fillGuiWithArticles(List<Article> articles) {
 
-        //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        articleNum.setText(String.format("Number of articles: %d", articles.size()));
 
-        window.setScene(tableViewScene);
-        window.show();
-    }
+        double windowWidth = newsList.getPrefWidth();
 
-    @FXML
-    public void loadArticles() {
-        List<Article> austiranArticle = app.getTopHeadlinesAustria();
-
-        articleNum.setText(String.format("Number of articles: %d", austiranArticle.size()));
-
-        double windowWidth = austriaList.getPrefWidth();
-
-        for (Article a : austiranArticle) {
+        for (Article a : articles) {
             HBox container = new HBox();
             VBox image = new VBox();
             VBox articleInfo = new VBox();
@@ -106,7 +92,7 @@ public class AustriaController implements Initializable {
             container.getChildren().addAll(image, articleInfo);
             container.setAlignment(Pos.CENTER_RIGHT);
             container.setMaxWidth(windowWidth - 35);
-            austriaList.getItems().add(container);
+            newsList.getItems().add(container);
         }
     }
 
@@ -121,8 +107,25 @@ public class AustriaController implements Initializable {
         return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
     }
 
+    @FXML
+    public void goToMainWindow(ActionEvent event) throws IOException
+    {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("startingWindow.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        loadArticles();
+        List<Article> articles = new ArrayList<>();
+        if (austria != null) articles = app.getTopHeadlinesAustria();
+        if (bitcoin != null) articles = app.getAllNewsBitcoin();
+        if (customNews != null) System.out.println(""); //TODO: Implement custome news loading
+        fillGuiWithArticles(articles);
     }
 }

@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.gui;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,8 +11,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class MainWindowController {
-
+public class StartingWindowController {
 
     /**
      * When this method is called, it will change the Scene to
@@ -44,8 +44,9 @@ public class MainWindowController {
     }
 
     @FXML
-    public void closeWindow(ActionEvent event) throws IOException{
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("mainWindow.fxml"));
+    public void goToCustomeCall(ActionEvent event) throws IOException
+    {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("customNewsSelector.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         //This line gets the Stage information
@@ -53,7 +54,10 @@ public class MainWindowController {
 
         window.setScene(tableViewScene);
         window.show();
-        window.close();
     }
 
+    @FXML
+    public void closeWindow() {
+        Platform.exit();
+    }
 }

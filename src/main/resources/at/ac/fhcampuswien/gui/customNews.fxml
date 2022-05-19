@@ -6,7 +6,7 @@
 <?import javafx.scene.text.*?>
 
 <BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.NewsLoadingController">
-    <Label fx:id="bitcoin"> </Label>
+    <Label fx:id="customNews"> </Label>
     <top>
         <VBox prefHeight="110.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
             <children>
@@ -27,6 +27,24 @@
             </children>
         </VBox>
     </top>
+    <bottom>
+        <AnchorPane prefHeight="82.0" prefWidth="1006.0" style="-fx-background-color: #e5f1ef;" BorderPane.alignment="CENTER">
+            <children>
+            <Pane layoutX="-6.0" prefHeight="83.0" prefWidth="1006.0">
+               <children>
+                      <Button layoutX="478.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToMainWindow" style="-fx-background-color: transparent; -fx-border-st: none;">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../icons/left-arrow.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children></Pane>
+            </children>
+        </AnchorPane>
+    </bottom>
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
@@ -34,22 +52,4 @@
             </children>
         </AnchorPane>
     </center>
-    <bottom>
-        <AnchorPane prefHeight="70.0" prefWidth="1006.0" style="-fx-background-color: #e5f1ef;" BorderPane.alignment="CENTER">
-            <children>
-                <Pane layoutX="-6.0" prefHeight="70.0" prefWidth="1006.0">
-                    <children>
-                        <Button layoutX="478.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToMainWindow" style="-fx-background-color: transparent; -fx-border-st: none;">
-                            <graphic>
-                                <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                                    <image>
-                                        <Image url="@../icons/left-arrow.png" />
-                                    </image>
-                                </ImageView>
-                            </graphic>
-                        </Button>
-                    </children></Pane>
-            </children>
-        </AnchorPane>
-    </bottom>
 </BorderPane>
