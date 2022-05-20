@@ -50,7 +50,7 @@ public class NewsApi {
      * @param args     the filtering word, default is keyword
      * @return returns the http message body as string
      */
-    public String urlBuilder(Enum category, Enum... args) throws UrlException {
+    public String urlBuilder(Enum category, Enum... args) {
 
         String url = BASEURL + category.toString();
         for (Enum part : args) {

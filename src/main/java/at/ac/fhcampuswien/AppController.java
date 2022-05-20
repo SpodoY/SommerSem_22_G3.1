@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.apiHandling.NewsResponse;
 import at.ac.fhcampuswien.enums.Category;
 import at.ac.fhcampuswien.enums.Country;
 import at.ac.fhcampuswien.enums.Endpoint;
+import at.ac.fhcampuswien.exceptions.UrlException;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -49,11 +50,10 @@ public class AppController {
 
     public List<Article> getTopHeadlinesAustria() {
         try {
-            NewsResponse austria = answer(newsApi.runRequest( newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT)));
+            NewsResponse austria = answer(newsApi.runRequest(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT)));
             setArticles(austria.getArticles());
             return austria.getArticles();
         } catch (Exception e) {
-            System.out.println("Couldn't get articles ");
             return new ArrayList<Article>();
         }
     }
@@ -61,11 +61,10 @@ public class AppController {
     //gets all the articles with the query "bitcoin" and returns the new list
     public List<Article> getAllNewsBitcoin() {
         try {
-            NewsResponse bitcoin = answer(newsApi.runRequest( newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN)));
+            NewsResponse bitcoin = answer(newsApi.runRequest(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN)));
             setArticles(bitcoin.getArticles());
             return bitcoin.getArticles();
         } catch (Exception e) {
-            System.out.println("Couldn't get articles ");
             return new ArrayList<Article>();
         }
     }
@@ -95,21 +94,16 @@ public class AppController {
         try {
             newsApi.downladAnArticle(url, a);
         } catch (IOException e) {
-            e.printStackTrace();
             System.out.println(url);
             System.out.println("Invalid url created check arguments");
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println("Oh no! We did a big fucky wucky! It's time to get in the forever-box owo");
         }
     }
 
     public String authorLength(List<Article> articles) {
         return articles.stream()
-                .sorted(Comparator
-                        .comparing(Article::getAuthorLength))
-                .collect(Collectors.toList())
-                .get(articles.size()-1)
-                .getAuthor();
+                .sorted(Comparator.comparing(Article::getAuthorLength).reversed()).toList().get(0).getAuthor();
     }
     public int sourceNewYorkTimes(List<Article> articles) {
         return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
