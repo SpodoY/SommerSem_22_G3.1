@@ -8,7 +8,8 @@ public enum Category {
     HEALTH ("q=health"),
     SCIENCE ("q=science"),
     SPORTS ("q=sports"),
-    TECHNOLOGY ("q=technology");
+    TECHNOLOGY ("q=technology"),
+    NONE("");
 
     private final String partOfUrl;
 
