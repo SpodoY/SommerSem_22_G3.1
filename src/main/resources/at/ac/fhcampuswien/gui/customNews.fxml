@@ -27,24 +27,6 @@
             </children>
         </VBox>
     </top>
-    <bottom>
-        <AnchorPane prefHeight="82.0" prefWidth="1006.0" style="-fx-background-color: #e5f1ef;" BorderPane.alignment="CENTER">
-            <children>
-            <Pane layoutX="-6.0" prefHeight="83.0" prefWidth="1006.0">
-               <children>
-                      <Button layoutX="478.0" layoutY="22.0" mnemonicParsing="false" onAction="#goToMainWindow" style="-fx-background-color: transparent; -fx-border-st: none;">
-                     <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="32.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../icons/left-arrow.png" />
-                           </image>
-                        </ImageView>
-                     </graphic>
-                  </Button>
-               </children></Pane>
-            </children>
-        </AnchorPane>
-    </bottom>
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
@@ -52,4 +34,122 @@
             </children>
         </AnchorPane>
     </center>
+    <bottom>
+        <VBox prefHeight="70.0" prefWidth="1006.0" style="-fx-background-color: #CCFBFE;" BorderPane.alignment="CENTER">
+            <children>
+                <HBox alignment="CENTER" prefHeight="50.0" prefWidth="1006.0" spacing="20.0">
+                    <children>
+                        <VBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="100.0">
+                            <children>
+                                <Label text="Most Articles">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" style="-fx-background-color: null;">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../icons/global-search.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="697.0" layoutY="10.0" prefHeight="50.0" prefWidth="100.0">
+                            <children>
+                                <Label text="New York Times">
+                                    <font>
+                                        <Font name="System Bold" size="12.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#newYorkTimesArticles" style="-fx-background-color: null;">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../icons/NYT.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="757.0" layoutY="10.0" prefHeight="50.0" prefWidth="100.0">
+                            <children>
+                                <Label text="Author Length">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#authorLength" style="-fx-background-color: null;">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../icons/arrows.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="877.0" layoutY="10.0" prefHeight="50.0" prefWidth="100.0">
+                            <children>
+                                <Label text="Sort By Length">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#sortByLength" style="-fx-background-color: null;">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../icons/download.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="751.0" layoutY="10.0" prefHeight="50.0" prefWidth="100.0">
+                            <children>
+                                <Label text="Title &lt; 15">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#lessThan15" style="-fx-background-color: null;">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../icons/fifteen.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                        <VBox alignment="TOP_CENTER" layoutX="817.0" layoutY="10.0" prefHeight="50.0" prefWidth="100.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Go Back">
+                                    <font>
+                                        <Font name="System Bold" size="14.0" />
+                                    </font>
+                                </Label>
+                                <Button mnemonicParsing="false" onAction="#goToMainWindow" style="-fx-background-color: transparent; -fx-border-style: none;">
+                                    <graphic>
+                                        <ImageView fitHeight="40.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                                            <image>
+                                                <Image url="@../icons/left-arrow.png" />
+                                            </image>
+                                        </ImageView>
+                                    </graphic>
+                                </Button>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </bottom>
 </BorderPane>

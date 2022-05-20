@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.NewsLoadingController">
+<BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.NewsLoadingController">
    <Label fx:id="austria"> </Label>
    <top>
       <VBox prefHeight="110.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
