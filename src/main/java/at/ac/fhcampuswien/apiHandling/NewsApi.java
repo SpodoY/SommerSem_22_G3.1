@@ -54,7 +54,12 @@ public class NewsApi {
 
         String url = BASEURL + category.toString();
         for (Enum part : args) {
-            url += "?" + part.toString();
+            if(part.toString() != ""){
+                url += "?" + part.toString();
+            }
+            else {
+                continue;
+            }
         }
 
         if (API_KEY == null) {
