@@ -5,27 +5,21 @@ import at.ac.fhcampuswien.apiHandling.NewsResponse;
 import at.ac.fhcampuswien.enums.Category;
 import at.ac.fhcampuswien.enums.Country;
 import at.ac.fhcampuswien.enums.Endpoint;
-import at.ac.fhcampuswien.exceptions.UrlException;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class AppController {
 
-    private static List<Article> intermediary = new ArrayList<>();
-
     // the Datastructures for containing all our Articles
-    private final List<Article> articles = new ArrayList<>();
+    private static final List<Article> articles = new ArrayList<>();
     private static final NewsApi newsApi = new NewsApi();
-    private final Gson gsonParser = new Gson();
+    private static final Gson gsonParser = new Gson();
 
-    public NewsResponse answer(String json) {
+    public static NewsResponse answer(String json) {
         NewsResponse data = gsonParser.fromJson(json, NewsResponse.class);
         return data;
     }
@@ -33,11 +27,18 @@ public class AppController {
     public AppController() {
     }
 
-
-    public void setArticles(List<Article> articles) {
+    public static void setArticles(List<Article> newArticles) {
         // clears list for new usage
-        this.articles.clear();
-        this.articles.addAll(articles);
+        articles.clear();
+        articles.addAll(newArticles);
+    }
+
+    public static List<Article> passCustomeNewsString(List<Enum> params) {
+        Enum[] allParams = params.toArray(new Enum[0]);
+        Enum[] withoutFirst = IntStream.range(1, allParams.length).mapToObj(i -> allParams[i]).toArray(Enum[]::new);
+        NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
+        setArticles(custom.getArticles());
+        return custom.getArticles();
     }
 
     public int getArticleCount() {
@@ -67,18 +68,6 @@ public class AppController {
         } catch (Exception e) {
             return new ArrayList<Article>();
         }
-    }
-
-    protected static List<Article> filterList(String query, List<Article> articles) {
-        String toLower = query.toLowerCase();                                                                           //we don´t want case sensitive querys ->everything to lower case
-        intermediary.clear();                                                                                           //a intermediary list which gets cleared everytime the function is called so we can reuse it
-        if (toLower.equals(""))
-            return intermediary;                                                                                        //if the query is empty we return a empty list (duuhhhh)
-        for (Article a : articles) {                                                                                    //a for-each loop which gets every avaiable article
-            if (a.getTitle().toLowerCase().contains(toLower))
-                intermediary.add(a);                                                                                    //checks if a title of an article (in lower case) contains our query. if it dooes it adds the article to our intermediary list
-        }
-        return intermediary;
     }
 
     public List<Article> headLessThan15() {

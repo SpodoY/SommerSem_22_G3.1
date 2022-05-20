@@ -54,7 +54,8 @@ public class NewsApi {
 
         String url = BASEURL + category.toString();
         for (Enum part : args) {
-            if(part.toString() != ""){
+            if(!part.toString().equals("")){
+                System.out.println(part);
                 url += "?" + part.toString();
             }
             else {

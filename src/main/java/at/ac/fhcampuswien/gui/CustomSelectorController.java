@@ -1,6 +1,7 @@
 package at.ac.fhcampuswien.gui;
 
-import at.ac.fhcampuswien.enums.Endpoint;
+import at.ac.fhcampuswien.AppController;
+import at.ac.fhcampuswien.enums.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -8,22 +9,25 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomSelectorController implements Initializable {
 
-    @FXML
-    private ChoiceBox<Endpoint> endpoint;
-
-    @FXML
-    private ChoiceBox<String> category;
-
-    private Endpoint endpointValue;
+    @FXML private ChoiceBox<Endpoint> endpoint;
+    @FXML private ChoiceBox<Category> category;
+    @FXML private ChoiceBox<Language> language;
+    @FXML private ChoiceBox<Country> country;
+    @FXML private ChoiceBox<Sortby> sortBy;
+    @FXML private ChoiceBox<Keywords> keyword;
 
     @FXML
     public void goToMainWindow(ActionEvent event) throws IOException
@@ -43,13 +47,66 @@ public class CustomSelectorController implements Initializable {
         endpoint.getItems().add(Endpoint.EVERYTHING);
         endpoint.getItems().add(Endpoint.TOP_HEADLINES);
         endpoint.setOnAction(e -> updateEndpoint());
+
+        // Adds all countries to Country-Dropdown
+        Arrays.stream(Country.values()).forEach(country -> this.country.getItems().add(country));
+
+        // Adds all Categories to Category-Dropdown
+        Arrays.stream(Category.values()).forEach(category -> this.category.getItems().add(category));
+
+        // Adds all languages to Language-Dropdown
+        Arrays.stream(Language.values()).forEach(language -> this.language.getItems().add(language));
+
+        // Adds all sortTypes to SortBy-Dropdown
+        Arrays.stream(Sortby.values()).forEach(sortby -> sortBy.getItems().add(sortby));
+
+        // Adds all keywords to KeyWord-Dropdown
+        Arrays.stream(Keywords.values()).forEach(keywords -> keyword.getItems().add(keywords));
+
+        country.setValue(Country.NONE);
+        category.setValue(Category.NONE);
+        language.setValue(Language.NONE);
+        sortBy.setValue(Sortby.NONE);
+        keyword.setValue(Keywords.NONE);
     }
 
     private void updateEndpoint() {
-        endpointValue = endpoint.getValue();
+        Endpoint endpointValue = endpoint.getValue();
 
-        System.out.println(endpointValue);
-        category.setDisable(endpointValue == Endpoint.TOP_HEADLINES);
-        //TODO: Add more Enums & Dropdowns
+        category.setDisable(endpointValue == Endpoint.EVERYTHING);
+        category.setValue(Category.NONE);
+
+        keyword.setDisable(endpointValue == Endpoint.TOP_HEADLINES);
+        keyword.setValue(Keywords.NONE);
+    }
+
+    private List<Enum> fetchDropdownData() {
+        List<Enum> callEnums = new ArrayList<>();
+        callEnums.add(endpoint.getValue());
+        callEnums.add(category.getValue());
+        callEnums.add(keyword.getValue());
+        callEnums.add(language.getValue());
+        callEnums.add(country.getValue());
+        callEnums.add(sortBy.getValue());
+        return callEnums;
+    }
+
+    public void makeAPICall() {
+        AppController.passCustomeNewsString(fetchDropdownData());
+        goToCustomNews();
+    }
+
+    @FXML
+    private void goToCustomNews() {
+        Parent tableViewParent = null;
+        try { tableViewParent = FXMLLoader.load(getClass().getResource("customNews.fxml")); }
+        catch (IOException e) { throw new RuntimeException(e); }
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        //This line gets the Stage information
+        Stage window = (Stage) endpoint.getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
     }
 }

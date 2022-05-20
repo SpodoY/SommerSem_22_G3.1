@@ -45,7 +45,7 @@ public class NewsLoadingController implements Initializable {
     private double imgWidth = 175;
     private double imgHeight = imgWidth / 16 * 9;
 
-    private void fillGuiWithArticles(List<Article> articles) {
+    public void fillGuiWithArticles(List<Article> articles) {
 
         articleNum.setText(String.format("Number of articles: %d", articles.size()));
 
@@ -125,7 +125,7 @@ public class NewsLoadingController implements Initializable {
         List<Article> articles = new ArrayList<>();
         if (austria != null) articles = app.getTopHeadlinesAustria();
         if (bitcoin != null) articles = app.getAllNewsBitcoin();
-        if (customNews != null) System.out.println(""); //TODO: Implement custome news loading
+        if (customNews != null) articles = app.getArticles();
         fillGuiWithArticles(articles);
     }
 }

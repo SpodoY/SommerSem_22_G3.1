@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.CustomSelectorController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.CustomSelectorController">
     <bottom>
         <HBox alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="70.0" prefWidth="1006.0" style="-fx-background-color: #E6EBE0;">
             <children>
@@ -49,6 +49,55 @@
                   <ChoiceBox fx:id="category" prefHeight="30.0" prefWidth="180.0" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="331.0" prefHeight="30.0" prefWidth="1006.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="104.0" text="Country" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="country" prefHeight="30.0" prefWidth="180.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="351.0" prefHeight="30.0" prefWidth="1006.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="104.0" text="Language" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="language" prefHeight="30.0" prefWidth="180.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="371.0" prefHeight="30.0" prefWidth="1006.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="104.0" text="SortBy" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="sortBy" prefHeight="30.0" prefWidth="180.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" layoutX="10.0" layoutY="391.0" prefHeight="30.0" prefWidth="1006.0" spacing="20.0">
+               <children>
+                  <Label alignment="CENTER" prefHeight="30.0" prefWidth="104.0" text="KeyWord" HBox.hgrow="ALWAYS">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <ChoiceBox fx:id="keyword" prefHeight="30.0" prefWidth="180.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <Button fx:id="submit" mnemonicParsing="false" onAction="#makeAPICall" style="-fx-background-color: null;">
+               <graphic>
+                  <ImageView fitHeight="64.0" fitWidth="64.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../icons/send.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </VBox>
    </center>

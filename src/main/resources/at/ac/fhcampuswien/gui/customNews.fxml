@@ -12,7 +12,7 @@
             <children>
                 <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
                     <children>
-                        <Label text="Top Headlines BitCoin">
+                        <Label text="Custome News">
                             <font>
                                 <Font name="Arial Bold" size="42.0" />
                             </font>
