@@ -69,7 +69,7 @@
                                     <graphic>
                                         <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@../icons/kisspng-new-york-city-the-new-york-times-company-logo-jour-vp-in-finance-develops-total-eclipse-of-the-heart-5b633d0edadb15.1462106615332303508964.png" />
+                                                <Image url="@../icons/NYT.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
