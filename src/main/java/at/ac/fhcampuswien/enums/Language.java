@@ -14,7 +14,8 @@ public enum Language {
     RU ("language=ru"),
     SE ("language=se"),
     UD ("language=ud"),
-    ZH ("language=zh");
+    ZH ("language=zh"),
+    NONE("");
 
     private final String partOfUrl;
 

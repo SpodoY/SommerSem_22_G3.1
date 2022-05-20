@@ -7,7 +7,8 @@ package at.ac.fhcampuswien.enums;
  */
 public enum Endpoint {
     EVERYTHING ("everything"),
-    TOP_HEADLINES ("top-headlines");
+    TOP_HEADLINES ("top-headlines"),
+    NONE("");
 
     private final String partOfUrl;
 

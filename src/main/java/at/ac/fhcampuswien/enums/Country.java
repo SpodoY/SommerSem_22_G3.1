@@ -54,7 +54,8 @@ public enum Country {
     UA ("country=ua"),
     US ("country=us"),
     VE ("country=ve"),
-    ZA ("country=za");
+    ZA ("country=za"),
+    NONE("");
 
     private final String partOfUrl;
 

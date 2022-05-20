@@ -6,7 +6,8 @@ public enum Sortby {
     //articles from popular sources and publishers come first.
     POPULARITY ("sortBy=popularity"),
     //newest articles come first.
-    PUBLISHED_AT ("sortBy=publishedAt");
+    PUBLISHED_AT ("sortBy=publishedAt"),
+    NONE("");
 
     private final String partOfUrl;
 

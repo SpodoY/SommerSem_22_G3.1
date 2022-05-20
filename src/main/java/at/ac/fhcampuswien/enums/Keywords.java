@@ -10,7 +10,8 @@ public enum Keywords {
     HUAWEI("q=huawei"),
     TWITTER("q=twitter"),
     AMAZON("q=amazon"),
-    GOOGEL("q=googel");
+    GOOGEL("q=googel"),
+    NONE("");
 
 
     private final String partOfUrl;
