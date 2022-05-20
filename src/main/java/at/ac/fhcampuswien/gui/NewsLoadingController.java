@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.gui;
 
 import at.ac.fhcampuswien.AppController;
 import at.ac.fhcampuswien.Article;
+import at.ac.fhcampuswien.apiHandling.PopUp;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -120,6 +121,31 @@ public class NewsLoadingController implements Initializable {
         window.show();
     }
 
+    @FXML
+    public void mostArticles() {
+        //TODO: Implement when monkeys done with their part <3
+    }
+
+    public void newYorkTimesArticles() {
+        PopUp.createNotification(String.format("There are %d New York Times Articles", app.sourceNewYorkTimes()));
+    }
+
+    public void authorLength() {
+        PopUp.createNotification(String.format("The longest Author is: %s", app.authorLength()));
+    }
+
+    public void sortByLength() {
+        clearList();
+        AppController.setArticles(app.sortByLengthDescending());
+        fillGuiWithArticles(app.getArticles());
+    }
+
+    public void lessThan15() {
+        clearList();
+        AppController.setArticles(app.headLessThan15());
+        fillGuiWithArticles(app.getArticles());
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         List<Article> articles = new ArrayList<>();
@@ -127,5 +153,9 @@ public class NewsLoadingController implements Initializable {
         if (bitcoin != null) articles = app.getAllNewsBitcoin();
         if (customNews != null) articles = app.getArticles();
         fillGuiWithArticles(articles);
+    }
+
+    private void clearList() {
+        newsList.getItems().clear();
     }
 }

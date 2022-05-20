@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.exceptions;
 
-import at.ac.fhcampuswien.apiHandling.NewsErrorAlert;
+import at.ac.fhcampuswien.apiHandling.PopUp;
 
 public class UrlException extends Exception {
 
@@ -8,7 +8,7 @@ public class UrlException extends Exception {
 
     public UrlException(){
         super(MESSAGE);
-        NewsErrorAlert.createAlert(MESSAGE);
+        PopUp.createAlert(MESSAGE);
     }
     UrlException(String message){
         super(message);

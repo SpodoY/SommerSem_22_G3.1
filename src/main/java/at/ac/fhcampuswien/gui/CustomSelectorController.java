@@ -9,7 +9,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
@@ -63,11 +62,8 @@ public class CustomSelectorController implements Initializable {
         // Adds all keywords to KeyWord-Dropdown
         Arrays.stream(Keywords.values()).forEach(keywords -> keyword.getItems().add(keywords));
 
-        country.setValue(Country.NONE);
-        category.setValue(Category.NONE);
-        language.setValue(Language.NONE);
-        sortBy.setValue(Sortby.NONE);
-        keyword.setValue(Keywords.NONE);
+        country.setValue(Country.NONE); category.setValue(Category.NONE);
+        language.setValue(Language.NONE); sortBy.setValue(Sortby.NONE); keyword.setValue(Keywords.NONE);
     }
 
     private void updateEndpoint() {
@@ -98,7 +94,7 @@ public class CustomSelectorController implements Initializable {
 
     @FXML
     private void goToCustomNews() {
-        Parent tableViewParent = null;
+        Parent tableViewParent;
         try { tableViewParent = FXMLLoader.load(getClass().getResource("customNews.fxml")); }
         catch (IOException e) { throw new RuntimeException(e); }
         Scene tableViewScene = new Scene(tableViewParent);

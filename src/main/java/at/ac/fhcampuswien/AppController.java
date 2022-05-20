@@ -71,6 +71,7 @@ public class AppController {
     }
 
     public List<Article> headLessThan15() {
+        //TODO: Check if List Size > 0
         return articles.stream().filter(a -> a.getTitle().length() < 15).collect(Collectors.toList());
     }
 
@@ -90,11 +91,11 @@ public class AppController {
         }
     }
 
-    public String authorLength(List<Article> articles) {
+    public String authorLength() {
         return articles.stream()
                 .sorted(Comparator.comparing(Article::getAuthorLength).reversed()).toList().get(0).getAuthor();
     }
-    public int sourceNewYorkTimes(List<Article> articles) {
+    public int sourceNewYorkTimes() {
         return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
     }
 

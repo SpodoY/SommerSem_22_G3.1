@@ -1,13 +1,13 @@
 package at.ac.fhcampuswien.exceptions;
 
-import at.ac.fhcampuswien.apiHandling.NewsErrorAlert;
+import at.ac.fhcampuswien.apiHandling.PopUp;
 
 public class HttpException extends Exception {
 
     private final static String MESSAGE = "Response status is NOT 'ok'!";
     public HttpException() {
         super(MESSAGE);
-        NewsErrorAlert.createAlert(MESSAGE);
+        PopUp.createAlert(MESSAGE);
     }
 
     HttpException(String message) {

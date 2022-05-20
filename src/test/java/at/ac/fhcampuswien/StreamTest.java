@@ -51,7 +51,7 @@ public class StreamTest {
             // close reader
             reader.close();
 
-            app.setArticles(user.getArticles());
+            AppController.setArticles(user.getArticles());
             resetList.addAll(user.getArticles());
 
         } catch (Exception ex) {
@@ -67,13 +67,13 @@ public class StreamTest {
         int expected = 1;
 
         //Act
-        app.setArticles(app.headLessThan15());
+        AppController.setArticles(app.headLessThan15());
 
         //Assert
         assertEquals(expected, app.getArticleCount());
 
         //Rest
-        app.setArticles(resetList);
+        AppController.setArticles(resetList);
     }
 
     @Test
@@ -83,14 +83,14 @@ public class StreamTest {
 
 
         //Act
-        app.setArticles(app.sortByLengthDescending());
+        AppController.setArticles(app.sortByLengthDescending());
 
         //Assert
         for (int i = 0; i < resetList.size()-1; i++) {
             assertEquals(resetList.get(i), app.getArticles().get(i));
         }
         //Rest
-        app.setArticles(resetList);
+        AppController.setArticles(resetList);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class StreamTest {
             assertNotEquals(functionVictim.get(i), changed.get(i));
         }
         //Rest
-        app.setArticles(resetList);
+        AppController.setArticles(resetList);
     }
 
     @Test
@@ -119,13 +119,14 @@ public class StreamTest {
         String afterFunction;
 
         //Act
-        afterFunction = app.authorLength(resetList);
+        AppController.setArticles(resetList);
+        afterFunction = app.authorLength();
 
         //Assert
         assertEquals(correct, afterFunction);
 
         //Rest
-        app.setArticles(resetList);
+        AppController.setArticles(resetList);
     }
 
     @Test
@@ -136,13 +137,13 @@ public class StreamTest {
         String afterFunction;
 
         //Act
-        afterFunction = app.authorLength(app.getArticles());
+        afterFunction = app.authorLength();
 
         //Assert
         assertEquals(correct.length(), afterFunction.length());
 
         //Rest
-        app.setArticles(resetList);
+        AppController.setArticles(resetList);
     }
 
     //Next test requires an implementation of sourcedata like id or name
@@ -153,13 +154,13 @@ public class StreamTest {
         int afterFunction;
 
         //Act
-        afterFunction= app.sourceNewYorkTimes(app.getArticles());
+        afterFunction= app.sourceNewYorkTimes();
 
         //Assert
         assertEquals(3, afterFunction);
 
         //Rest
-        app.setArticles(resetList);
+        AppController.setArticles(resetList);
 
     }
     @Test

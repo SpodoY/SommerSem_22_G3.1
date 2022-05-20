@@ -64,7 +64,7 @@ public class Article implements Comparable<Article> {
     @Override
     // overriding to string to get a nice output
     public String toString() {
-        return String.format("Title: %s, Author: %s%n", title, author);
+        return String.format("Title: %s, Author: %s, Description: %s%n", title, author, description);
     }
 
 

@@ -1,10 +1,6 @@
 package at.ac.fhcampuswien.exceptions;
 
-import at.ac.fhcampuswien.apiHandling.NewsErrorAlert;
-
-import java.io.IOException;
-import java.net.URL;
-import java.net.URLConnection;
+import at.ac.fhcampuswien.apiHandling.PopUp;
 
 public class NoWifiException extends Exception{
 
@@ -12,7 +8,7 @@ public class NoWifiException extends Exception{
 
     public NoWifiException(){
         super(MESSAGE);
-        NewsErrorAlert.createAlert(MESSAGE);
+        PopUp.createAlert(MESSAGE);
     }
 
     NoWifiException(String message){
