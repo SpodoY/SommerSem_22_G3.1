@@ -30,7 +30,12 @@ public class AppController {
     public static void setArticles(List<Article> newArticles) {
         // clears list for new usage
         articles.clear();
-        articles.addAll(newArticles);
+        if(newArticles.size() > 0){
+            articles.addAll(newArticles);
+        }else {
+            newArticles.add(new Article(new Source("1","one"),"Your News App Team","No articles match your Requirements", "null", "null",null,"","null"));
+            articles.addAll(newArticles);
+        }
     }
 
     public static List<Article> passCustomeNewsString(List<Enum> params) {
@@ -79,17 +84,6 @@ public class AppController {
         return articles.stream().sorted().collect(Collectors.toList());
     }
 
-    public void saveHTML(Article a) throws IOException {
-        String url = a.getUrl();
-        try {
-            newsApi.downladAnArticle(url, a);
-        } catch (IOException e) {
-            System.out.println(url);
-            System.out.println("Invalid url created check arguments");
-        } catch (Exception e) {
-            System.out.println("Oh no! We did a big fucky wucky! It's time to get in the forever-box owo");
-        }
-    }
 
     public String authorLength() {
         return articles.stream()
@@ -107,4 +101,16 @@ public class AppController {
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
     }*/
+
+    public void saveHTML(Article a) throws IOException {
+        String url = a.getUrl();
+        try {
+            newsApi.downladAnArticle(url, a);
+        } catch (IOException e) {
+            System.out.println(url);
+            System.out.println("Invalid url created check arguments");
+        } catch (Exception e) {
+            System.out.println("Oh no! We did a big fucky wucky! It's time to get in the forever-box owo");
+        }
+    }
 }

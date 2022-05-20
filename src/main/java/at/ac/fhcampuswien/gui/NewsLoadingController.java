@@ -103,9 +103,14 @@ public class NewsLoadingController implements Initializable {
      * @return Formatted Date in 'dd.MM.yyyy HH:mm:ss' format
      */
     private static String formatDate(String date) {
-        DateTimeFormatter pattern = DateTimeFormatter.ISO_DATE_TIME;
-        LocalDateTime dateTime = LocalDateTime.parse(date, pattern);
-        return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        try{
+            DateTimeFormatter pattern = DateTimeFormatter.ISO_DATE_TIME;
+            LocalDateTime dateTime = LocalDateTime.parse(date, pattern);
+            return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
+        }catch (Exception e){
+            return "now ;)";
+        }
+
     }
 
     @FXML
