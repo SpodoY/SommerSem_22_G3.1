@@ -38,7 +38,7 @@ public class NewsApi {
                 return key;
             }
         } catch (IOException | NewsApiException | ApiKeyExceptions e) {
-            System.out.println("A problem in NewsApi occured: " + e.getMessage());
+            System.out.println(e.getMessage());
         }
         return null;
     }
@@ -56,15 +56,11 @@ public class NewsApi {
         for (Enum part : args) {
             url += "?" + part.toString();
         }
-        try {
-            if (API_KEY == null) {
-                throw new ApiKeyExceptions();
-            } else {
-                url += API_KEY;
-            }
-        } catch (ApiKeyExceptions e) {
-            System.out.println(e.getMessage());
+
+        if (API_KEY == null) {
             return "";
+        } else {
+            url += API_KEY;
         }
 
         return url;

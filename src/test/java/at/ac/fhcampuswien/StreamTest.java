@@ -64,12 +64,13 @@ public class StreamTest {
     @DisplayName("Test Stream for headlines smaller than 15 digits")
     public void testStreamHeadlines() {
         //Arrange
+        int expected = 1;
 
         //Act
         app.setArticles(app.headLessThan15());
 
         //Assert
-        assertEquals(1, app.getArticleCount());
+        assertEquals(expected, app.getArticleCount());
 
         //Rest
         app.setArticles(resetList);

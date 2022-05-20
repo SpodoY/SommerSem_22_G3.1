@@ -13,7 +13,7 @@ public class NewsApiException extends Exception{
 
     NewsApiException(){
         super(MESSAGE);
-        NewsErrorAlert.createAlert(MESSAGE);
+        //NewsErrorAlert.createAlert(MESSAGE);
     }
 
     NewsApiException(String message) {
