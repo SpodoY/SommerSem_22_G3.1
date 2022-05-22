@@ -77,6 +77,10 @@ public class Article implements Comparable<Article> {
         return source;
     }
 
+    public String getSourceName() {
+       return source.getName();
+    }
+
     @Override
     public int compareTo(Article a) {
         if (getDescription().length() == a.getDescription().length()) {

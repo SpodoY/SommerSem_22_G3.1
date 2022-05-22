@@ -128,7 +128,7 @@ public class NewsLoadingController implements Initializable {
 
     @FXML
     public void mostArticles() {
-        //TODO: Implement when monkeys done with their part <3
+        PopUp.createNotification(String.format("%s provides most Articles", app.sourceMostArticles()));
     }
 
     public void newYorkTimesArticles() {

@@ -163,6 +163,28 @@ public class StreamTest {
         AppController.setArticles(resetList);
 
     }
+
+
+    @Test
+    @DisplayName("Test Stream for headlines smaller than 15 digits")
+    public void testSourceMostArticles() {
+
+        //Arrange
+        String expected = "Gizmodo.com";
+
+
+        //Act
+        String actual = app.sourceMostArticles();
+
+        //Assert
+        assertEquals(expected, actual);
+
+        //Rest
+        AppController.setArticles(resetList);
+    }
+
+
+
     @Test
     public void chekTheDownloadFunction(){
         try {
@@ -171,6 +193,7 @@ public class StreamTest {
             throw new RuntimeException(e);
         }
     }
+
 
 }
 

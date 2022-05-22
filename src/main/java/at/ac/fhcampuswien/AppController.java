@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -93,14 +94,13 @@ public class AppController {
         return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
     }
 
-    //Needs a new implementation Sourcename is now articles.getSource.getName
-    /*public String sourceMostArticles(List<Article> articles) {
-        return articles.stream().map(Article::getAuthor)
+    public String sourceMostArticles() {
+        return articles.stream().map(Article::getSourceName)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
-    }*/
+    }
 
     public void saveHTML(Article a) throws IOException {
         String url = a.getUrl();

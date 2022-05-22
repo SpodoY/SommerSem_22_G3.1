@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.geometry.Insets?>
-<BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.NewsLoadingController">
+<BorderPane prefHeight="702.0" prefWidth="1006.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.ac.fhcampuswien.gui.NewsLoadingController">
     <Label fx:id="bitcoin"> </Label>
     <top>
         <VBox prefHeight="110.0" prefWidth="1006.0" BorderPane.alignment="CENTER">
@@ -47,7 +46,7 @@
                                         <Font name="System Bold" size="14.0" />
                                     </font>
                                 </Label>
-                                <Button mnemonicParsing="false" style="-fx-background-color: null;">
+                                <Button mnemonicParsing="false" onAction="#mostArticles" style="-fx-background-color: null;">
                                     <graphic>
                                         <ImageView fitHeight="40.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
