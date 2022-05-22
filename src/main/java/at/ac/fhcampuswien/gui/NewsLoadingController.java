@@ -31,17 +31,23 @@ import java.util.ResourceBundle;
 
 public class NewsLoadingController implements Initializable {
 
-    @FXML AppController app = new AppController();
+    @FXML
+    AppController app = new AppController();
 
-    @FXML ListView<HBox> newsList;
+    @FXML
+    ListView<HBox> newsList;
 
-    @FXML Label articleNum;
+    @FXML
+    Label articleNum;
 
-    @FXML private Label austria;
+    @FXML
+    private Label austria;
 
-    @FXML private Label bitcoin;
+    @FXML
+    private Label bitcoin;
 
-    @FXML private Label customNews;
+    @FXML
+    private Label customNews;
 
     private double imgWidth = 175;
     private double imgHeight = imgWidth / 16 * 9;
@@ -61,8 +67,12 @@ public class NewsLoadingController implements Initializable {
             Runnable task = () -> {
                 Platform.runLater(() -> {
                     Image articlePicture;
-                    if (a.getUrlToImage() != null) articlePicture = new Image(a.getUrlToImage(),imgWidth, imgHeight, false, false);
-                    else articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", imgWidth, imgHeight, false, false);
+                    try {
+                            articlePicture = new Image(a.getUrlToImage(), imgWidth, imgHeight, false, false);
+                    } catch (Exception e) {
+                        articlePicture = new Image("at/ac/fhcampuswien/imgNotFound.png", imgWidth, imgHeight, false, false);
+                    }
+
 
                     ImageView articlePictureView = new ImageView(articlePicture);
                     image.getChildren().add(articlePictureView);
@@ -75,7 +85,7 @@ public class NewsLoadingController implements Initializable {
 
             //ArticleInfo
             Label title = new Label(a.getTitle());
-            title.setPadding(new Insets(0, 0,10,0 ));
+            title.setPadding(new Insets(0, 0, 10, 0));
             title.setStyle("-fx-font: 12 Verdana; -fx-font-weight: bold;");
             title.setWrapText(true);
 
@@ -99,28 +109,28 @@ public class NewsLoadingController implements Initializable {
 
     /**
      * Takes the Date format given by the NewsApi and converts it into a more readable form
+     *
      * @param date The given date by the NewsApi
      * @return Formatted Date in 'dd.MM.yyyy HH:mm:ss' format
      */
     private static String formatDate(String date) {
-        try{
+        try {
             DateTimeFormatter pattern = DateTimeFormatter.ISO_DATE_TIME;
             LocalDateTime dateTime = LocalDateTime.parse(date, pattern);
             return dateTime.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm:ss"));
-        }catch (Exception e){
+        } catch (Exception e) {
             return "now ;)";
         }
 
     }
 
     @FXML
-    public void goToMainWindow(ActionEvent event) throws IOException
-    {
+    public void goToMainWindow(ActionEvent event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("startingWindow.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         //This line gets the Stage information
-        Stage window = (Stage)((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
         window.show();
