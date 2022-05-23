@@ -5,6 +5,7 @@ import at.ac.fhcampuswien.apiHandling.NewsResponse;
 import at.ac.fhcampuswien.enums.Category;
 import at.ac.fhcampuswien.enums.Country;
 import at.ac.fhcampuswien.enums.Endpoint;
+import at.ac.fhcampuswien.enums.Keywords;
 import at.ac.fhcampuswien.gui.NewsLoadingController;
 import com.google.gson.Gson;
 import javafx.scene.control.ListView;
@@ -38,11 +39,18 @@ public class AppController {
     }
 
     public static List<Article> passCustomeNewsString(List<Enum> params) {
-        Enum[] allParams = params.toArray(new Enum[0]);
-        Enum[] withoutFirst = IntStream.range(1, allParams.length).mapToObj(i -> allParams[i]).toArray(Enum[]::new);
-        NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
-        setArticles(custom.getArticles());
-        return custom.getArticles();
+        try {
+            Enum[] allParams = params.toArray(new Enum[0]);
+            Enum[] withoutFirst = IntStream.range(1, allParams.length).mapToObj(i -> allParams[i]).toArray(Enum[]::new);
+
+            NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
+            setArticles(custom.getArticles());
+            return custom.getArticles();
+        }catch (Exception e){
+            List<Article> errorList = new ArrayList<>();
+            errorList.add(new Article(new Source("1", "one"), "Your News App Team", "No articles match your Requirements", "null", "null", null, "", "null"));
+            return errorList;
+        }
     }
 
     public int getArticleCount() {

@@ -11,6 +11,7 @@ public enum Keywords {
     TWITTER("q=twitter"),
     AMAZON("q=amazon"),
     GOOGEL("q=googel"),
+    EVERYTHING("q=everything"),
     NONE("");
 
 

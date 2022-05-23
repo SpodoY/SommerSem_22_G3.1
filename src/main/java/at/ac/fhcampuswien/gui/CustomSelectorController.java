@@ -88,7 +88,11 @@ public class CustomSelectorController implements Initializable {
     }
 
     public void makeAPICall() {
-        AppController.passCustomeNewsString(fetchDropdownData());
+        List<Enum> callEnums = new ArrayList<>();
+        callEnums = fetchDropdownData();
+
+
+        AppController.passCustomeNewsString(callEnums);
         goToCustomNews();
     }
 

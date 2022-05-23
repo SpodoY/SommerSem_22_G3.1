@@ -53,6 +53,7 @@ public class NewsLoadingController implements Initializable {
     private Label customNews;
 
     private double imgWidth = 175;
+
     private double imgHeight = imgWidth / 16 * 9;
 
     public void fillGuiWithArticles(List<Article> articles) {
