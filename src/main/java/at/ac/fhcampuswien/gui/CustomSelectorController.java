@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.gui;
 
 import at.ac.fhcampuswien.AppController;
 import at.ac.fhcampuswien.enums.*;
+import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
@@ -27,6 +29,7 @@ public class CustomSelectorController implements Initializable {
     @FXML private ChoiceBox<Country> country;
     @FXML private ChoiceBox<Sortby> sortBy;
     @FXML private ChoiceBox<Keywords> keyword;
+    @FXML private Button submit;
 
     @FXML
     public void goToMainWindow(ActionEvent event) throws IOException
@@ -43,6 +46,7 @@ public class CustomSelectorController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         endpoint.getItems().add(Endpoint.EVERYTHING);
         endpoint.getItems().add(Endpoint.TOP_HEADLINES);
         endpoint.setOnAction(e -> updateEndpoint());
@@ -62,8 +66,16 @@ public class CustomSelectorController implements Initializable {
         // Adds all keywords to KeyWord-Dropdown
         Arrays.stream(Keywords.values()).forEach(keywords -> keyword.getItems().add(keywords));
 
-        country.setValue(Country.NONE); category.setValue(Category.NONE);
+        country.setValue(Country.NONE); category.setValue(Category.NONE); endpoint.setValue(Endpoint.NONE);
         language.setValue(Language.NONE); sortBy.setValue(Sortby.NONE); keyword.setValue(Keywords.NONE);
+
+        // Disables submit-button is either endpoint is not set or category/keyword with corresponding
+        // endpoint is not set
+        submit.disableProperty().bind(Bindings.isEmpty(keyword.valueProperty().asString())
+                .and(Bindings.equal("everything", endpoint.valueProperty().asString()))
+                .or((Bindings.isEmpty(category.valueProperty().asString())
+                        .and(Bindings.equal("top-headlines", endpoint.valueProperty().asString())))
+                ).or(Bindings.isEmpty(endpoint.valueProperty().asString())));
     }
 
     private void updateEndpoint() {
