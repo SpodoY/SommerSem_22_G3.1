@@ -5,7 +5,10 @@ import at.ac.fhcampuswien.apiHandling.NewsResponse;
 import at.ac.fhcampuswien.enums.Category;
 import at.ac.fhcampuswien.enums.Country;
 import at.ac.fhcampuswien.enums.Endpoint;
+import at.ac.fhcampuswien.gui.NewsLoadingController;
 import com.google.gson.Gson;
+import javafx.scene.control.ListView;
+import javafx.scene.layout.HBox;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,12 +34,7 @@ public class AppController {
     public static void setArticles(List<Article> newArticles) {
         // clears list for new usage
         articles.clear();
-        if(newArticles.size() > 0){
-            articles.addAll(newArticles);
-        }else {
-            newArticles.add(new Article(new Source("1","one"),"Your News App Team","No articles match your Requirements", "null", "null",null,"","null"));
-            articles.addAll(newArticles);
-        }
+        articles.addAll(newArticles);
     }
 
     public static List<Article> passCustomeNewsString(List<Enum> params) {
@@ -90,9 +88,20 @@ public class AppController {
         return articles.stream()
                 .sorted(Comparator.comparing(Article::getAuthorLength).reversed()).toList().get(0).getAuthor();
     }
+
+    public List<Article> guiAuthorLength(){
+        return articles.stream().filter(e->e.getAuthorLength() == authorLength().length()).collect(Collectors.toList());
+    }
+
     public int sourceNewYorkTimes() {
         return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
     }
+
+    public List<Article> guiSourceNewYorkTimes(){
+        return articles.stream().filter(e->e.getAuthor().contains("New York Times")).collect(Collectors.toList());
+    }
+
+
 
     public String sourceMostArticles() {
         return articles.stream().map(Article::getSourceName)
@@ -101,6 +110,16 @@ public class AppController {
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
                 .orElse(null);
     }
+
+    public List<Article> guiSourceMostArticles(){
+        return articles.stream().filter(e->e.getSourceName().contains(sourceMostArticles())).collect(Collectors.toList());
+    }
+
+    public List<Article> errorList() {
+        List<Article> errorList = new ArrayList<>();
+        errorList.add(new Article(new Source("1", "one"), "Your News App Team", "No articles match your Requirements", "null", "null", null, "", "null"));
+        return errorList;
+        }
 
     public void saveHTML(Article a) throws IOException {
         String url = a.getUrl();

@@ -28,6 +28,7 @@ public class Article implements Comparable<Article> {
     }
 
     public String getAuthor() {
+        if (author==null) return "Not found";
         return author;
     }
 
