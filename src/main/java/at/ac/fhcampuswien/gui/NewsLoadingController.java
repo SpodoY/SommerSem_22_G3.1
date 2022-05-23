@@ -2,6 +2,7 @@ package at.ac.fhcampuswien.gui;
 
 import at.ac.fhcampuswien.AppController;
 import at.ac.fhcampuswien.Article;
+import at.ac.fhcampuswien.Source;
 import at.ac.fhcampuswien.apiHandling.PopUp;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -28,6 +29,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class NewsLoadingController implements Initializable {
 
@@ -53,6 +55,7 @@ public class NewsLoadingController implements Initializable {
     private double imgHeight = imgWidth / 16 * 9;
 
     public void fillGuiWithArticles(List<Article> articles) {
+        newsList.getItems().clear();
 
         articleNum.setText(String.format("Number of articles: %d", articles.size()));
 
@@ -104,7 +107,9 @@ public class NewsLoadingController implements Initializable {
             container.setAlignment(Pos.CENTER_RIGHT);
             container.setMaxWidth(windowWidth - 35);
             newsList.getItems().add(container);
+
         }
+        checkIfEmpty();
     }
 
     /**
@@ -138,27 +143,26 @@ public class NewsLoadingController implements Initializable {
 
     @FXML
     public void mostArticles() {
+        fillGuiWithArticles(app.getArticles().stream().filter(article -> article.getSourceName().contains(app.sourceMostArticles())).collect(Collectors.toList()));
         PopUp.createNotification(String.format("%s provides most Articles", app.sourceMostArticles()));
     }
 
     public void newYorkTimesArticles() {
+        fillGuiWithArticles(app.getArticles().stream().filter(e -> e.getSource().getName().contains("New York Times")).collect(Collectors.toList()));
         PopUp.createNotification(String.format("There are %d New York Times Articles", app.sourceNewYorkTimes()));
     }
 
     public void authorLength() {
+        fillGuiWithArticles(app.getArticles().stream().filter(e->e.getAuthorLength() == app.authorLength().length()).collect(Collectors.toList()));
         PopUp.createNotification(String.format("The longest Author is: %s", app.authorLength()));
     }
 
     public void sortByLength() {
-        clearList();
-        AppController.setArticles(app.sortByLengthDescending());
-        fillGuiWithArticles(app.getArticles());
+        fillGuiWithArticles(app.sortByLengthDescending());
     }
 
     public void lessThan15() {
-        clearList();
-        AppController.setArticles(app.headLessThan15());
-        fillGuiWithArticles(app.getArticles());
+        fillGuiWithArticles(app.headLessThan15());
     }
 
     @Override
@@ -170,7 +174,11 @@ public class NewsLoadingController implements Initializable {
         fillGuiWithArticles(articles);
     }
 
-    private void clearList() {
-        newsList.getItems().clear();
+    private void checkIfEmpty(){
+        List<Article> errorList = new ArrayList<>();
+        errorList.add(new Article(new Source("1","one"),"Your News App Team","No articles match your Requirements", "null", "null",null,"","null"));
+        if (newsList.getItems().size()< 1){
+            fillGuiWithArticles(errorList);
+        }
     }
 }
