@@ -36,6 +36,7 @@ public class AppController {
         // clears list for new usage
         articles.clear();
         articles.addAll(newArticles);
+        System.out.println("hi");
     }
 
     public static List<Article> passCustomeNewsString(List<Enum> params) {
