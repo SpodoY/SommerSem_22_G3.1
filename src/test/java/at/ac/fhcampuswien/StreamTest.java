@@ -2,6 +2,10 @@
 package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.apiHandling.NewsResponse;
+import at.ac.fhcampuswien.downloader.Downloader;
+import at.ac.fhcampuswien.downloader.ParallelDownloader;
+import at.ac.fhcampuswien.downloader.SequentialDownloader;
+import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -27,11 +31,11 @@ public class StreamTest {
     private static AppController app;
     private static Gson gson;
     private static final List<Article> resetList = new ArrayList<>();
+    private static Downloader downloader;
 
     @BeforeAll
     static void init() {
         app = new AppController();
-
         gson = new Gson();
 
         try {
@@ -191,6 +195,18 @@ public class StreamTest {
                 app.saveHTML(resetList.get(0));
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void checkTheDownloadFunction2(){
+        Downloader parDownloader = new ParallelDownloader();
+        Downloader seqDownloader = new SequentialDownloader();
+        try{
+            app.downloadURLs(parDownloader);
+            app.downloadURLs(seqDownloader);
+        } catch (NewsAPIExceptionLeo newsAPIExceptionLeo) {
+            newsAPIExceptionLeo.printStackTrace();
         }
     }
 

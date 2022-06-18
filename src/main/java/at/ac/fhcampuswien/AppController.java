@@ -2,23 +2,23 @@ package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.apiHandling.NewsApi;
 import at.ac.fhcampuswien.apiHandling.NewsResponse;
+import at.ac.fhcampuswien.downloader.Downloader;
 import at.ac.fhcampuswien.enums.Category;
 import at.ac.fhcampuswien.enums.Country;
 import at.ac.fhcampuswien.enums.Endpoint;
-import at.ac.fhcampuswien.enums.Keywords;
-import at.ac.fhcampuswien.gui.NewsLoadingController;
+import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 import com.google.gson.Gson;
-import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class AppController {
+import static java.util.stream.Collectors.flatMapping;
+import static java.util.stream.Collectors.toMap;
 
+public class AppController {
     // the Datastructures for containing all our Articles
     private static final List<Article> articles = new ArrayList<>();
     private static final NewsApi newsApi = new NewsApi();
@@ -46,7 +46,7 @@ public class AppController {
             NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
             setArticles(custom.getArticles());
             return custom.getArticles();
-        }catch (Exception e){
+        } catch (Exception e) {
             List<Article> errorList = new ArrayList<>();
             errorList.add(new Article(new Source("1", "one"), "Your News App Team", "No articles match your Requirements", "null", "null", null, "", "null"));
             return errorList;
@@ -97,18 +97,17 @@ public class AppController {
                 .sorted(Comparator.comparing(Article::getAuthorLength).reversed()).toList().get(0).getAuthor();
     }
 
-    public List<Article> guiAuthorLength(){
-        return articles.stream().filter(e->e.getAuthorLength() == authorLength().length()).collect(Collectors.toList());
+    public List<Article> guiAuthorLength() {
+        return articles.stream().filter(e -> e.getAuthorLength() == authorLength().length()).collect(Collectors.toList());
     }
 
     public int sourceNewYorkTimes() {
         return (int) articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).count();
     }
 
-    public List<Article> guiSourceNewYorkTimes(){
-        return articles.stream().filter(e->e.getAuthor().contains("New York Times")).collect(Collectors.toList());
+    public List<Article> guiSourceNewYorkTimes() {
+        return articles.stream().filter(e -> e.getAuthor().contains("New York Times")).collect(Collectors.toList());
     }
-
 
 
     public String sourceMostArticles() {
@@ -119,15 +118,15 @@ public class AppController {
                 .orElse(null);
     }
 
-    public List<Article> guiSourceMostArticles(){
-        return articles.stream().filter(e->e.getSourceName().contains(sourceMostArticles())).collect(Collectors.toList());
+    public List<Article> guiSourceMostArticles() {
+        return articles.stream().filter(e -> e.getSourceName().contains(sourceMostArticles())).collect(Collectors.toList());
     }
 
     public List<Article> errorList() {
         List<Article> errorList = new ArrayList<>();
         errorList.add(new Article(new Source("1", "one"), "Your News App Team", "No articles match your Requirements", "null", "null", null, "", "null"));
         return errorList;
-        }
+    }
 
     public void saveHTML(Article a) throws IOException {
         String url = a.getUrl();
@@ -140,4 +139,21 @@ public class AppController {
             System.out.println("Oh no! We did a big fucky wucky! It's time to get in the forever-box owo");
         }
     }
+
+    public int downloadURLs(Downloader downloader) throws NewsAPIExceptionLeo {
+        if (articles == null) {
+            throw new NewsAPIExceptionLeo();
+        }
+
+
+        List<String> urls = new ArrayList<>();
+
+        // TODO extract urls from articles with java stream
+        articles.forEach(e->{
+            urls.add(e.getUrlToImage());
+            urls.add(e.getUrl());
+        });
+        return downloader.process(urls);
+    }
+
 }
