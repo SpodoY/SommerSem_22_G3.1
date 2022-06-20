@@ -91,7 +91,6 @@ public class AppController {
         return articles.stream().sorted().collect(Collectors.toList());
     }
 
-
     public String authorLength() {
         return articles.stream()
                 .sorted(Comparator.comparing(Article::getAuthorLength).reversed()).toList().get(0).getAuthor();
@@ -108,7 +107,6 @@ public class AppController {
     public List<Article> guiSourceNewYorkTimes() {
         return articles.stream().filter(e -> e.getAuthor().contains("New York Times")).collect(Collectors.toList());
     }
-
 
     public String sourceMostArticles() {
         return articles.stream().map(Article::getSourceName)
@@ -144,7 +142,6 @@ public class AppController {
         if (articles == null) {
             throw new NewsAPIExceptionLeo();
         }
-
 
         List<String> urls = new ArrayList<>();
 

@@ -18,18 +18,13 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
     public int process(List<String> urls) throws NewsAPIExceptionLeo {
         // TODO implement download function using multiple threads
         long timer1 = System.nanoTime();
-        final int[] count = {0};
+        int count = 0;
         ExecutorService executorService = Executors.newCachedThreadPool();
         List<Future<String>> futures = new ArrayList<Future<String>>();
         for (final String url : urls){
-            futures.add(executorService.submit(new Callable<String>() {
-                @Override
-                public String call() throws Exception {
-                    String answer = saveUrl2File(url);
-                    count[0]++;
-                    return answer;
-                }
-            }));
+            this.url = url;
+            futures.add(executorService.submit(this));
+            count++;
         }
         for (Future<String> future : futures){
             try {
@@ -42,7 +37,7 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
         }
         long timer2 = System.nanoTime();
         System.out.printf("Parallel took: %dms\n", (timer2-timer1)/1000000);
-        return count[0];
+        return count;
     }
     @Override
     public String call() throws Exception {
