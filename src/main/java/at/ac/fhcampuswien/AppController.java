@@ -11,6 +11,7 @@ import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 import com.google.gson.Gson;
 
 import java.io.*;
+import java.math.BigInteger;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -103,7 +104,7 @@ public class AppController {
     }
 
     public List<Article> guiSourceNewYorkTimes() {
-        return articles.stream().filter(e -> e.getAuthor().contains("New York Times")).collect(Collectors.toList());
+        return articles.stream().filter(e -> e.getSource().getName().contains("New York Times")).collect(Collectors.toList());
     }
 
     public String sourceMostArticles() {
