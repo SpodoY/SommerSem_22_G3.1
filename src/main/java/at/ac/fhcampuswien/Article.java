@@ -81,17 +81,13 @@ public class Article implements Comparable<Article> {
         private String publishedAt;
         private String content;
 
-        public Builder(String author, String title, String description, String url, String publishedAt) {
+        public Builder(String author, String title, String description, String url, String publishedAt, Source source) {
             this.author = author;
             this.title = title;
             this.description = description;
             this.url = url;
             this.publishedAt = publishedAt;
-        }
-
-        public Builder source(Source source) {
             this.source = source;
-            return this;
         }
 
         public Builder urlToImage(String urlToImage) {
