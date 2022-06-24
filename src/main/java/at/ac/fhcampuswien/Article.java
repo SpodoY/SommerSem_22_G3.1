@@ -62,12 +62,16 @@ public class Article implements Comparable<Article> {
         return source.getName();
     }
 
+    private int getLength() {
+        return description != null ? description.length() : 0;
+    }
+
     @Override
     public int compareTo(Article a) {
-        if (description.length() == a.description.length()) {
+        if (getLength() == a.getLength()) {
             return String.CASE_INSENSITIVE_ORDER.compare(getTitle(), a.getTitle());
         } else {
-            return Integer.compare(a.description.length(), description.length());
+            return Integer.compare(a.getLength(), getLength());
         }
     }
 

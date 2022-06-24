@@ -61,6 +61,8 @@ public class NewsLoadingController implements Initializable {
             newsList.getItems().clear();
         }
 
+        if (articles.size() == 0) PopUp.createAlert("Your handed query has no results");
+
         articleNum.setText(String.format("Number of articles: %d", articles.size()));
 
         double windowWidth = newsList.getPrefWidth();

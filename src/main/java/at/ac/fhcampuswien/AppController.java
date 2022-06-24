@@ -46,6 +46,7 @@ public class AppController {
 
             NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
             setArticles(custom.getArticles());
+            if (articles.size() == 0) PopUp.createAlert("Your handed query has no results");
         } catch (Exception e) {
             PopUp.createAlert("Your handed query has no results");
         }
