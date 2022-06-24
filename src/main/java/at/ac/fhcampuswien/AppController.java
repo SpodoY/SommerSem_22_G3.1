@@ -2,6 +2,7 @@ package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.apiHandling.NewsApi;
 import at.ac.fhcampuswien.apiHandling.NewsResponse;
+import at.ac.fhcampuswien.apiHandling.PopUp;
 import at.ac.fhcampuswien.downloader.Downloader;
 import at.ac.fhcampuswien.enums.Category;
 import at.ac.fhcampuswien.enums.Country;
@@ -15,7 +16,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static java.util.stream.Collectors.flatMapping;
 import static java.util.stream.Collectors.toMap;
 
 public class AppController {
@@ -34,22 +34,20 @@ public class AppController {
 
     public static void setArticles(List<Article> newArticles) {
         // clears list for new usage
+        if (newArticles.size() == 0) PopUp.createAlert("Your handed query has no results");
         articles.clear();
         articles.addAll(newArticles);
     }
 
-    public static List<Article> passCustomeNewsString(List<Enum> params) {
+    public static void passCustomeNewsString(List<Enum> params) {
         try {
             Enum[] allParams = params.toArray(new Enum[0]);
             Enum[] withoutFirst = IntStream.range(1, allParams.length).mapToObj(i -> allParams[i]).toArray(Enum[]::new);
 
             NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
             setArticles(custom.getArticles());
-            return custom.getArticles();
         } catch (Exception e) {
-            List<Article> errorList = new ArrayList<>();
-            errorList.add(new Article(new Source("1", "one"), "Your News App Team", "No articles match your Requirements", "null", "null", null, "", "null"));
-            return errorList;
+            PopUp.createAlert("Your handed query has no results");
         }
     }
 
@@ -109,7 +107,9 @@ public class AppController {
     }
 
     public String sourceMostArticles() {
-        return articles.stream().map(Article::getSourceName)
+        return articles.stream()
+                .filter(a -> !a.getAuthor().equals("Not found"))
+                .map(Article::getSourceName)
                 .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()))
                 .entrySet().stream()
                 .max(Map.Entry.comparingByValue()).map(Map.Entry::getKey)
@@ -118,12 +118,6 @@ public class AppController {
 
     public List<Article> guiSourceMostArticles() {
         return articles.stream().filter(e -> e.getSourceName().contains(sourceMostArticles())).collect(Collectors.toList());
-    }
-
-    public List<Article> errorList() {
-        List<Article> errorList = new ArrayList<>();
-        errorList.add(new Article(new Source("1", "one"), "Your News App Team", "No articles match your Requirements", "null", "null", null, "", "null"));
-        return errorList;
     }
 
     public void saveHTML(Article a) throws IOException {

@@ -6,7 +6,7 @@ public class App {
         // launches application
         Menu menu = new Menu();
         menu.start();
-        //Welcome to Exercise 3
+        //Welcome to Exercise 4
 
     }
 

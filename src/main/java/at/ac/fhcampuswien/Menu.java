@@ -12,16 +12,6 @@ public class Menu {
 
         NewGUI.main(new String[0]);
 
-
-//        Scanner in = new Scanner(System.in);
-//        String selection;
-//        controller = new AppController();
-//        while (true) {
-//            printMenu();
-//            selection = in.nextLine();
-//            handleInput(selection);
-//        }
-
     }
 
     /**

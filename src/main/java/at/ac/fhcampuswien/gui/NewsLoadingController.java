@@ -113,7 +113,7 @@ public class NewsLoadingController implements Initializable {
             newsList.getItems().add(container);
 
         }
-        checkIfEmpty(app.errorList());
+//        checkIfEmpty(app.errorList());
     }
 
     /**
@@ -178,10 +178,10 @@ public class NewsLoadingController implements Initializable {
         fillGuiWithArticles(articles);
     }
 
-    public void checkIfEmpty(List<Article> errorList) {
-        if (newsList.getItems().size() < 1) {
-            fillGuiWithArticles(errorList);
-        }
-    }
+//    public void checkIfEmpty(List<Article> errorList) {
+//        if (newsList.getItems().size() < 1) {
+//            fillGuiWithArticles(errorList);
+//        }
+//    }
 
 }
