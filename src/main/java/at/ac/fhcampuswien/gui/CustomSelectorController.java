@@ -1,6 +1,6 @@
 package at.ac.fhcampuswien.gui;
 
-import at.ac.fhcampuswien.AppController;
+import at.ac.fhcampuswien.SingletonAppController;
 import at.ac.fhcampuswien.enums.*;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
@@ -104,7 +104,7 @@ public class CustomSelectorController implements Initializable {
         callEnums = fetchDropdownData();
 
 
-        AppController.passCustomeNewsString(callEnums);
+        SingletonAppController.passCustomeNewsString(callEnums);
         goToCustomNews();
     }
 
