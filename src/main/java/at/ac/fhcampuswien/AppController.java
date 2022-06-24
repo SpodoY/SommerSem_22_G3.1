@@ -44,7 +44,7 @@ public class AppController {
             Enum[] allParams = params.toArray(new Enum[0]);
             Enum[] withoutFirst = IntStream.range(1, allParams.length).mapToObj(i -> allParams[i]).toArray(Enum[]::new);
 
-            NewsResponse custom = answer(newsApi.runRequest(newsApi.urlBuilder(params.get(0), withoutFirst)));
+            NewsResponse custom = answer(newsApi.checkIfAllConditionsAreFulfilled(newsApi.urlAssembly(params.get(0), withoutFirst)));
             setArticles(custom.getArticles());
         } catch (Exception e) {
             PopUp.createAlert("Your handed query has no results");
@@ -61,7 +61,7 @@ public class AppController {
 
     public List<Article> getTopHeadlinesAustria() {
         try {
-            NewsResponse austria = answer(newsApi.runRequest(newsApi.urlBuilder(Endpoint.TOP_HEADLINES, Country.AT)));
+            NewsResponse austria = answer(newsApi.runRequest(newsApi.urlAssembly(Endpoint.TOP_HEADLINES, Country.AT)));
             setArticles(austria.getArticles());
             return austria.getArticles();
         } catch (Exception e) {
@@ -72,7 +72,7 @@ public class AppController {
     //gets all the articles with the query "bitcoin" and returns the new list
     public List<Article> getAllNewsBitcoin() {
         try {
-            NewsResponse bitcoin = answer(newsApi.runRequest(newsApi.urlBuilder(Endpoint.EVERYTHING, Category.BITCOIN)));
+            NewsResponse bitcoin = answer(newsApi.runRequest(newsApi.urlAssembly(Endpoint.EVERYTHING, Category.BITCOIN)));
             setArticles(bitcoin.getArticles());
             return bitcoin.getArticles();
         } catch (Exception e) {
