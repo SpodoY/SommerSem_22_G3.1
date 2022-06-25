@@ -29,10 +29,9 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
         for (Future<String> future : futures){
             try {
                 future.get();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
+            } catch (InterruptedException | ExecutionException e) {
+//                e.printStackTrace();
+                System.out.println("Oh no big fucky wucky owo");
             }
         }
         long timer2 = System.nanoTime();

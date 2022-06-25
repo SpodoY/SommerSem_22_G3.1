@@ -1,7 +1,10 @@
 package at.ac.fhcampuswien.gui;
 
 import at.ac.fhcampuswien.SingletonAppController;
+import at.ac.fhcampuswien.downloader.ParallelDownloader;
+import at.ac.fhcampuswien.downloader.SequentialDownloader;
 import at.ac.fhcampuswien.enums.*;
+import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 import javafx.beans.binding.Bindings;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,6 +25,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class CustomSelectorController implements Initializable {
+
+    @FXML
+    SingletonAppController app = SingletonAppController.getInstance();
 
     @FXML private ChoiceBox<Endpoint> endpoint;
     @FXML private ChoiceBox<Category> category;
@@ -107,6 +113,24 @@ public class CustomSelectorController implements Initializable {
         SingletonAppController.passCustomeNewsString(callEnums);
         goToCustomNews();
     }
+
+    public void downloadParallel() {
+        try {
+            app.downloadURLs(new ParallelDownloader());
+        } catch (NewsAPIExceptionLeo e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void downloadSequential() {
+        try {
+            app.downloadURLs(new SequentialDownloader());
+        } catch (NewsAPIExceptionLeo e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
 
     @FXML
     private void goToCustomNews() {

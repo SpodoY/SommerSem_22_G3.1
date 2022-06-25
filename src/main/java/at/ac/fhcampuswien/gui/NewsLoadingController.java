@@ -3,6 +3,10 @@ package at.ac.fhcampuswien.gui;
 import at.ac.fhcampuswien.SingletonAppController;
 import at.ac.fhcampuswien.Article;
 import at.ac.fhcampuswien.apiHandling.PopUp;
+import at.ac.fhcampuswien.downloader.Downloader;
+import at.ac.fhcampuswien.downloader.ParallelDownloader;
+import at.ac.fhcampuswien.downloader.SequentialDownloader;
+import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -167,6 +171,22 @@ public class NewsLoadingController implements Initializable {
 
     public void lessThan15() {
         fillGuiWithArticles(app.headLessThan15());
+    }
+
+    public void downloadParallel() {
+        try {
+            app.downloadURLs(new ParallelDownloader());
+        } catch (NewsAPIExceptionLeo e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void downloadSequential() {
+        try {
+            app.downloadURLs(new SequentialDownloader());
+        } catch (NewsAPIExceptionLeo e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
