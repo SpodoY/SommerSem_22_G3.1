@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.downloader;
 
+import at.ac.fhcampuswien.apiHandling.PopUp;
 import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 
 import java.util.ArrayList;
@@ -36,6 +37,9 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
         }
         long timer2 = System.nanoTime();
         System.out.printf("Parallel took: %dms\n", (timer2-timer1)/1000000);
+
+        String message = "Parallel took: " + (timer2-timer1)/1000000 + "ms";
+        PopUp.createNotification(message);
         return count;
     }
     @Override

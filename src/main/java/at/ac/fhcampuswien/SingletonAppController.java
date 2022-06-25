@@ -178,7 +178,7 @@ public class SingletonAppController {
         List<String> urls = new ArrayList<>();
 
         // TODO extract urls from articles with java stream
-        articles.forEach(e->{
+        articles.stream().forEach(e->{
             urls.add(e.getUrlToImage());
             urls.add(e.getUrl());
         });

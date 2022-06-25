@@ -1,5 +1,6 @@
 package at.ac.fhcampuswien.downloader;
 
+import at.ac.fhcampuswien.apiHandling.PopUp;
 import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 
 import java.util.List;
@@ -26,6 +27,9 @@ public class SequentialDownloader extends Downloader {
         }
         long timer2 = System.nanoTime();
         System.out.printf("Sequentiell took: %dms\n", (timer2-timer1)/1000000);
+
+        String message = "Sequentiell took: " + (timer2-timer1)/1000000 + "ms";
+        PopUp.createNotification(message);
         return count;
     }
 }
