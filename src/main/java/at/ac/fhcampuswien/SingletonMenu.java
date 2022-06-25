@@ -2,11 +2,47 @@ package at.ac.fhcampuswien;
 
 import at.ac.fhcampuswien.gui.NewGUI;
 
-public class Menu {
+public class SingletonMenu {
 
-    private AppController controller;
+    // The field must be declared volatile so that double check lock would work correctly.
+    // volatile -> everytime the variable is accessed,it is read directly from the main memory
+    // Singleton - only one instance is created
+    private static volatile SingletonMenu instance = null;
+    private SingletonAppController controller;
     private static final String INVALID_INPUT_MESSAGE = "Invalid Input :(";
     private static final String EXIT_MESSAGE = "Bye bye!";
+
+    private SingletonMenu() {
+    }
+
+    public static SingletonMenu getInstance() {
+        // The approach taken here is called double-checked locking (DCL). It
+        // exists to prevent race condition between multiple threads that may
+        // attempt to get singleton instance at the same time, creating separate
+        // instances as a result.
+        //
+        // It may seem that having the `result` variable here is completely
+        // pointless. There is, however, a very important caveat when
+        // implementing double-checked locking in Java, which is solved by
+        // introducing this local variable.
+        //
+        // You can read more info DCL issues in Java here:
+        // https://refactoring.guru/java-dcl-issue
+
+
+        SingletonMenu result = instance;
+        //even if the instance was created, every thread has to wait before returning it
+        //-> therefore extra if (instance != null) immediately return instance/result
+        if (result != null) {
+            return result;
+        }
+        synchronized(SingletonMenu.class) {
+            if (instance == null) {
+                instance = new SingletonMenu();
+            }
+            return instance;
+        }
+    }
 
     public void start() {
 
@@ -34,15 +70,15 @@ public class Menu {
         }
     }
 
-    private void getArticleCount(AppController ctrl) {
+    private void getArticleCount(SingletonAppController ctrl) {
         System.out.println(ctrl.getArticleCount());
     }
 
-    private void getTopHeadlinesAustria(AppController ctrl) {
+    private void getTopHeadlinesAustria(SingletonAppController ctrl) {
         System.out.println(ctrl.getArticles());
     }
 
-    private void getAllNewsBitcoin(AppController ctrl) {
+    private void getAllNewsBitcoin(SingletonAppController ctrl) {
         System.out.println(ctrl.getArticles());
     }
 

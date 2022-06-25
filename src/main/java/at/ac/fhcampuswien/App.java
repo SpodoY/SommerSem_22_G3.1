@@ -4,7 +4,7 @@ public class App {
 
     public static void main(String[] args) {
         // launches application
-        Menu menu = new Menu();
+        SingletonMenu menu = SingletonMenu.getInstance();
         menu.start();
         //Welcome to Exercise 4
 

@@ -1,8 +1,7 @@
 package at.ac.fhcampuswien.gui;
 
-import at.ac.fhcampuswien.AppController;
+import at.ac.fhcampuswien.SingletonAppController;
 import at.ac.fhcampuswien.Article;
-import at.ac.fhcampuswien.Source;
 import at.ac.fhcampuswien.apiHandling.PopUp;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -29,13 +28,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-import java.util.stream.Collectors;
 
 public class NewsLoadingController implements Initializable {
 
 
     @FXML
-    AppController app = new AppController();
+    SingletonAppController app = SingletonAppController.getInstance();
 
     @FXML
     ListView<HBox> newsList;

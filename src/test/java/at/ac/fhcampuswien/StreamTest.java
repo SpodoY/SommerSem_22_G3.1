@@ -18,7 +18,6 @@ import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,14 +27,14 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class StreamTest {
 
-    private static AppController app;
+    private static SingletonAppController app;
     private static Gson gson;
     private static final List<Article> resetList = new ArrayList<>();
     private static Downloader downloader;
 
     @BeforeAll
     static void init() {
-        app = new AppController();
+        app = SingletonAppController.getInstance();
         gson = new Gson();
 
         try {
@@ -55,7 +54,7 @@ public class StreamTest {
             // close reader
             reader.close();
 
-            AppController.setArticles(user.getArticles());
+            SingletonAppController.setArticles(user.getArticles());
             resetList.addAll(user.getArticles());
 
         } catch (Exception ex) {
@@ -71,13 +70,13 @@ public class StreamTest {
         int expected = 1;
 
         //Act
-        AppController.setArticles(app.headLessThan15());
+        SingletonAppController.setArticles(app.headLessThan15());
 
         //Assert
         assertEquals(expected, app.getArticleCount());
 
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
     }
 
     @Test
@@ -87,14 +86,14 @@ public class StreamTest {
 
 
         //Act
-        AppController.setArticles(app.sortByLengthDescending());
+        SingletonAppController.setArticles(app.sortByLengthDescending());
 
         //Assert
         for (int i = 0; i < resetList.size()-1; i++) {
             assertEquals(resetList.get(i), app.getArticles().get(i));
         }
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
     }
 
     @Test
@@ -112,7 +111,7 @@ public class StreamTest {
             assertNotEquals(functionVictim.get(i), changed.get(i));
         }
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
     }
 
     @Test
@@ -123,14 +122,14 @@ public class StreamTest {
         String afterFunction;
 
         //Act
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
         afterFunction = app.authorLength();
 
         //Assert
         assertEquals(correct, afterFunction);
 
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
     }
 
     @Test
@@ -147,7 +146,7 @@ public class StreamTest {
         assertEquals(correct.length(), afterFunction.length());
 
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
     }
 
     //Next test requires an implementation of sourcedata like id or name
@@ -164,7 +163,7 @@ public class StreamTest {
         assertEquals(3, afterFunction);
 
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
 
     }
 
@@ -184,7 +183,7 @@ public class StreamTest {
         assertEquals(expected, actual);
 
         //Rest
-        AppController.setArticles(resetList);
+        SingletonAppController.setArticles(resetList);
     }
 
 

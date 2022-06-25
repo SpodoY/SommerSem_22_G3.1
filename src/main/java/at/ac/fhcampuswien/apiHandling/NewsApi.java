@@ -14,16 +14,15 @@ import java.util.Objects;
 import static java.time.format.DateTimeFormatter.ISO_LOCAL_DATE;
 
 
-public class NewsApi {
+public class NewsApi extends ApiRequests {
 
     // defining fields
     private final String BASEURL = "https://newsapi.org/v2/";
-    private final static String API_KEY = readKey();
+    private final String API_KEY = getKey();
 
-    /**
-     * This method reads the api key from a static file, which isn't pushed to git
-     */
-    private static String readKey() {
+
+    @Override
+    public String getKey() {
         // Instantiating all Classes need for reading from a file
         InputStream file = NewsApi.class.getClassLoader().getResourceAsStream("at/ac/fhcampuswien/keys.txt");
         InputStreamReader fileReader = new InputStreamReader(file);
@@ -43,15 +42,8 @@ public class NewsApi {
         return null;
     }
 
-    /**
-     * This method gets all parameters for the url and calls the request function
-     *
-     * @param category headlines or everything
-     * @param args     the filtering word, default is keyword
-     * @return returns the http message body as string
-     */
-    public String urlBuilder(Enum category, Enum... args) {
-
+    @Override
+    public String urlAssembly(Enum category, Enum... args) {
         String url = BASEURL + category.toString();
         for (Enum part : args) {
             if(!part.toString().equals("")){
@@ -68,10 +60,10 @@ public class NewsApi {
             url += API_KEY;
         }
 
-        return url;
-    }
+        return url;    }
 
-    public String runRequest(String url) {
+    @Override
+    public String checkIfAllConditionsAreFulfilled(String url) {
         try {
             if (Objects.equals(url, "")) {
                 throw new UrlException();
@@ -89,45 +81,16 @@ public class NewsApi {
                 throw new NoWifiException();
             } else {
                 System.out.println(url);
-                return getRequest(url);
+                return runRequest(url);
             }
-        } catch (NoWifiException | UrlException | IOException e) {
+        } catch (NoWifiException | UrlException e) {
             System.out.println(e.getMessage());
         }
         return "";
     }
 
-
-    public void downladAnArticle(String url, Article a) throws IOException {
-        URL urlReal = new URL(url);
-        String input;
-        BufferedReader in = new BufferedReader(new InputStreamReader(urlReal.openStream()));
-        String filename = a.getTitle() + " " + LocalDateTime.now().format(ISO_LOCAL_DATE) +".html";
-
-        final File parentDir = new File("download");
-        parentDir.mkdir();
-        final File file = new File(parentDir, filename);
-        String path = file.getAbsolutePath();
-        file.createNewFile();
-
-        BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
-
-        while ((input = in.readLine()) != null) {
-            writer.append((input));
-        }
-        in.close();
-        writer.close();
-    }
-
-    /**
-     * This method handles Get request and should be called from the response function
-     *
-     * @param url the url from the Response function
-     * @return the message body to string from the http request
-     * @throws IOException
-     */
-    private String getRequest(String url) throws IOException {
-
+    @Override
+    public String runRequest(String url) {
         // initiates the http client
         var client = new OkHttpClient();
 
@@ -156,5 +119,29 @@ public class NewsApi {
         // just the last Backup return if nothing works
         return "no respones";
     }
+
+
+
+    public void downladAnArticle(String url, Article a) throws IOException {
+        URL urlReal = new URL(url);
+        String input;
+        BufferedReader in = new BufferedReader(new InputStreamReader(urlReal.openStream()));
+        String filename = a.getTitle() + " " + LocalDateTime.now().format(ISO_LOCAL_DATE) +".html";
+
+        final File parentDir = new File("download");
+        parentDir.mkdir();
+        final File file = new File(parentDir, filename);
+        String path = file.getAbsolutePath();
+        file.createNewFile();
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(path, true));
+
+        while ((input = in.readLine()) != null) {
+            writer.append((input));
+        }
+        in.close();
+        writer.close();
+    }
+
 
 }
