@@ -181,12 +181,6 @@ public class SingletonAppController {
         articles.forEach(e->{
             urls.add(e.getUrlToImage());
             urls.add(e.getUrl());
-
-            //Christna added this:
-            String sentUrlImage = e.getUrlToImage();
-            String sentUrl = e.getUrl();
-            System.out.println(sentUrlImage + sentUrl);
-
         });
         return downloader.process(urls);
     }
