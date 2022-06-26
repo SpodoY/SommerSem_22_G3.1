@@ -10,13 +10,14 @@ import at.ac.fhcampuswien.enums.Endpoint;
 import at.ac.fhcampuswien.exceptions.NewsAPIExceptionLeo;
 import com.google.gson.Gson;
 
-import java.io.*;
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-
-import static java.util.stream.Collectors.toMap;
 
 public class SingletonAppController {
     // the Datastructures for containing all our Articles
@@ -30,6 +31,7 @@ public class SingletonAppController {
     private static final List<Article> articles = new ArrayList<>();
     private static final NewsApi newsApi = new NewsApi();
     private static final Gson gsonParser = new Gson();
+
     public static NewsResponse answer(String json) {
         NewsResponse data = gsonParser.fromJson(json, NewsResponse.class);
         return data;
@@ -60,7 +62,7 @@ public class SingletonAppController {
         if (result != null) {
             return result;
         }
-        synchronized(SingletonAppController.class) {
+        synchronized (SingletonAppController.class) {
             if (instance == null) {
                 instance = new SingletonAppController();
             }
@@ -176,9 +178,7 @@ public class SingletonAppController {
         }
 
         List<String> urls = new ArrayList<>();
-
-        // TODO extract urls from articles with java stream
-        articles.stream().forEach(e->{
+        articles.stream().forEach(e -> {
             urls.add(e.getUrlToImage());
             urls.add(e.getUrl());
         });
