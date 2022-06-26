@@ -17,7 +17,7 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
     // returns number of downloaded article urls
     @Override
     public int process(List<String> urls) throws NewsAPIExceptionLeo {
-        System.setProperty("https.protocols", "TLSv1 TLSv1.1 TLSv1.2 TLSv1.3");
+        //System.setProperty("https.protocols", "TLSv1 TLSv1.1 TLSv1.2 TLSv1.3");
         long timer1 = System.nanoTime();
         int count = 0;
         ExecutorService executorService = Executors.newCachedThreadPool();
@@ -31,7 +31,6 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
             try {
                 future.get();
             } catch (ExecutionException e) {
-                future.cancel(true);
                 System.out.printf("Sorry we couldn´t download this url: %s, because their server denied us access. PepoSadFace", this.url + System.lineSeparator());
             } catch (InterruptedException e) {
                 e.printStackTrace();
