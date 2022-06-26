@@ -31,6 +31,7 @@ public class ParallelDownloader extends Downloader implements Callable<String> {
             try {
                 future.get();
             } catch (ExecutionException e) {
+                future.cancel(true);
                 System.out.printf("Sorry we couldn´t download this url: %s, because their server denied us access. PepoSadFace", this.url + System.lineSeparator());
             } catch (InterruptedException e) {
                 e.printStackTrace();
