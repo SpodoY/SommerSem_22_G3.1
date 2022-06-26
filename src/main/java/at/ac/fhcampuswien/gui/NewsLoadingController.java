@@ -185,7 +185,7 @@ public class NewsLoadingController implements Initializable {
         try {
             app.downloadURLs(new SequentialDownloader());
         } catch (Exception e) {
-            System.out.println("whatever");        }
+            e.printStackTrace();    }
     }
 
     @Override

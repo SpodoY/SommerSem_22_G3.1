@@ -19,8 +19,10 @@ public class SequentialDownloader extends Downloader {
                 if(fileName != null)
                     count++;
             } catch (NewsAPIExceptionLeo e){
-                throw new NewsAPIExceptionLeo(e.getMessage());
-            } catch (Exception e){
+                System.out.printf("Sorry we can´t download this file: %s",url);
+                continue;
+            }
+            catch (Exception e){
                 throw new NewsAPIExceptionLeo("Different problem occurred in " + this.getClass().getName() + ". Message: " + e.getMessage());
             }
         }
