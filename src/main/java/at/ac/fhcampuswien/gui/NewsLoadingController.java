@@ -184,9 +184,8 @@ public class NewsLoadingController implements Initializable {
     public void downloadSequential() {
         try {
             app.downloadURLs(new SequentialDownloader());
-        } catch (NewsAPIExceptionLeo e) {
-            throw new RuntimeException(e);
-        }
+        } catch (Exception e) {
+            System.out.println("whatever");        }
     }
 
     @Override

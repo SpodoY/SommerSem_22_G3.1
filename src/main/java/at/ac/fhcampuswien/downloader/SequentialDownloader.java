@@ -19,7 +19,6 @@ public class SequentialDownloader extends Downloader {
                 if(fileName != null)
                     count++;
             } catch (NewsAPIExceptionLeo e){
-                System.err.println(e.getMessage());
                 throw new NewsAPIExceptionLeo(e.getMessage());
             } catch (Exception e){
                 throw new NewsAPIExceptionLeo("Different problem occurred in " + this.getClass().getName() + ". Message: " + e.getMessage());
